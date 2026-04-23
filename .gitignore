@@ -10,3 +10,6 @@ calcom/
 *.log
 **/.env
 .env.*
+tenacious-seed/
+*.zip
+seed-materials/

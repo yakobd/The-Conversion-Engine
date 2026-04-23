@@ -13,6 +13,8 @@ from agent.enrichment.pipeline import run_enrichment_pipeline
 load_dotenv(Path(__file__).parent.parent / "tau2-bench" / ".env")
 
 resend.api_key = os.getenv("RESEND_API_KEY")
+OUTBOUND_ENABLED = os.getenv("OUTBOUND_ENABLED", "false").lower() == "true"
+STAFF_SINK_EMAIL = os.getenv("STAFF_SINK_EMAIL", "sink@tenacious-program.dev")
 
 TRACE_DIR = Path(__file__).parent.parent / "data" / "traces"
 TRACE_DIR.mkdir(parents=True, exist_ok=True)
@@ -101,18 +103,23 @@ def send_outreach_email(
         "sent_at": datetime.now().isoformat(),
         "status": None,
         "latency_ms": None,
-        "error": None
+        "error": None,
+        "draft": True,
+        "outbound_enabled": OUTBOUND_ENABLED,
     }
 
     try:
-        if dry_run:
-            time.sleep(0.1)  # Simulate network latency
+        if dry_run or not OUTBOUND_ENABLED:
+            time.sleep(0.1)
             result["status"] = "dry_run_success"
             result["message_id"] = f"dry_run_{trace_id}"
+            result["routed_to"] = "staff_sink"
         else:
+            # Route to staff sink unless explicitly enabled
+            actual_recipient = to_email if OUTBOUND_ENABLED else STAFF_SINK_EMAIL
             response = resend.Emails.send({
                 "from": "onboarding@resend.dev",
-                "to": to_email,
+                "to": actual_recipient,
                 "subject": email_content.get("subject"),
                 "text": email_content.get("body")
             })
