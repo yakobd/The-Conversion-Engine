@@ -301,8 +301,8 @@ if __name__ == "__main__":
 
     summary = run_outreach_sequence(
         companies=companies,
-        test_email="test@example.com",
-        dry_run=True
+        test_email="yakobdereje.yd@gmail.com",
+        dry_run=False
     )
 
     print(f"\n✅ Outreach sequence complete!")

@@ -1,7 +1,7 @@
 {
   "prospect": "Yellow.ai",
-  "enriched_at": "2026-04-23T12:27:39.042157",
-  "pipeline_duration_seconds": 0.35,
+  "enriched_at": "2026-04-23T21:21:04.623001",
+  "pipeline_duration_seconds": 0.21,
   "icp_classification": {
     "segment": 2,
     "segment_name": "Mid-market restructuring",
@@ -24,7 +24,7 @@
     "crunchbase_id": "e7761b35-82d8-7dcf-4b96-c355a9d65fd4",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T12:27:38.970043",
+    "last_enriched_at": "2026-04-23T21:21:04.582743",
     "name": "Yellow.ai",
     "website": "https://yellow.ai",
     "description": "Yellow.ai is a conversational AI platform, enabling enterprises to unlock business potential at scale.",
@@ -122,7 +122,7 @@
     ],
     "claim_language": "active hiring signals detected",
     "assert_aggressive_hiring": true,
-    "scraped_at": "2026-04-23T12:27:39.022159",
+    "scraped_at": "2026-04-23T21:21:04.606366",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {
