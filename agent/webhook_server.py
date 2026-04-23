@@ -357,6 +357,25 @@ def check_warm_lead_status(phone_number: str) -> bool:
         return phone_number in warm_leads.get("phone_numbers", [])
     return False
 
+def send_sms_to_warm_lead_only(phone_number: str, message: str) -> dict:
+    """
+    Enforce warm-lead gate before sending any outbound SMS.
+    SMS is ONLY sent to contacts who have already replied by email.
+    Raises ValueError if contact is not a warm lead.
+    """
+    if not check_warm_lead_status(phone_number):
+        logger.warning(f"Outbound SMS blocked for {phone_number} — not a warm lead")
+        raise ValueError(f"SMS gating enforced: {phone_number} has no prior email engagement")
+
+    import africastalking
+    africastalking.initialize(
+        os.getenv("AT_USERNAME"),
+        os.getenv("AT_API_KEY")
+    )
+    sms = africastalking.SMS
+    response = sms.send(message, [phone_number])
+    logger.info(f"SMS sent to warm lead {phone_number}: {response}")
+    return response
 
 # ─── CAL.COM WEBHOOK ──────────────────────────────────────────────────────────
 @app.post("/webhooks/calcom")
@@ -468,6 +487,7 @@ def update_hubspot_on_booking(
                     "lifecyclestage": "opportunity",
                     "hs_lead_status": "IN_PROGRESS",
                     "notes_last_updated": datetime.now().isoformat(),
+                    "enrichment_timestamp": datetime.now().isoformat(),
                 }
             }
 
@@ -487,6 +507,7 @@ def update_hubspot_on_booking(
                         "lastname": " ".join(prospect_name.split()[1:]) if prospect_name else "",
                         "lifecyclestage": "opportunity",
                         "hs_lead_status": "IN_PROGRESS",
+                        "enrichment_timestamp": datetime.now().isoformat(),
                     }
                 }
                 create_resp = req.post(create_url, headers=headers, json=create_payload)

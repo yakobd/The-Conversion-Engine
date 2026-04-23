@@ -8,6 +8,8 @@ All SMS during challenge week routes to staff sink.
 import os
 import json
 import time
+import logging
+logger = logging.getLogger(__name__)
 from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
@@ -18,18 +20,28 @@ OUTBOUND_ENABLED = os.getenv("OUTBOUND_ENABLED", "false").lower() == "true"
 TRACE_DIR = Path(__file__).parent.parent / "data" / "traces"
 TRACE_DIR.mkdir(parents=True, exist_ok=True)
 
-def send_sms(phone_number: str, message: str, prospect_name: str = "") -> dict:
+def send_sms(phone_number: str, message: str, prospect_name: str = "", is_warm_lead: bool = False) -> dict:
     """
     Send SMS via Africa's Talking sandbox.
     Reserved for warm leads who have already replied by email.
     SMS content: scheduling coordination only — no pitch content.
     Max 160 characters per SMS policy.
     """
+        # Enforce warm-lead gate in code — SMS is a warm-lead-only channel
+    if not is_warm_lead:
+        logger.warning(f"SMS blocked for {phone_number} — not a warm lead")
+        return {
+            "status": "blocked_not_warm_lead",
+            "phone": phone_number,
+            "reason": "SMS channel requires prior email engagement",
+            "sent_at": datetime.now().isoformat()
+        }
+        
     import africastalking
 
     trace_id = f"sms_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
     start_time = time.time()
-
+        
     # Enforce 160 char limit
     if len(message) > 160:
         message = message[:157] + "..."

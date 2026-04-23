@@ -31,8 +31,12 @@ def create_contact(prospect: dict) -> dict:
             "email": prospect.get("email", ""),
             "company": prospect.get("company", ""),
             "jobtitle": prospect.get("jobtitle", ""),
+            "phone": prospect.get("phone", ""),                          
+            "website": prospect.get("website", ""),                      
+            "industry": prospect.get("industry", ""),                    
             "hs_lead_status": "NEW",
             "lifecyclestage": "lead",
+            "enrichment_timestamp": datetime.now().isoformat(),
         }
     }
 
