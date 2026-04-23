@@ -1,0 +1,86 @@
+{
+  "prospect": "Yellow.ai",
+  "generated_at": "2026-04-23T12:22:30.740569",
+  "prospect_ai_maturity": 2,
+  "sector_stats": {
+    "avg_ai_maturity": 1.1,
+    "max_ai_maturity": 2,
+    "top_quartile_threshold": 1,
+    "sector_size_in_sample": 11
+  },
+  "prospect_position": {
+    "rank": 1,
+    "out_of": 11,
+    "percentile": 90.9,
+    "vs_average": 0.8999999999999999
+  },
+  "top_quartile_companies": [
+    {
+      "company": "Wit.ai",
+      "ai_maturity_score": 1,
+      "confidence": "low",
+      "signals": [
+        {
+          "signal": "ai_industry_classification",
+          "weight": "medium",
+          "detail": "AI-related industry: ['artificial intelligence', 'machine learning']",
+          "score_contribution": 1
+        }
+      ]
+    },
+    {
+      "company": "Wizard Labs",
+      "ai_maturity_score": 1,
+      "confidence": "low",
+      "signals": [
+        {
+          "signal": "ai_industry_classification",
+          "weight": "medium",
+          "detail": "AI-related industry: ['artificial intelligence']",
+          "score_contribution": 1
+        }
+      ]
+    },
+    {
+      "company": "Semantica",
+      "ai_maturity_score": 1,
+      "confidence": "low",
+      "signals": [
+        {
+          "signal": "ai_industry_classification",
+          "weight": "medium",
+          "detail": "AI-related industry: ['artificial intelligence', 'machine learning']",
+          "score_contribution": 1
+        }
+      ]
+    },
+    {
+      "company": "Xrosswork",
+      "ai_maturity_score": 1,
+      "confidence": "low",
+      "signals": [
+        {
+          "signal": "ai_industry_classification",
+          "weight": "medium",
+          "detail": "AI-related industry: ['artificial intelligence']",
+          "score_contribution": 1
+        }
+      ]
+    },
+    {
+      "company": "The Attention Exchange",
+      "ai_maturity_score": 1,
+      "confidence": "low",
+      "signals": [
+        {
+          "signal": "ai_industry_classification",
+          "weight": "medium",
+          "detail": "AI-related industry: ['artificial intelligence']",
+          "score_contribution": 1
+        }
+      ]
+    }
+  ],
+  "capability_gaps": [],
+  "outreach_finding": "Yellow.ai shows strong AI signals relative to peers. The opportunity is specialized capacity \u2014 ML engineers and AI systems builders \u2014 not direction."
+}

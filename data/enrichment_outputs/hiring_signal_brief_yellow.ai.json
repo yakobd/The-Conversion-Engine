@@ -1,0 +1,136 @@
+{
+  "prospect": "Yellow.ai",
+  "enriched_at": "2026-04-23T12:27:39.042157",
+  "pipeline_duration_seconds": 0.35,
+  "icp_classification": {
+    "segment": 2,
+    "segment_name": "Mid-market restructuring",
+    "confidence": "high",
+    "scores": {
+      "1": 2,
+      "2": 3,
+      "3": 1,
+      "4": 2
+    },
+    "reasons": [
+      "Layoff detected \u2014 cost restructuring likely",
+      "Leadership change detected \u2014 monitor for tech role",
+      "AI maturity 2/3 \u2014 eligible for Segment 4 pitch",
+      "Recent funding detected \u2014 fresh budget available"
+    ]
+  },
+  "firmographics": {
+    "company": "Yellow.ai",
+    "crunchbase_id": "e7761b35-82d8-7dcf-4b96-c355a9d65fd4",
+    "found": true,
+    "confidence": 1.0,
+    "last_enriched_at": "2026-04-23T12:27:38.970043",
+    "name": "Yellow.ai",
+    "website": "https://yellow.ai",
+    "description": "Yellow.ai is a conversational AI platform, enabling enterprises to unlock business potential at scale.",
+    "industries": "[{\"id\":\"artificial-intelligence\",\"value\":\"Artificial Intelligence (AI)\"},{\"id\":\"customer-service\",\"value\":\"Customer Service\"},{\"id\":\"enterprise-software\",\"value\":\"Enterprise Software\"},{\"id\":\"generative-ai\",\"value\":\"Generative AI\"},{\"id\":\"information-technology-dbca\",\"value\":\"Information Technology\"},{\"id\":\"software\",\"value\":\"Software\"}]",
+    "operating_status": "active",
+    "company_type": "for_profit",
+    "founded_date": "2016-01-22",
+    "num_employees": "501-1000",
+    "country_code": "US",
+    "location": "[{\"name\":\"San Mateo\",\"permalink\":\"san-mateo-california\"},{\"name\":\"California\",\"permalink\":\"california-united-states\"},{\"name\":\"United States\",\"permalink\":\"united-states\"},{\"name\":\"North America\",\"permalink\":\"north-america\"}]",
+    "funding_rounds": "{\"last_funding_at\":\"2021-08-04T00:00:00.000Z\",\"last_funding_type\":\"series_c\",\"num_funding_rounds\":5,\"value\":{\"currency\":\"USD\",\"value\":102150000,\"value_usd\":102150000}}",
+    "funding_rounds_list": "[{\"announced_on\":\"2021-08-04\",\"id\":\"yellow-messenger-series-c--5adacf85\",\"image_id\":\"zacpiwhofy15rtig7dk6\",\"lead_investors\":[{\"image\":\"v1421288803/xyiimrm08sdkclll5sew.png\",\"name\":\"Salesforce Ventures\",\"permalink\":\"salesforce-ventures\"},{\"image\":\"alb3msamv4i6yeobjyar\",\"name\":\"Sapphire Ventures\",\"permalink\":\"sapphire-ventures\"},{\"image\":\"a5ynwz94uigs4diz0f93\",\"name\":\"WestBridge Capital\",\"permalink\":\"westbridge-capital\"}],\"money_raised\":{\"currency\":\"USD\",\"value\":78150000,\"value_usd\":78150000},\"title\":\"Series C - Yellow.ai\",\"uuid\":\"5adacf85-de09-43af-a7d9-994f5110528b\"},{\"announced_on\":\"2020-04-16\",\"id\":\"yellow-messenger-series-b--ea0e677a\",\"image_id\":\"zacpiwhofy15rtig7dk6\",\"lead_investors\":[{\"image\":\"czergf6pnxkmmpgmnik7\",\"name\":\"Lightspeed Venture Partners\",\"permalink\":\"lightspeed-venture-partners\"}],\"money_raised\":{\"currency\":\"USD\",\"value\":20000000,\"value_usd\":20000000},\"title\":\"Series B - Yellow.ai\",\"uuid\":\"ea0e677a-a8c5-4a1e-9f09-fda8871e4e9b\"},{\"announced_on\":\"2019-06-12\",\"id\":\"yellow-messenger-series-a--082202bc\",\"image_id\":\"zacpiwhofy15rtig7dk6\",\"lead_investors\":[{\"image\":\"gylpifgocajnk3ijrbzs\",\"name\":\"Lightspeed India Partners\",\"permalink\":\"lightspeed-venture-partners-india\"}],\"money_raised\":{\"currency\":\"USD\",\"value\":4000000,\"value_usd\":4000000},\"title\":\"Series A - Yellow.ai\",\"uuid\":\"082202bc-11ba-4988-8d2a-d9747d552798\"},{\"announced_on\":\"2019-03-01\",\"id\":\"yellow-messenger-series-a--a069072e\",\"image_id\":\"zacpiwhofy15rtig7dk6\",\"title\":\"Series A - Yellow.ai\",\"uuid\":\"a069072e-698a-4eb3-9148-c3313687c009\"},{\"announced_on\":\"2016-06-16\",\"id\":\"yellow-messenger-non-equity-assistance--46070eb8\",\"image_id\":\"zacpiwhofy15rtig7dk6\",\"title\":\"Non Equity Assistance - Yellow.ai\",\"uuid\":\"46070eb8-4fa0-7380-6316-d40328439e0e\"}]",
+    "num_investors": "7.0",
+    "layoff": "[{\"key_event_date\":\"2023-03-01\",\"label\":\"Conversational AI Startup Yellow.ai Fires 200 Employees\",\"link\":\"https://inc42.com/buzz/conversational-ai-startup-yellow-ai-fires-200-employees/\",\"uuid\":\"3c535b3f-ac8f-475b-9184-c46731e8ca3f\"}]",
+    "leadership_hire": "[{\"key_event_date\":\"2023-07-27\",\"label\":\"Yellow.ai appoints KT Prasad, former Zendesk leader as Chief Revenue Officer - International Region\",\"link\":\"https://www.zawya.com/en/press-release/people-in-the-news/yellowai-appoints-kt-prasad-former-zendesk-leader-as-chief-revenue-officer-international-region-yp8une0n\",\"uuid\":\"fc2acd17-8096-42f5-bc06-386397f51548\"}]",
+    "builtwith_tech": "[{\"name\":\"Domain Not Resolving\",\"num_companies_using\":\"751486\",\"technology_category\":[\"hosting\"]},{\"name\":\"Google Maps\",\"num_companies_using\":\"499984\",\"technology_category\":[\"mapping\"]},{\"name\":\"Amazon\",\"num_companies_using\":\"465968\",\"technology_category\":[\"hosting\"]},{\"name\":\"Cloudflare Hosting\",\"num_companies_using\":\"319265\",\"technology_category\":[\"hosting\"]},{\"name\":\"nginx\",\"num_companies_using\":\"266045\",\"technology_category\":[\"web_server\"]},{\"name\":\"Apache\",\"num_companies_using\":\"263861\",\"technology_category\":[\"web_server\"]},{\"name\":\"Google\",\"num_companies_using\":\"248923\",\"technology_category\":[\"hosting\"]},{\"name\":\"Google Cloud\",\"num_companies_using\":\"220669\",\"technology_category\":[\"hosting\"]},{\"name\":\"Facebook Sharer\",\"num_companies_using\":\"204895\",\"technology_category\":[\"widgets\"]},{\"name\":\"AJAX Libraries API\",\"num_companies_using\":\"202601\",\"technology_category\":[\"cdn\"]}]",
+    "stock_symbol": "nan",
+    "ipo_status": "private"
+  },
+  "layoff_signal": {
+    "company": "Yellow.ai",
+    "layoff_detected": true,
+    "confidence": 1.0,
+    "source": "crunchbase_odm",
+    "layoff_count": 1,
+    "latest_layoff": {
+      "key_event_date": "2023-03-01",
+      "label": "Conversational AI Startup Yellow.ai Fires 200 Employees",
+      "link": "https://inc42.com/buzz/conversational-ai-startup-yellow-ai-fires-200-employees/",
+      "uuid": "3c535b3f-ac8f-475b-9184-c46731e8ca3f"
+    },
+    "icp_signal": "Segment 2 \u2014 cost restructuring pitch",
+    "note": "Recent layoff detected in Crunchbase data"
+  },
+  "leadership_signal": {
+    "company": "Yellow.ai",
+    "leadership_change_detected": true,
+    "technical_leadership_change": false,
+    "confidence": 0.8,
+    "source": "crunchbase_odm",
+    "hires": [
+      {
+        "key_event_date": "2023-07-27",
+        "label": "Yellow.ai appoints KT Prasad, former Zendesk leader as Chief Revenue Officer - International Region",
+        "link": "https://www.zawya.com/en/press-release/people-in-the-news/yellowai-appoints-kt-prasad-former-zendesk-leader-as-chief-revenue-officer-international-region-yp8une0n",
+        "uuid": "fc2acd17-8096-42f5-bc06-386397f51548"
+      }
+    ],
+    "icp_signal": "Segment 1 or 2 \u2014 monitor for technical role",
+    "note": "Leadership change detected but not technical role"
+  },
+  "ai_maturity": {
+    "company": "Yellow.ai",
+    "ai_maturity_score": 2,
+    "confidence": "medium",
+    "signals": [
+      {
+        "signal": "ai_industry_classification",
+        "weight": "medium",
+        "detail": "AI-related industry: ['artificial intelligence']",
+        "score_contribution": 1
+      },
+      {
+        "signal": "ai_leadership_hire",
+        "weight": "high",
+        "detail": "AI leadership hire detected: Yellow.ai appoints KT Prasad, former Zendesk leader as Chief Revenue Officer - I",
+        "score_contribution": 1
+      }
+    ],
+    "pitch_implication": "Segment 1/2 with AI language OR Segment 4 if strong signals",
+    "note": "Score 2/3 based on 2 public signals"
+  },
+  "job_post_signal": {
+    "company": "Yellow.ai",
+    "website": "https://yellow.ai",
+    "num_employees": "501-1000",
+    "hiring_velocity": "high",
+    "estimated_open_roles": 15,
+    "hiring_signals": [
+      {
+        "signal": "company_active",
+        "detail": "Company is actively operating",
+        "weight": "low"
+      },
+      {
+        "signal": "recent_funding",
+        "detail": "Recent funding detected \u2014 hiring likely",
+        "weight": "high"
+      },
+      {
+        "signal": "leadership_expansion",
+        "detail": "1 leadership hires detected",
+        "weight": "medium"
+      }
+    ],
+    "claim_language": "active hiring signals detected",
+    "assert_aggressive_hiring": true,
+    "scraped_at": "2026-04-23T12:27:39.022159",
+    "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
+  },
+  "outreach_guidance": {
+    "primary_channel": "email",
+    "secondary_channel": "sms",
+    "segment": 2,
+    "tone": "professional and research-grounded",
+    "hook": "Your recent restructuring suggests you are optimizing for output per dollar \u2014 that is exactly where offshore engineering changes the math",
+    "pitch_angle": "Replace higher-cost roles with offshore equivalents without cutting delivery capacity"
+  }
+}
