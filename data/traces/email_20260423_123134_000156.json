@@ -1,0 +1,13 @@
+{
+  "trace_id": "email_20260423_123134_000156",
+  "prospect": "Sycamore Dental and Associates",
+  "to_email": "test@example.com",
+  "subject": "Engineering capacity for Sycamore Dental and Associates",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T12:31:34.000272",
+  "status": "dry_run_success",
+  "latency_ms": 100.53,
+  "error": null,
+  "message_id": "dry_run_email_20260423_123134_000156"
+}

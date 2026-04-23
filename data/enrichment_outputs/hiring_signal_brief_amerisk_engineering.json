@@ -1,0 +1,92 @@
+{
+  "prospect": "Amerisk Engineering",
+  "enriched_at": "2026-04-23T12:31:31.619145",
+  "pipeline_duration_seconds": 0.11,
+  "icp_classification": {
+    "segment": 1,
+    "segment_name": "Recently-funded startup",
+    "confidence": "low",
+    "scores": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "reasons": [
+      "No strong signals \u2014 defaulting to Segment 1"
+    ]
+  },
+  "firmographics": {
+    "company": "Amerisk Engineering",
+    "crunchbase_id": "20890c4a-8a6b-45e8-9144-a86cc18fa1a0",
+    "found": true,
+    "confidence": 1.0,
+    "last_enriched_at": "2026-04-23T12:31:31.529974",
+    "name": "Amerisk Engineering",
+    "website": "https://ameriskengineering.com",
+    "description": "Amerisk Engineering is a facility management and risk assessment firm that provides facility audits, inspections, and testing services.",
+    "industries": "[{\"id\":\"facility-management\",\"value\":\"Facility Management\"},{\"id\":\"industrial-engineering\",\"value\":\"Industrial Engineering\"},{\"id\":\"risk-management\",\"value\":\"Risk Management\"}]",
+    "operating_status": "active",
+    "company_type": "for_profit",
+    "founded_date": "1996-01-01",
+    "num_employees": "11-50",
+    "country_code": "US",
+    "location": "[{\"name\":\"Murrieta\",\"permalink\":\"murrieta-california\"},{\"name\":\"California\",\"permalink\":\"california-united-states\"},{\"name\":\"United States\",\"permalink\":\"united-states\"},{\"name\":\"North America\",\"permalink\":\"north-america\"}]",
+    "funding_rounds": "{}",
+    "funding_rounds_list": "[]",
+    "num_investors": "nan",
+    "layoff": "[]",
+    "leadership_hire": "[]",
+    "builtwith_tech": "[]",
+    "stock_symbol": "nan",
+    "ipo_status": "private"
+  },
+  "layoff_signal": {
+    "company": "Amerisk Engineering",
+    "layoff_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No layoff detected in Crunchbase ODM data"
+  },
+  "leadership_signal": {
+    "company": "Amerisk Engineering",
+    "leadership_change_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No recent leadership change detected"
+  },
+  "ai_maturity": {
+    "company": "Amerisk Engineering",
+    "ai_maturity_score": 0,
+    "confidence": "very_low",
+    "signals": [],
+    "pitch_implication": "Generic outreach \u2014 no AI angle",
+    "note": "Score 0/3 based on 0 public signals"
+  },
+  "job_post_signal": {
+    "company": "Amerisk Engineering",
+    "website": "https://ameriskengineering.com",
+    "num_employees": "11-50",
+    "hiring_velocity": "low",
+    "estimated_open_roles": 3,
+    "hiring_signals": [
+      {
+        "signal": "company_active",
+        "detail": "Company is actively operating",
+        "weight": "low"
+      }
+    ],
+    "claim_language": "limited public hiring signal",
+    "assert_aggressive_hiring": false,
+    "scraped_at": "2026-04-23T12:31:31.596822",
+    "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
+  },
+  "outreach_guidance": {
+    "primary_channel": "email",
+    "secondary_channel": "sms",
+    "segment": 1,
+    "tone": "professional and research-grounded",
+    "hook": "You recently raised funding \u2014 most teams at this stage hit a hiring bottleneck before a delivery bottleneck",
+    "pitch_angle": "Scale engineering output faster than in-house hiring can support"
+  }
+}

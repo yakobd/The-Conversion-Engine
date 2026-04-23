@@ -1,0 +1,13 @@
+{
+  "trace_id": "email_20260423_123131_970877",
+  "prospect": "Study Crown Limited",
+  "to_email": "test@example.com",
+  "subject": "Engineering capacity for Study Crown Limited",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T12:31:31.970931",
+  "status": "dry_run_success",
+  "latency_ms": 101.71,
+  "error": null,
+  "message_id": "dry_run_email_20260423_123131_970877"
+}

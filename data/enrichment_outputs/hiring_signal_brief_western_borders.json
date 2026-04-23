@@ -1,7 +1,7 @@
 {
-  "prospect": "Consolety",
-  "enriched_at": "2026-04-23T12:31:31.073993",
-  "pipeline_duration_seconds": 0.17,
+  "prospect": "Western Borders",
+  "enriched_at": "2026-04-23T12:31:32.461647",
+  "pipeline_duration_seconds": 0.07,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -17,46 +17,46 @@
     ]
   },
   "firmographics": {
-    "company": "Consolety",
-    "crunchbase_id": "16c96f49-5c3b-4ecc-a606-8f3c0c77f279",
+    "company": "Western Borders",
+    "crunchbase_id": "67fef08e-978a-45c1-87c4-9391c8960f98",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T12:31:31.030996",
-    "name": "Consolety",
-    "website": "https://consolety.net",
-    "description": "Link Exchange network with wordpress plugin, Off-page SEO and Link Building optimized to perfection",
-    "industries": "[{\"id\":\"seo\",\"value\":\"SEO\"}]",
+    "last_enriched_at": "2026-04-23T12:31:32.395072",
+    "name": "Western Borders",
+    "website": "http://www.westernborders.com/",
+    "description": "Western Borders provides online campaigns and analytics strategies to enhance business growth for organizations and manufacturers.",
+    "industries": "[{\"id\":\"brand-marketing\",\"value\":\"Brand Marketing\"},{\"id\":\"consulting\",\"value\":\"Consulting\"},{\"id\":\"digital-marketing-9bff\",\"value\":\"Digital Marketing\"}]",
     "operating_status": "active",
     "company_type": "for_profit",
-    "founded_date": "2018-04-20",
+    "founded_date": "nan",
     "num_employees": "1-10",
-    "country_code": "NL",
-    "location": "[{\"name\":\"Amsterdam\",\"permalink\":\"amsterdam-noord-holland\"},{\"name\":\"Noord-Holland\",\"permalink\":\"noord-holland-the-netherlands\"},{\"name\":\"The Netherlands\",\"permalink\":\"the-netherlands\"},{\"name\":\"Europe\",\"permalink\":\"europe\"}]",
+    "country_code": "US",
+    "location": "[{\"name\":\"Seattle\",\"permalink\":\"seattle-washington\"},{\"name\":\"Washington\",\"permalink\":\"washington-united-states\"},{\"name\":\"United States\",\"permalink\":\"united-states\"},{\"name\":\"North America\",\"permalink\":\"north-america\"}]",
     "funding_rounds": "{}",
     "funding_rounds_list": "[]",
     "num_investors": "nan",
     "layoff": "[]",
     "leadership_hire": "[]",
-    "builtwith_tech": "[{\"name\":\"Apache\",\"num_companies_using\":\"263875\",\"technology_category\":[\"web_server\"]},{\"name\":\"U.S. Server Location\",\"num_companies_using\":\"194342\",\"technology_category\":[\"hosting\"]},{\"name\":\"CloudFront\",\"num_companies_using\":\"119677\",\"technology_category\":[\"cdn\"]},{\"name\":\"Apache 2.4\",\"num_companies_using\":\"113746\",\"technology_category\":[\"web_server\"]},{\"name\":\"Ubuntu\",\"num_companies_using\":\"102347\",\"technology_category\":[\"server\"]},{\"name\":\"OpenResty\",\"num_companies_using\":\"77785\",\"technology_category\":[\"framework\"]},{\"name\":\"AdBlock Acceptable Ads\",\"num_companies_using\":\"45660\",\"technology_category\":[\"ads\"]},{\"name\":\"Google Adsense for Domains\",\"num_companies_using\":\"36538\",\"technology_category\":[\"ads\"]},{\"name\":\"Choopa\",\"num_companies_using\":\"8517\",\"technology_category\":[\"hosting\"]}]",
+    "builtwith_tech": "[]",
     "stock_symbol": "nan",
     "ipo_status": "private"
   },
   "layoff_signal": {
-    "company": "Consolety",
+    "company": "Western Borders",
     "layoff_detected": false,
     "confidence": 0.9,
     "source": "crunchbase_odm",
     "note": "No layoff detected in Crunchbase ODM data"
   },
   "leadership_signal": {
-    "company": "Consolety",
+    "company": "Western Borders",
     "leadership_change_detected": false,
     "confidence": 0.9,
     "source": "crunchbase_odm",
     "note": "No recent leadership change detected"
   },
   "ai_maturity": {
-    "company": "Consolety",
+    "company": "Western Borders",
     "ai_maturity_score": 0,
     "confidence": "very_low",
     "signals": [],
@@ -64,8 +64,8 @@
     "note": "Score 0/3 based on 0 public signals"
   },
   "job_post_signal": {
-    "company": "Consolety",
-    "website": "https://consolety.net",
+    "company": "Western Borders",
+    "website": "http://www.westernborders.com/",
     "num_employees": "1-10",
     "hiring_velocity": "low",
     "estimated_open_roles": 3,
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T12:31:31.054477",
+    "scraped_at": "2026-04-23T12:31:32.439431",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

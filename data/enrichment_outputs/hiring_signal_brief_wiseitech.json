@@ -1,0 +1,104 @@
+{
+  "prospect": "WISEiTECH",
+  "enriched_at": "2026-04-23T12:31:32.880101",
+  "pipeline_duration_seconds": 0.11,
+  "icp_classification": {
+    "segment": 1,
+    "segment_name": "Recently-funded startup",
+    "confidence": "medium",
+    "scores": {
+      "1": 2,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "reasons": [
+      "Recent funding detected \u2014 fresh budget available"
+    ]
+  },
+  "firmographics": {
+    "company": "WISEiTECH",
+    "crunchbase_id": "e707ec50-52d7-4bad-ad22-e28552a3e462",
+    "found": true,
+    "confidence": 1.0,
+    "last_enriched_at": "2026-04-23T12:31:32.776147",
+    "name": "WISEiTECH",
+    "website": "http://www.wise.co.kr/",
+    "description": "WISEiTECH provides machine learning, big data analysis, data quality and open government data services.",
+    "industries": "[{\"id\":\"analytics\",\"value\":\"Analytics\"},{\"id\":\"big-data\",\"value\":\"Big Data\"},{\"id\":\"machine-learning\",\"value\":\"Machine Learning\"}]",
+    "operating_status": "active",
+    "company_type": "for_profit",
+    "founded_date": "1990-09-27",
+    "num_employees": "101-250",
+    "country_code": "KR",
+    "location": "[{\"name\":\"Bundangdong\",\"permalink\":\"bundangdong-kyonggi-do\"},{\"name\":\"Kyonggi-do\",\"permalink\":\"kyonggi-do-south-korea\"},{\"name\":\"South Korea\",\"permalink\":\"south-korea\"},{\"name\":\"Asia\",\"permalink\":\"asia\"}]",
+    "funding_rounds": "{\"last_funding_at\":\"2018-11-01T00:00:00.000Z\",\"last_funding_type\":\"series_unknown\",\"num_funding_rounds\":1,\"value\":{\"currency\":\"USD\",\"value\":0,\"value_usd\":0}}",
+    "funding_rounds_list": "[{\"announced_on\":\"2018-11-01\",\"id\":\"wiseitech-series-unknown--9ce9f8f2\",\"image_id\":\"ad06aa3f9ddb50253600\",\"title\":\"Venture Round - WISEiTECH\",\"uuid\":\"9ce9f8f2-c9ad-429f-93ac-5f01343eb25f\"}]",
+    "num_investors": "1.0",
+    "layoff": "[]",
+    "leadership_hire": "[]",
+    "builtwith_tech": "[{\"name\":\"Euro\",\"num_companies_using\":\"742758\",\"technology_category\":[\"payment\"]},{\"name\":\"CrUX Dataset\",\"num_companies_using\":\"190922\",\"technology_category\":[\"widgets\"]},{\"name\":\"CrUX Top 5m\",\"num_companies_using\":\"84124\",\"technology_category\":[\"widgets\"]}]",
+    "stock_symbol": "nan",
+    "ipo_status": "private"
+  },
+  "layoff_signal": {
+    "company": "WISEiTECH",
+    "layoff_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No layoff detected in Crunchbase ODM data"
+  },
+  "leadership_signal": {
+    "company": "WISEiTECH",
+    "leadership_change_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No recent leadership change detected"
+  },
+  "ai_maturity": {
+    "company": "WISEiTECH",
+    "ai_maturity_score": 1,
+    "confidence": "low",
+    "signals": [
+      {
+        "signal": "ai_industry_classification",
+        "weight": "medium",
+        "detail": "AI-related industry: ['machine learning', 'analytics']",
+        "score_contribution": 1
+      }
+    ],
+    "pitch_implication": "Segment 1/2 \u2014 standard pitch, no AI emphasis",
+    "note": "Score 1/3 based on 1 public signals"
+  },
+  "job_post_signal": {
+    "company": "WISEiTECH",
+    "website": "http://www.wise.co.kr/",
+    "num_employees": "101-250",
+    "hiring_velocity": "medium",
+    "estimated_open_roles": 8,
+    "hiring_signals": [
+      {
+        "signal": "company_active",
+        "detail": "Company is actively operating",
+        "weight": "low"
+      },
+      {
+        "signal": "recent_funding",
+        "detail": "Recent funding detected \u2014 hiring likely",
+        "weight": "high"
+      }
+    ],
+    "claim_language": "active hiring signals detected",
+    "assert_aggressive_hiring": true,
+    "scraped_at": "2026-04-23T12:31:32.849519",
+    "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
+  },
+  "outreach_guidance": {
+    "primary_channel": "email",
+    "secondary_channel": "sms",
+    "segment": 1,
+    "tone": "professional and research-grounded",
+    "hook": "You recently raised funding \u2014 most teams at this stage hit a hiring bottleneck before a delivery bottleneck",
+    "pitch_angle": "Scale engineering output faster than in-house hiring can support"
+  }
+}

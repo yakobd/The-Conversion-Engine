@@ -1,0 +1,13 @@
+{
+  "trace_id": "email_20260423_123132_473866",
+  "prospect": "Western Borders",
+  "to_email": "test@example.com",
+  "subject": "Engineering capacity for Western Borders",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T12:31:32.473929",
+  "status": "dry_run_success",
+  "latency_ms": 100.86,
+  "error": null,
+  "message_id": "dry_run_email_20260423_123132_473866"
+}

@@ -1,0 +1,13 @@
+{
+  "trace_id": "email_20260423_123134_149956",
+  "prospect": "Sydney Chefs",
+  "to_email": "test@example.com",
+  "subject": "Engineering capacity for Sydney Chefs",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T12:31:34.149999",
+  "status": "dry_run_success",
+  "latency_ms": 100.4,
+  "error": null,
+  "message_id": "dry_run_email_20260423_123134_149956"
+}

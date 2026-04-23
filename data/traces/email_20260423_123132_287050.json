@@ -1,0 +1,13 @@
+{
+  "trace_id": "email_20260423_123132_287050",
+  "prospect": "Constantin Hang Machine Production",
+  "to_email": "test@example.com",
+  "subject": "Engineering capacity for Constantin Hang Machine Production",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T12:31:32.287103",
+  "status": "dry_run_success",
+  "latency_ms": 102.15,
+  "error": null,
+  "message_id": "dry_run_email_20260423_123132_287050"
+}

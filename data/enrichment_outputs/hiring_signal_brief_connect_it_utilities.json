@@ -1,0 +1,92 @@
+{
+  "prospect": "Connect It Utilities",
+  "enriched_at": "2026-04-23T12:31:33.066675",
+  "pipeline_duration_seconds": 0.08,
+  "icp_classification": {
+    "segment": 1,
+    "segment_name": "Recently-funded startup",
+    "confidence": "low",
+    "scores": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "reasons": [
+      "No strong signals \u2014 defaulting to Segment 1"
+    ]
+  },
+  "firmographics": {
+    "company": "Connect It Utilities",
+    "crunchbase_id": "0438675a-e238-4fbf-ba71-fa85115791f5",
+    "found": true,
+    "confidence": 1.0,
+    "last_enriched_at": "2026-04-23T12:31:32.994023",
+    "name": "Connect It Utilities",
+    "website": "https://www.cius.co.uk",
+    "description": "Connect It Utilities provides street lighting and electro-mechanical installations, gas, water, and smart metering connections.",
+    "industries": "[{\"id\":\"electronics\",\"value\":\"Electronics\"},{\"id\":\"field-support\",\"value\":\"Field Support\"},{\"id\":\"smart-cities\",\"value\":\"Smart Cities\"}]",
+    "operating_status": "active",
+    "company_type": "for_profit",
+    "founded_date": "2001-01-01",
+    "num_employees": "101-250",
+    "country_code": "GB",
+    "location": "[{\"name\":\"Southampton\",\"permalink\":\"southampton-southampton\"},{\"name\":\"Southampton\",\"permalink\":\"southampton-united-kingdom\"},{\"name\":\"United Kingdom\",\"permalink\":\"united-kingdom\"},{\"name\":\"Europe\",\"permalink\":\"europe\"}]",
+    "funding_rounds": "{}",
+    "funding_rounds_list": "[]",
+    "num_investors": "nan",
+    "layoff": "[]",
+    "leadership_hire": "[]",
+    "builtwith_tech": "[{\"name\":\"Google Maps\",\"num_companies_using\":\"500006\",\"technology_category\":[\"mapping\"]},{\"name\":\"Google Maps API\",\"num_companies_using\":\"187218\",\"technology_category\":[\"mapping\"]},{\"name\":\"YouTube\",\"num_companies_using\":\"175064\",\"technology_category\":[\"media\"]},{\"name\":\"HSTS IncludeSubdomains PreLoad\",\"num_companies_using\":\"98179\",\"technology_category\":[\"ssl\"]},{\"name\":\"Digital Ocean\",\"num_companies_using\":\"71284\",\"technology_category\":[\"hosting\"]},{\"name\":\"Elegant Themes\",\"num_companies_using\":\"18610\",\"technology_category\":[\"framework\"]},{\"name\":\"British Telecom\",\"num_companies_using\":\"2893\",\"technology_category\":[\"hosting\"]}]",
+    "stock_symbol": "nan",
+    "ipo_status": "private"
+  },
+  "layoff_signal": {
+    "company": "Connect It Utilities",
+    "layoff_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No layoff detected in Crunchbase ODM data"
+  },
+  "leadership_signal": {
+    "company": "Connect It Utilities",
+    "leadership_change_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No recent leadership change detected"
+  },
+  "ai_maturity": {
+    "company": "Connect It Utilities",
+    "ai_maturity_score": 0,
+    "confidence": "very_low",
+    "signals": [],
+    "pitch_implication": "Generic outreach \u2014 no AI angle",
+    "note": "Score 0/3 based on 0 public signals"
+  },
+  "job_post_signal": {
+    "company": "Connect It Utilities",
+    "website": "https://www.cius.co.uk",
+    "num_employees": "101-250",
+    "hiring_velocity": "low",
+    "estimated_open_roles": 3,
+    "hiring_signals": [
+      {
+        "signal": "company_active",
+        "detail": "Company is actively operating",
+        "weight": "low"
+      }
+    ],
+    "claim_language": "limited public hiring signal",
+    "assert_aggressive_hiring": false,
+    "scraped_at": "2026-04-23T12:31:33.054079",
+    "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
+  },
+  "outreach_guidance": {
+    "primary_channel": "email",
+    "secondary_channel": "sms",
+    "segment": 1,
+    "tone": "professional and research-grounded",
+    "hook": "You recently raised funding \u2014 most teams at this stage hit a hiring bottleneck before a delivery bottleneck",
+    "pitch_angle": "Scale engineering output faster than in-house hiring can support"
+  }
+}

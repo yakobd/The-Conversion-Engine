@@ -1,0 +1,86 @@
+{
+  "prospect": "Study Crown Limited",
+  "enriched_at": "2026-04-23T12:31:31.969459",
+  "pipeline_duration_seconds": 0.06,
+  "icp_classification": {
+    "segment": 1,
+    "segment_name": "Recently-funded startup",
+    "confidence": "low",
+    "scores": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "reasons": [
+      "No strong signals \u2014 defaulting to Segment 1"
+    ]
+  },
+  "firmographics": {
+    "company": "Study Crown Limited",
+    "crunchbase_id": "f14dab9d-9dea-108c-0642-ce384d996ccd",
+    "found": true,
+    "confidence": 1.0,
+    "last_enriched_at": "2026-04-23T12:31:31.913618",
+    "name": "Study Crown Limited",
+    "website": "https://studycrown.com",
+    "description": "StudyCrown is NZ Startup. An online platform, for education seekers and providers, striving to provide technology driven solutions.",
+    "industries": "[{\"id\":\"education\",\"value\":\"Education\"},{\"id\":\"information-technology-dbca\",\"value\":\"Information Technology\"},{\"id\":\"internet\",\"value\":\"Internet\"}]",
+    "operating_status": "closed",
+    "company_type": "for_profit",
+    "founded_date": "2016-10-01",
+    "num_employees": "nan",
+    "country_code": "NZ",
+    "location": "[{\"name\":\"Auckland\",\"permalink\":\"auckland-auckland\"},{\"name\":\"Auckland\",\"permalink\":\"auckland-new-zealand-cecd\"},{\"name\":\"New Zealand\",\"permalink\":\"new-zealand\"},{\"name\":\"Oceania\",\"permalink\":\"oceania\"}]",
+    "funding_rounds": "{}",
+    "funding_rounds_list": "[]",
+    "num_investors": "nan",
+    "layoff": "[]",
+    "leadership_hire": "[]",
+    "builtwith_tech": "[{\"name\":\"Domain Not Resolving\",\"num_companies_using\":\"751518\",\"technology_category\":[\"hosting\"]}]",
+    "stock_symbol": "nan",
+    "ipo_status": "private"
+  },
+  "layoff_signal": {
+    "company": "Study Crown Limited",
+    "layoff_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No layoff detected in Crunchbase ODM data"
+  },
+  "leadership_signal": {
+    "company": "Study Crown Limited",
+    "leadership_change_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No recent leadership change detected"
+  },
+  "ai_maturity": {
+    "company": "Study Crown Limited",
+    "ai_maturity_score": 0,
+    "confidence": "very_low",
+    "signals": [],
+    "pitch_implication": "Generic outreach \u2014 no AI angle",
+    "note": "Score 0/3 based on 0 public signals"
+  },
+  "job_post_signal": {
+    "company": "Study Crown Limited",
+    "website": "https://studycrown.com",
+    "num_employees": "nan",
+    "hiring_velocity": "low",
+    "estimated_open_roles": 0,
+    "hiring_signals": [],
+    "claim_language": "limited public hiring signal",
+    "assert_aggressive_hiring": false,
+    "scraped_at": "2026-04-23T12:31:31.951194",
+    "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
+  },
+  "outreach_guidance": {
+    "primary_channel": "email",
+    "secondary_channel": "sms",
+    "segment": 1,
+    "tone": "professional and research-grounded",
+    "hook": "You recently raised funding \u2014 most teams at this stage hit a hiring bottleneck before a delivery bottleneck",
+    "pitch_angle": "Scale engineering output faster than in-house hiring can support"
+  }
+}

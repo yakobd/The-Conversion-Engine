@@ -1,0 +1,13 @@
+{
+  "trace_id": "email_20260423_123131_805668",
+  "prospect": "Styloosh",
+  "to_email": "test@example.com",
+  "subject": "Engineering capacity for Styloosh",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T12:31:31.805731",
+  "status": "dry_run_success",
+  "latency_ms": 101.36,
+  "error": null,
+  "message_id": "dry_run_email_20260423_123131_805668"
+}

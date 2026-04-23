@@ -1,0 +1,92 @@
+{
+  "prospect": "Winder Research",
+  "enriched_at": "2026-04-23T12:31:31.242869",
+  "pipeline_duration_seconds": 0.06,
+  "icp_classification": {
+    "segment": 1,
+    "segment_name": "Recently-funded startup",
+    "confidence": "low",
+    "scores": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "reasons": [
+      "No strong signals \u2014 defaulting to Segment 1"
+    ]
+  },
+  "firmographics": {
+    "company": "Winder Research",
+    "crunchbase_id": "644bc78e-4120-4c1c-91f1-08f2f0ab980f",
+    "found": true,
+    "confidence": 1.0,
+    "last_enriched_at": "2026-04-23T12:31:31.183317",
+    "name": "Winder Research",
+    "website": "https://winderresearch.com/",
+    "description": "Winder Research empowers businesses with cloud-native data Science consulting, development and training.",
+    "industries": "nan",
+    "operating_status": "active",
+    "company_type": "for_profit",
+    "founded_date": "nan",
+    "num_employees": "nan",
+    "country_code": "GB",
+    "location": "[{\"name\":\"Harrogate\",\"permalink\":\"harrogate-north-yorkshire\"},{\"name\":\"North Yorkshire\",\"permalink\":\"north-yorkshire-united-kingdom\"},{\"name\":\"United Kingdom\",\"permalink\":\"united-kingdom\"},{\"name\":\"Europe\",\"permalink\":\"europe\"}]",
+    "funding_rounds": "{}",
+    "funding_rounds_list": "[]",
+    "num_investors": "nan",
+    "layoff": "[]",
+    "leadership_hire": "[]",
+    "builtwith_tech": "[{\"name\":\"Domain Not Resolving\",\"num_companies_using\":\"751518\",\"technology_category\":[\"hosting\"]},{\"name\":\"IPv6\",\"num_companies_using\":\"359733\",\"technology_category\":[\"server\"]},{\"name\":\"Pound Sterling\",\"num_companies_using\":\"182537\",\"technology_category\":[\"payment\"]},{\"name\":\"Japanese Yen\",\"num_companies_using\":\"117939\",\"technology_category\":[\"payment\"]},{\"name\":\"HubSpot CMS Hub\",\"num_companies_using\":\"59430\",\"technology_category\":[\"cms\"]},{\"name\":\"Hubspot Hosted\",\"num_companies_using\":\"50177\",\"technology_category\":[\"hosting\"]},{\"name\":\"MailChimp\",\"num_companies_using\":\"39505\",\"technology_category\":[\"widgets\"]}]",
+    "stock_symbol": "nan",
+    "ipo_status": "private"
+  },
+  "layoff_signal": {
+    "company": "Winder Research",
+    "layoff_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No layoff detected in Crunchbase ODM data"
+  },
+  "leadership_signal": {
+    "company": "Winder Research",
+    "leadership_change_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No recent leadership change detected"
+  },
+  "ai_maturity": {
+    "company": "Winder Research",
+    "ai_maturity_score": 0,
+    "confidence": "very_low",
+    "signals": [],
+    "pitch_implication": "Generic outreach \u2014 no AI angle",
+    "note": "Score 0/3 based on 0 public signals"
+  },
+  "job_post_signal": {
+    "company": "Winder Research",
+    "website": "https://winderresearch.com/",
+    "num_employees": "nan",
+    "hiring_velocity": "low",
+    "estimated_open_roles": 3,
+    "hiring_signals": [
+      {
+        "signal": "company_active",
+        "detail": "Company is actively operating",
+        "weight": "low"
+      }
+    ],
+    "claim_language": "limited public hiring signal",
+    "assert_aggressive_hiring": false,
+    "scraped_at": "2026-04-23T12:31:31.236503",
+    "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
+  },
+  "outreach_guidance": {
+    "primary_channel": "email",
+    "secondary_channel": "sms",
+    "segment": 1,
+    "tone": "professional and research-grounded",
+    "hook": "You recently raised funding \u2014 most teams at this stage hit a hiring bottleneck before a delivery bottleneck",
+    "pitch_angle": "Scale engineering output faster than in-house hiring can support"
+  }
+}

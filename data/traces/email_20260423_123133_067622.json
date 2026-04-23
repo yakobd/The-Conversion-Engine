@@ -1,0 +1,13 @@
+{
+  "trace_id": "email_20260423_123133_067622",
+  "prospect": "Connect It Utilities",
+  "to_email": "test@example.com",
+  "subject": "Engineering capacity for Connect It Utilities",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T12:31:33.067656",
+  "status": "dry_run_success",
+  "latency_ms": 103.62,
+  "error": null,
+  "message_id": "dry_run_email_20260423_123133_067622"
+}

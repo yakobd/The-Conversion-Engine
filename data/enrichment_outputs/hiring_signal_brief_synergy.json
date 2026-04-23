@@ -1,0 +1,92 @@
+{
+  "prospect": "Synergy",
+  "enriched_at": "2026-04-23T12:31:33.843460",
+  "pipeline_duration_seconds": 0.06,
+  "icp_classification": {
+    "segment": 1,
+    "segment_name": "Recently-funded startup",
+    "confidence": "low",
+    "scores": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "reasons": [
+      "No strong signals \u2014 defaulting to Segment 1"
+    ]
+  },
+  "firmographics": {
+    "company": "Synergy",
+    "crunchbase_id": "83abdec7-8a85-4395-90a0-bc83824844aa",
+    "found": true,
+    "confidence": 1.0,
+    "last_enriched_at": "2026-04-23T12:31:33.788744",
+    "name": "Synergy",
+    "website": "https://www.synergypetroleum.com",
+    "description": "Synergy offers engineering and contracting services for civil, mechanical, instrumentation, electrical, and procurement industries.",
+    "industries": "[{\"id\":\"energy-0ff0\",\"value\":\"Energy\"},{\"id\":\"industrial-engineering\",\"value\":\"Industrial Engineering\"},{\"id\":\"oil-and-gas\",\"value\":\"Oil and Gas\"}]",
+    "operating_status": "active",
+    "company_type": "for_profit",
+    "founded_date": "2006-01-01",
+    "num_employees": "101-250",
+    "country_code": "OM",
+    "location": "[{\"name\":\"Qurm\",\"permalink\":\"qurm-masqat\"},{\"name\":\"Masqat\",\"permalink\":\"masqat-oman\"},{\"name\":\"Oman\",\"permalink\":\"oman\"},{\"name\":\"Asia\",\"permalink\":\"asia\"}]",
+    "funding_rounds": "{}",
+    "funding_rounds_list": "[]",
+    "num_investors": "nan",
+    "layoff": "[]",
+    "leadership_hire": "[]",
+    "builtwith_tech": "[]",
+    "stock_symbol": "nan",
+    "ipo_status": "private"
+  },
+  "layoff_signal": {
+    "company": "Synergy",
+    "layoff_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No layoff detected in Crunchbase ODM data"
+  },
+  "leadership_signal": {
+    "company": "Synergy",
+    "leadership_change_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No recent leadership change detected"
+  },
+  "ai_maturity": {
+    "company": "Synergy",
+    "ai_maturity_score": 0,
+    "confidence": "very_low",
+    "signals": [],
+    "pitch_implication": "Generic outreach \u2014 no AI angle",
+    "note": "Score 0/3 based on 0 public signals"
+  },
+  "job_post_signal": {
+    "company": "Synergy",
+    "website": "https://www.synergypetroleum.com",
+    "num_employees": "101-250",
+    "hiring_velocity": "low",
+    "estimated_open_roles": 3,
+    "hiring_signals": [
+      {
+        "signal": "company_active",
+        "detail": "Company is actively operating",
+        "weight": "low"
+      }
+    ],
+    "claim_language": "limited public hiring signal",
+    "assert_aggressive_hiring": false,
+    "scraped_at": "2026-04-23T12:31:33.832292",
+    "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
+  },
+  "outreach_guidance": {
+    "primary_channel": "email",
+    "secondary_channel": "sms",
+    "segment": 1,
+    "tone": "professional and research-grounded",
+    "hook": "You recently raised funding \u2014 most teams at this stage hit a hiring bottleneck before a delivery bottleneck",
+    "pitch_angle": "Scale engineering output faster than in-house hiring can support"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "prospect": "World of Wanderlust",
+  "enriched_at": "2026-04-23T12:31:32.136730",
+  "pipeline_duration_seconds": 0.06,
+  "icp_classification": {
+    "segment": 1,
+    "segment_name": "Recently-funded startup",
+    "confidence": "low",
+    "scores": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "reasons": [
+      "No strong signals \u2014 defaulting to Segment 1"
+    ]
+  },
+  "firmographics": {
+    "company": "World of Wanderlust",
+    "crunchbase_id": "f3750f1e-f7d4-44f7-856c-3be006e8bc72",
+    "found": true,
+    "confidence": 1.0,
+    "last_enriched_at": "2026-04-23T12:31:32.079163",
+    "name": "World of Wanderlust",
+    "website": "https://worldofwanderlust.com",
+    "description": "World of Wanderlust is an online publication that publishes destination guides, travel blogging, advertising, solo trip, and video content.",
+    "industries": "[{\"id\":\"blogging-platforms\",\"value\":\"Blogging Platforms\"},{\"id\":\"content-creators\",\"value\":\"Content Creators\"},{\"id\":\"publishing\",\"value\":\"Publishing\"},{\"id\":\"travel\",\"value\":\"Travel\"},{\"id\":\"video-advertising\",\"value\":\"Video Advertising\"}]",
+    "operating_status": "active",
+    "company_type": "for_profit",
+    "founded_date": "2012-01-01",
+    "num_employees": "1-10",
+    "country_code": "AU",
+    "location": "[{\"name\":\"Broadbeach\",\"permalink\":\"broadbeach-queensland\"},{\"name\":\"Queensland\",\"permalink\":\"queensland-australia\"},{\"name\":\"Australia\",\"permalink\":\"australia\"},{\"name\":\"Oceania\",\"permalink\":\"oceania\"}]",
+    "funding_rounds": "{}",
+    "funding_rounds_list": "[]",
+    "num_investors": "nan",
+    "layoff": "[]",
+    "leadership_hire": "[]",
+    "builtwith_tech": "[{\"name\":\"Person Schema\",\"num_companies_using\":\"261524\",\"technology_category\":[\"framework\"]},{\"name\":\"Facebook Sharer\",\"num_companies_using\":\"204899\",\"technology_category\":[\"widgets\"]},{\"name\":\"Apple Mobile Web App Capable\",\"num_companies_using\":\"172532\",\"technology_category\":[\"mobile\"]},{\"name\":\"Cloudflare CDN\",\"num_companies_using\":\"163722\",\"technology_category\":[\"cdn\"]},{\"name\":\"Ruby on Rails Token\",\"num_companies_using\":\"97534\",\"technology_category\":[\"framework\"]},{\"name\":\"Akismet\",\"num_companies_using\":\"51706\",\"technology_category\":[\"widgets\"]},{\"name\":\"Akismet Non Hosted\",\"num_companies_using\":\"51113\",\"technology_category\":[\"widgets\"]},{\"name\":\"Cloudflare Bot Manager\",\"num_companies_using\":\"49756\",\"technology_category\":[\"widgets\"]},{\"name\":\"Ruby on Rails\",\"num_companies_using\":\"43639\",\"technology_category\":[\"framework\"]},{\"name\":\"Cloudflare Insights\",\"num_companies_using\":\"29566\",\"technology_category\":[\"analytics\"]}]",
+    "stock_symbol": "nan",
+    "ipo_status": "private"
+  },
+  "layoff_signal": {
+    "company": "World of Wanderlust",
+    "layoff_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No layoff detected in Crunchbase ODM data"
+  },
+  "leadership_signal": {
+    "company": "World of Wanderlust",
+    "leadership_change_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No recent leadership change detected"
+  },
+  "ai_maturity": {
+    "company": "World of Wanderlust",
+    "ai_maturity_score": 0,
+    "confidence": "very_low",
+    "signals": [],
+    "pitch_implication": "Generic outreach \u2014 no AI angle",
+    "note": "Score 0/3 based on 0 public signals"
+  },
+  "job_post_signal": {
+    "company": "World of Wanderlust",
+    "website": "https://worldofwanderlust.com",
+    "num_employees": "1-10",
+    "hiring_velocity": "low",
+    "estimated_open_roles": 3,
+    "hiring_signals": [
+      {
+        "signal": "company_active",
+        "detail": "Company is actively operating",
+        "weight": "low"
+      }
+    ],
+    "claim_language": "limited public hiring signal",
+    "assert_aggressive_hiring": false,
+    "scraped_at": "2026-04-23T12:31:32.127556",
+    "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
+  },
+  "outreach_guidance": {
+    "primary_channel": "email",
+    "secondary_channel": "sms",
+    "segment": 1,
+    "tone": "professional and research-grounded",
+    "hook": "You recently raised funding \u2014 most teams at this stage hit a hiring bottleneck before a delivery bottleneck",
+    "pitch_angle": "Scale engineering output faster than in-house hiring can support"
+  }
+}

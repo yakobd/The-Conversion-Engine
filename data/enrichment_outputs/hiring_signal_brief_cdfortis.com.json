@@ -1,0 +1,97 @@
+{
+  "prospect": "Cdfortis.com",
+  "enriched_at": "2026-04-23T12:31:33.229183",
+  "pipeline_duration_seconds": 0.06,
+  "icp_classification": {
+    "segment": 1,
+    "segment_name": "Recently-funded startup",
+    "confidence": "medium",
+    "scores": {
+      "1": 2,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "reasons": [
+      "Recent funding detected \u2014 fresh budget available"
+    ]
+  },
+  "firmographics": {
+    "company": "Cdfortis.com",
+    "crunchbase_id": "db89061d-747f-4c06-aff9-8a63fbe5c244",
+    "found": true,
+    "confidence": 1.0,
+    "last_enriched_at": "2026-04-23T12:31:33.177039",
+    "name": "Cdfortis.com",
+    "website": "http://www.cdfortis.com/",
+    "description": "Cdfortis.com is an online platform for medical services.",
+    "industries": "[{\"id\":\"e-commerce-275d\",\"value\":\"E-Commerce\"},{\"id\":\"health-care\",\"value\":\"Health Care\"},{\"id\":\"internet\",\"value\":\"Internet\"},{\"id\":\"medical\",\"value\":\"Medical\"}]",
+    "operating_status": "active",
+    "company_type": "for_profit",
+    "founded_date": "2014-07-10",
+    "num_employees": "101-250",
+    "country_code": "CN",
+    "location": "[{\"name\":\"Chengdu\",\"permalink\":\"chengdu-sichuan\"},{\"name\":\"Sichuan\",\"permalink\":\"sichuan-china\"},{\"name\":\"China\",\"permalink\":\"china-500a\"},{\"name\":\"Asia\",\"permalink\":\"asia\"}]",
+    "funding_rounds": "{\"last_funding_at\":\"2015-09-15T00:00:00.000Z\",\"last_funding_type\":\"series_a\",\"num_funding_rounds\":1,\"value\":{\"currency\":\"CNY\",\"value\":50000000,\"value_usd\":7849646}}",
+    "funding_rounds_list": "[{\"announced_on\":\"2015-09-15\",\"id\":\"cdfortis-com-series-a--d3fa5f88\",\"image_id\":\"5288799f236eb993b86c\",\"lead_investors\":[{\"image\":\"nbht20d1hnejv9yht1yg\",\"name\":\"Tiantu Capital\",\"permalink\":\"tiantu-capital\"}],\"money_raised\":{\"currency\":\"CNY\",\"value\":50000000,\"value_usd\":7849646},\"title\":\"Series A - Cdfortis.com\",\"uuid\":\"d3fa5f88-4ee4-4518-bd35-076e1d41d11b\"}]",
+    "num_investors": "1.0",
+    "layoff": "[]",
+    "leadership_hire": "[]",
+    "builtwith_tech": "[{\"name\":\"Euro\",\"num_companies_using\":\"742757\",\"technology_category\":[\"payment\"]},{\"name\":\"Pound Sterling\",\"num_companies_using\":\"182536\",\"technology_category\":[\"payment\"]},{\"name\":\"Japanese Yen\",\"num_companies_using\":\"117939\",\"technology_category\":[\"payment\"]},{\"name\":\"Chinese Server Location\",\"num_companies_using\":\"6482\",\"technology_category\":[\"hosting\"]}]",
+    "stock_symbol": "nan",
+    "ipo_status": "private"
+  },
+  "layoff_signal": {
+    "company": "Cdfortis.com",
+    "layoff_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No layoff detected in Crunchbase ODM data"
+  },
+  "leadership_signal": {
+    "company": "Cdfortis.com",
+    "leadership_change_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No recent leadership change detected"
+  },
+  "ai_maturity": {
+    "company": "Cdfortis.com",
+    "ai_maturity_score": 0,
+    "confidence": "very_low",
+    "signals": [],
+    "pitch_implication": "Generic outreach \u2014 no AI angle",
+    "note": "Score 0/3 based on 0 public signals"
+  },
+  "job_post_signal": {
+    "company": "Cdfortis.com",
+    "website": "http://www.cdfortis.com/",
+    "num_employees": "101-250",
+    "hiring_velocity": "medium",
+    "estimated_open_roles": 8,
+    "hiring_signals": [
+      {
+        "signal": "company_active",
+        "detail": "Company is actively operating",
+        "weight": "low"
+      },
+      {
+        "signal": "recent_funding",
+        "detail": "Recent funding detected \u2014 hiring likely",
+        "weight": "high"
+      }
+    ],
+    "claim_language": "active hiring signals detected",
+    "assert_aggressive_hiring": true,
+    "scraped_at": "2026-04-23T12:31:33.212249",
+    "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
+  },
+  "outreach_guidance": {
+    "primary_channel": "email",
+    "secondary_channel": "sms",
+    "segment": 1,
+    "tone": "professional and research-grounded",
+    "hook": "You recently raised funding \u2014 most teams at this stage hit a hiring bottleneck before a delivery bottleneck",
+    "pitch_angle": "Scale engineering output faster than in-house hiring can support"
+  }
+}

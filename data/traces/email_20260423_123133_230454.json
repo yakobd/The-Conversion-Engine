@@ -1,0 +1,13 @@
+{
+  "trace_id": "email_20260423_123133_230454",
+  "prospect": "Cdfortis.com",
+  "to_email": "test@example.com",
+  "subject": "Engineering capacity for Cdfortis.com",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T12:31:33.230501",
+  "status": "dry_run_success",
+  "latency_ms": 101.67,
+  "error": null,
+  "message_id": "dry_run_email_20260423_123133_230454"
+}

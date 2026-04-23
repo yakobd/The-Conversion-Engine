@@ -1,0 +1,13 @@
+{
+  "trace_id": "email_20260423_123131_405872",
+  "prospect": "Wiring Technologies",
+  "to_email": "test@example.com",
+  "subject": "Engineering capacity for Wiring Technologies",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T12:31:31.405930",
+  "status": "dry_run_success",
+  "latency_ms": 100.8,
+  "error": null,
+  "message_id": "dry_run_email_20260423_123131_405872"
+}

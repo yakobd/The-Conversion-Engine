@@ -1,0 +1,92 @@
+{
+  "prospect": "Constantin Hang Machine Production",
+  "enriched_at": "2026-04-23T12:31:32.285901",
+  "pipeline_duration_seconds": 0.05,
+  "icp_classification": {
+    "segment": 1,
+    "segment_name": "Recently-funded startup",
+    "confidence": "low",
+    "scores": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "reasons": [
+      "No strong signals \u2014 defaulting to Segment 1"
+    ]
+  },
+  "firmographics": {
+    "company": "Constantin Hang Machine Production",
+    "crunchbase_id": "5c3f9cb6-1b7f-4427-8292-6f7c038f397b",
+    "found": true,
+    "confidence": 1.0,
+    "last_enriched_at": "2026-04-23T12:31:32.244563",
+    "name": "Constantin Hang Machine Production",
+    "website": "https://www.hang.de",
+    "description": "Constantin Hang Machine Production is a manufacturer of paper drills, riveting, and eyelet machines.",
+    "industries": "[{\"id\":\"industrial\",\"value\":\"Industrial\"},{\"id\":\"manufacturing\",\"value\":\"Manufacturing\"},{\"id\":\"product-design\",\"value\":\"Product Design\"}]",
+    "operating_status": "active",
+    "company_type": "for_profit",
+    "founded_date": "nan",
+    "num_employees": "11-50",
+    "country_code": "DE",
+    "location": "[{\"name\":\"G\u00f6ppingen\",\"permalink\":\"g\u00f6ppingen-baden-wurttemberg\"},{\"name\":\"Baden-Wurttemberg\",\"permalink\":\"baden-wurttemberg-germany\"},{\"name\":\"Germany\",\"permalink\":\"germany\"},{\"name\":\"Europe\",\"permalink\":\"europe\"}]",
+    "funding_rounds": "{}",
+    "funding_rounds_list": "[]",
+    "num_investors": "nan",
+    "layoff": "[]",
+    "leadership_hire": "[]",
+    "builtwith_tech": "[{\"name\":\"Domain Not Resolving\",\"num_companies_using\":\"751520\",\"technology_category\":[\"hosting\"]},{\"name\":\"Cloudflare JS\",\"num_companies_using\":\"250794\",\"technology_category\":[\"cdn\"]},{\"name\":\"CDN JS\",\"num_companies_using\":\"240673\",\"technology_category\":[\"cdn\"]},{\"name\":\"CrUX Top 50m\",\"num_companies_using\":\"193789\",\"technology_category\":[\"widgets\"]},{\"name\":\"CrUX Dataset\",\"num_companies_using\":\"190922\",\"technology_category\":[\"widgets\"]},{\"name\":\"DigiCert SSL\",\"num_companies_using\":\"93945\",\"technology_category\":[\"ssl\"]},{\"name\":\"Encryption Everywhere\",\"num_companies_using\":\"17777\",\"technology_category\":[\"ssl\"]}]",
+    "stock_symbol": "nan",
+    "ipo_status": "private"
+  },
+  "layoff_signal": {
+    "company": "Constantin Hang Machine Production",
+    "layoff_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No layoff detected in Crunchbase ODM data"
+  },
+  "leadership_signal": {
+    "company": "Constantin Hang Machine Production",
+    "leadership_change_detected": false,
+    "confidence": 0.9,
+    "source": "crunchbase_odm",
+    "note": "No recent leadership change detected"
+  },
+  "ai_maturity": {
+    "company": "Constantin Hang Machine Production",
+    "ai_maturity_score": 0,
+    "confidence": "very_low",
+    "signals": [],
+    "pitch_implication": "Generic outreach \u2014 no AI angle",
+    "note": "Score 0/3 based on 0 public signals"
+  },
+  "job_post_signal": {
+    "company": "Constantin Hang Machine Production",
+    "website": "https://www.hang.de",
+    "num_employees": "11-50",
+    "hiring_velocity": "low",
+    "estimated_open_roles": 3,
+    "hiring_signals": [
+      {
+        "signal": "company_active",
+        "detail": "Company is actively operating",
+        "weight": "low"
+      }
+    ],
+    "claim_language": "limited public hiring signal",
+    "assert_aggressive_hiring": false,
+    "scraped_at": "2026-04-23T12:31:32.271727",
+    "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
+  },
+  "outreach_guidance": {
+    "primary_channel": "email",
+    "secondary_channel": "sms",
+    "segment": 1,
+    "tone": "professional and research-grounded",
+    "hook": "You recently raised funding \u2014 most teams at this stage hit a hiring bottleneck before a delivery bottleneck",
+    "pitch_angle": "Scale engineering output faster than in-house hiring can support"
+  }
+}

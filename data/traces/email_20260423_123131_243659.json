@@ -1,0 +1,13 @@
+{
+  "trace_id": "email_20260423_123131_243659",
+  "prospect": "Winder Research",
+  "to_email": "test@example.com",
+  "subject": "Engineering capacity for Winder Research",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T12:31:31.243698",
+  "status": "dry_run_success",
+  "latency_ms": 100.64,
+  "error": null,
+  "message_id": "dry_run_email_20260423_123131_243659"
+}
