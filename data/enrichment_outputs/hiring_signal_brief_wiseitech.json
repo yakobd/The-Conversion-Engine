@@ -1,7 +1,7 @@
 {
   "prospect": "WISEiTECH",
-  "enriched_at": "2026-04-23T17:35:18.377111",
-  "pipeline_duration_seconds": 0.04,
+  "enriched_at": "2026-04-23T17:57:26.369727",
+  "pipeline_duration_seconds": 0.07,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "e707ec50-52d7-4bad-ad22-e28552a3e462",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:18.336766",
+    "last_enriched_at": "2026-04-23T17:57:26.321981",
     "name": "WISEiTECH",
     "website": "http://www.wise.co.kr/",
     "description": "WISEiTECH provides machine learning, big data analysis, data quality and open government data services.",
@@ -90,7 +90,7 @@
     ],
     "claim_language": "active hiring signals detected",
     "assert_aggressive_hiring": true,
-    "scraped_at": "2026-04-23T17:35:18.364317",
+    "scraped_at": "2026-04-23T17:57:26.358360",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

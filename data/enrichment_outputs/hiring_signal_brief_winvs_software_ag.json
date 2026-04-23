@@ -1,7 +1,7 @@
 {
   "prospect": "winVS software AG",
-  "enriched_at": "2026-04-23T17:35:18.228144",
-  "pipeline_duration_seconds": 0.05,
+  "enriched_at": "2026-04-23T17:57:26.347284",
+  "pipeline_duration_seconds": 0.07,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "9195f7b7-3df8-4431-844d-bfda748c212b",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:18.187130",
+    "last_enriched_at": "2026-04-23T17:57:26.295819",
     "name": "winVS software AG",
     "website": "http://www.winvs.ch/de/",
     "description": "winVS software AG has been producing Swiss broker software, pension advisory software and financial planning software.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T17:35:18.215911",
+    "scraped_at": "2026-04-23T17:57:26.340436",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

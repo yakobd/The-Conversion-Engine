@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175727_892005",
+  "prospect": "Cdfortis.com",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Cdfortis.com and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:27.892058",
+  "status": "sent",
+  "latency_ms": 643.1,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "c4b3a8c5-a349-4dd5-9e69-307184da9bd4"
+}

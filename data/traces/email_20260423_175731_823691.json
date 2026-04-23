@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175731_823691",
+  "prospect": "Sycamore Dental and Associates",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Sycamore Dental and Associates and engineering c...",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:31.823740",
+  "status": "sent",
+  "latency_ms": 718.9,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "4aa7da50-3e4c-4e81-b41d-6154f8cc3eef"
+}

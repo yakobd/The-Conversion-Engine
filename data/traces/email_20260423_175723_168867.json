@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175723_168867",
+  "prospect": "Study Crown Limited",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Study Crown Limited and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:23.168915",
+  "status": "sent",
+  "latency_ms": 916.9,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "6d5960f2-ade4-431c-870e-ea801714d4f3"
+}

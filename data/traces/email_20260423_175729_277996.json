@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175729_277996",
+  "prospect": "SnapTrade",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: SnapTrade and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:29.278052",
+  "status": "sent",
+  "latency_ms": 806.13,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "761b08fe-26cc-4e48-8401-07853b4e31ce"
+}

@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175730_160687",
+  "prospect": "Snap21",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Snap21 and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:30.160721",
+  "status": "sent",
+  "latency_ms": 727.42,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "3cb15f3c-31a5-4d45-8c53-39bbcc94e6dc"
+}

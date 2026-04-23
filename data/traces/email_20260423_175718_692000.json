@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175718_692000",
+  "prospect": "Consolety",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Consolety and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:18.692051",
+  "status": "sent",
+  "latency_ms": 1060.31,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "95eeed35-f169-4d6a-b1d1-4dd0bc5b671c"
+}

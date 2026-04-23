@@ -1,6 +1,6 @@
 {
   "prospect": "Constantin Hang Machine Production",
-  "enriched_at": "2026-04-23T17:35:17.928160",
+  "enriched_at": "2026-04-23T17:57:24.934602",
   "pipeline_duration_seconds": 0.06,
   "icp_classification": {
     "segment": 1,
@@ -21,7 +21,7 @@
     "crunchbase_id": "5c3f9cb6-1b7f-4427-8292-6f7c038f397b",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:17.877638",
+    "last_enriched_at": "2026-04-23T17:57:24.890141",
     "name": "Constantin Hang Machine Production",
     "website": "https://www.hang.de",
     "description": "Constantin Hang Machine Production is a manufacturer of paper drills, riveting, and eyelet machines.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T17:35:17.904779",
+    "scraped_at": "2026-04-23T17:57:24.924523",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

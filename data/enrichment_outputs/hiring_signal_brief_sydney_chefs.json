@@ -1,7 +1,7 @@
 {
   "prospect": "Sydney Chefs",
-  "enriched_at": "2026-04-23T17:35:19.625171",
-  "pipeline_duration_seconds": 0.04,
+  "enriched_at": "2026-04-23T17:57:32.616152",
+  "pipeline_duration_seconds": 0.07,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "2f2acb99-202a-53e3-3997-f8edcdd157d6",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:19.589566",
+    "last_enriched_at": "2026-04-23T17:57:32.554203",
     "name": "Sydney Chefs",
     "website": "nan",
     "description": "The Sydney Chefs has been created by chefs for chefs to have somewhere to communicate and educate the industry for the future!",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T17:35:19.613085",
+    "scraped_at": "2026-04-23T17:57:32.599805",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

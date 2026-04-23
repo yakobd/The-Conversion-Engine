@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175726_350644",
+  "prospect": "winVS software AG",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: winVS software AG and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:26.350714",
+  "status": "sent",
+  "latency_ms": -53.18,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "697ad2c9-0a4e-4379-b4db-906532faefb9"
+}

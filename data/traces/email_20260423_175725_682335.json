@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175725_682335",
+  "prospect": "Western Borders",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Western Borders and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:25.682378",
+  "status": "sent",
+  "latency_ms": 590.68,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "0c513f4d-5e06-4bf5-9ff0-99889d3d22b5"
+}

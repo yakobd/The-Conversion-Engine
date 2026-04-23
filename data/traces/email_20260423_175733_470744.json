@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175733_470744",
+  "prospect": "Webcloud IT",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Webcloud IT and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:33.470803",
+  "status": "sent",
+  "latency_ms": 653.53,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "1626c612-9098-441d-8dd0-81794f46a239"
+}

@@ -1,6 +1,6 @@
 {
   "prospect": "Cdfortis.com",
-  "enriched_at": "2026-04-23T17:35:18.701618",
+  "enriched_at": "2026-04-23T17:57:27.890526",
   "pipeline_duration_seconds": 0.05,
   "icp_classification": {
     "segment": 1,
@@ -21,7 +21,7 @@
     "crunchbase_id": "db89061d-747f-4c06-aff9-8a63fbe5c244",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:18.657985",
+    "last_enriched_at": "2026-04-23T17:57:27.856157",
     "name": "Cdfortis.com",
     "website": "http://www.cdfortis.com/",
     "description": "Cdfortis.com is an online platform for medical services.",
@@ -83,7 +83,7 @@
     ],
     "claim_language": "active hiring signals detected",
     "assert_aggressive_hiring": true,
-    "scraped_at": "2026-04-23T17:35:18.688708",
+    "scraped_at": "2026-04-23T17:57:27.883518",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

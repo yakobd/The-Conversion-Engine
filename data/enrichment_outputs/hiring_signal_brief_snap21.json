@@ -1,7 +1,7 @@
 {
   "prospect": "Snap21",
-  "enriched_at": "2026-04-23T17:35:19.172668",
-  "pipeline_duration_seconds": 0.06,
+  "enriched_at": "2026-04-23T17:57:30.159736",
+  "pipeline_duration_seconds": 0.07,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "441acc19-55b1-4796-a33e-6c28b8fd7c83",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:19.112747",
+    "last_enriched_at": "2026-04-23T17:57:30.110870",
     "name": "Snap21",
     "website": "https://snap21.com.au",
     "description": "Snap21 is an integrated photo review app for automotive, real estate, pet care, and businesses.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T17:35:19.164434",
+    "scraped_at": "2026-04-23T17:57:30.146637",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

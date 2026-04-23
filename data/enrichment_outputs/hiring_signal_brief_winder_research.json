@@ -1,7 +1,7 @@
 {
   "prospect": "Winder Research",
-  "enriched_at": "2026-04-23T17:35:17.000129",
-  "pipeline_duration_seconds": 0.05,
+  "enriched_at": "2026-04-23T17:57:19.797148",
+  "pipeline_duration_seconds": 0.04,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "644bc78e-4120-4c1c-91f1-08f2f0ab980f",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:16.955524",
+    "last_enriched_at": "2026-04-23T17:57:19.756905",
     "name": "Winder Research",
     "website": "https://winderresearch.com/",
     "description": "Winder Research empowers businesses with cloud-native data Science consulting, development and training.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T17:35:16.990669",
+    "scraped_at": "2026-04-23T17:57:19.785987",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

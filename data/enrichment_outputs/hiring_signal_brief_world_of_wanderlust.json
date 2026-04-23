@@ -1,7 +1,7 @@
 {
   "prospect": "World of Wanderlust",
-  "enriched_at": "2026-04-23T17:35:17.770545",
-  "pipeline_duration_seconds": 0.06,
+  "enriched_at": "2026-04-23T17:57:24.134188",
+  "pipeline_duration_seconds": 0.05,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "f3750f1e-f7d4-44f7-856c-3be006e8bc72",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:17.718710",
+    "last_enriched_at": "2026-04-23T17:57:24.091598",
     "name": "World of Wanderlust",
     "website": "https://worldofwanderlust.com",
     "description": "World of Wanderlust is an online publication that publishes destination guides, travel blogging, advertising, solo trip, and video content.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T17:35:17.753048",
+    "scraped_at": "2026-04-23T17:57:24.124935",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

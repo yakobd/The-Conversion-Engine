@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175722_386635",
+  "prospect": "Styloosh",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Styloosh and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:22.386679",
+  "status": "sent",
+  "latency_ms": 709.73,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "a3b00de9-bf8d-4d94-b57d-b0ce30fb6f46"
+}

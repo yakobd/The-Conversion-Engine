@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175727_127932",
+  "prospect": "Connect It Utilities",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Connect It Utilities and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:27.127968",
+  "status": "sent",
+  "latency_ms": 713.5,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "dfd0503d-cf13-41fc-ac73-e0853317f630"
+}

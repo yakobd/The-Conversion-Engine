@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175721_605988",
+  "prospect": "Amerisk Engineering",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Amerisk Engineering and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:21.606029",
+  "status": "sent",
+  "latency_ms": 722.2,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "1a9b0e45-099d-4bdc-a10f-ecf1e6474749"
+}

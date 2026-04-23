@@ -1,7 +1,7 @@
 {
   "prospect": "Amerisk Engineering",
-  "enriched_at": "2026-04-23T17:35:17.281811",
-  "pipeline_duration_seconds": 0.04,
+  "enriched_at": "2026-04-23T17:57:21.604871",
+  "pipeline_duration_seconds": 0.07,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "20890c4a-8a6b-45e8-9144-a86cc18fa1a0",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:17.246922",
+    "last_enriched_at": "2026-04-23T17:57:21.556948",
     "name": "Amerisk Engineering",
     "website": "https://ameriskengineering.com",
     "description": "Amerisk Engineering is a facility management and risk assessment firm that provides facility audits, inspections, and testing services.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T17:35:17.270127",
+    "scraped_at": "2026-04-23T17:57:21.592000",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

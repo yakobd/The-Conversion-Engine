@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175719_798277",
+  "prospect": "Winder Research",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Winder Research and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:19.798319",
+  "status": "sent",
+  "latency_ms": 724.97,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "e7226b6d-0959-4a73-b781-f8c5cf8be545"
+}

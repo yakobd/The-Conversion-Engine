@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175726_370564",
+  "prospect": "WISEiTECH",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: WISEiTECH and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:26.370611",
+  "status": "sent",
+  "latency_ms": 703.71,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "753b43fc-3f4f-4b02-b586-02f4a9864fb3"
+}

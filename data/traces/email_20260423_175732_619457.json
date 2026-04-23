@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175732_619457",
+  "prospect": "Sydney Chefs",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Sydney Chefs and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:32.619519",
+  "status": "sent",
+  "latency_ms": 780.9,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "1b4f7ce3-3049-47d0-8dd0-373ee24a7b5f"
+}

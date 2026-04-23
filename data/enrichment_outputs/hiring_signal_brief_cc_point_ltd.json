@@ -1,7 +1,7 @@
 {
   "prospect": "CC Point Ltd",
-  "enriched_at": "2026-04-23T17:35:18.870395",
-  "pipeline_duration_seconds": 0.07,
+  "enriched_at": "2026-04-23T17:57:28.595651",
+  "pipeline_duration_seconds": 0.06,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "da9423b6-7fe4-4c5a-addf-b445134dd991",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:18.808710",
+    "last_enriched_at": "2026-04-23T17:57:28.554802",
     "name": "CC Point Ltd",
     "website": "http://www.ccpoint.ch",
     "description": "CC Point is a network solution provider covering PCs, notebooks, monitors, printers, options and network products with IT knowledge.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T17:35:18.861133",
+    "scraped_at": "2026-04-23T17:57:28.589656",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175724_935635",
+  "prospect": "Constantin Hang Machine Production",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Constantin Hang Machine Production and engineeri...",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:24.935713",
+  "status": "sent",
+  "latency_ms": 676.47,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "eed9ad7e-bf80-42b0-9eaa-3a7eee4c763a"
+}

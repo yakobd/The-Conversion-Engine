@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175724_138201",
+  "prospect": "World of Wanderlust",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: World of Wanderlust and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:24.138256",
+  "status": "sent",
+  "latency_ms": 734.07,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "01ed6ad4-67fc-4adf-84f7-a68b8f800316"
+}

@@ -1,7 +1,7 @@
 {
   "prospect": "Study Crown Limited",
-  "enriched_at": "2026-04-23T17:35:17.608205",
-  "pipeline_duration_seconds": 0.05,
+  "enriched_at": "2026-04-23T17:57:23.167213",
+  "pipeline_duration_seconds": 0.07,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "f14dab9d-9dea-108c-0642-ce384d996ccd",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:17.568099",
+    "last_enriched_at": "2026-04-23T17:57:23.104514",
     "name": "Study Crown Limited",
     "website": "https://studycrown.com",
     "description": "StudyCrown is NZ Startup. An online platform, for education seekers and providers, striving to provide technology driven solutions.",
@@ -72,7 +72,7 @@
     "hiring_signals": [],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T17:35:17.601311",
+    "scraped_at": "2026-04-23T17:57:23.156284",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

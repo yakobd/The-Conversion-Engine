@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175730_965917",
+  "prospect": "Synergy",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Synergy and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:30.966093",
+  "status": "sent",
+  "latency_ms": 792.5,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "4c72ca5a-4573-4805-a00a-9e8e34ba165e"
+}

@@ -1,0 +1,15 @@
+{
+  "trace_id": "email_20260423_175720_590395",
+  "prospect": "Wiring Technologies",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Context: Wiring Technologies and engineering capacity",
+  "segment": 1,
+  "dry_run": false,
+  "sent_at": "2026-04-23T17:57:20.590435",
+  "status": "sent",
+  "latency_ms": 947.42,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": true,
+  "message_id": "b5fb528a-bef6-4de5-98c9-60076be7be23"
+}

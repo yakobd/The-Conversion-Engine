@@ -1,6 +1,6 @@
 {
   "prospect": "Sycamore Dental and Associates",
-  "enriched_at": "2026-04-23T17:35:19.482416",
+  "enriched_at": "2026-04-23T17:57:31.822884",
   "pipeline_duration_seconds": 0.06,
   "icp_classification": {
     "segment": 1,
@@ -21,7 +21,7 @@
     "crunchbase_id": "d8f26dfb-0b26-43e7-9fd7-4cd47596c8fb",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T17:35:19.428381",
+    "last_enriched_at": "2026-04-23T17:57:31.781900",
     "name": "Sycamore Dental and Associates",
     "website": "https://sycamoredentalassociates.net",
     "description": "Sycamore Dental and Associates provides pediatric dentistry, prevention, and restoration services.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T17:35:19.467478",
+    "scraped_at": "2026-04-23T17:57:31.818642",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {
