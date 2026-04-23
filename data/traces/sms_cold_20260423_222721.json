@@ -1,0 +1,9 @@
+{
+  "from_number": "+251900000000",
+  "message": "Yes Tuesday 10am works for me",
+  "shortcode": "",
+  "is_warm_lead": false,
+  "received_at": "2026-04-23T22:27:21.676515",
+  "channel": "sms",
+  "action": "logged_only_not_warm"
+}

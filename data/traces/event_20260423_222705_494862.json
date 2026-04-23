@@ -1,0 +1,19 @@
+{
+  "event_type": "email.reply",
+  "payload": {
+    "from_email": "prospect@example.com",
+    "from_name": "Marcus Johnson",
+    "subject": "Re: Context: Yellow.ai",
+    "body": "Interesting context on the hiring velocity. What exactly does your engagement look like?",
+    "reply_class": "curious",
+    "classified_at": "2026-04-23T22:27:05.462439",
+    "raw_payload": {
+      "from": "prospect@example.com",
+      "from_name": "Marcus Johnson",
+      "subject": "Re: Context: Yellow.ai",
+      "text": "Interesting context on the hiring velocity. What exactly does your engagement look like?"
+    }
+  },
+  "emitted_at": "2026-04-23T22:27:05.494811",
+  "handlers_called": 1
+}

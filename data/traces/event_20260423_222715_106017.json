@@ -1,0 +1,14 @@
+{
+  "event_type": "email.bounce",
+  "payload": {
+    "email_id": "test-123",
+    "to": [
+      "bad@invalid.com"
+    ],
+    "bounce_type": "hard",
+    "bounce_message": "User does not exist",
+    "timestamp": "2026-04-23T22:27:15.103358"
+  },
+  "emitted_at": "2026-04-23T22:27:15.105988",
+  "handlers_called": 1
+}

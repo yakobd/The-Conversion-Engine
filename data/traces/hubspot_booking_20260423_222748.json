@@ -1,0 +1,15 @@
+{
+  "action": "hubspot_update_on_booking",
+  "prospect_email": "prospect@example.com",
+  "booking": {
+    "trigger": "BOOKING_CREATED",
+    "prospect_email": "prospect@example.com",
+    "prospect_name": "Marcus Johnson",
+    "booking_uid": "booking-123",
+    "start_time": "2026-04-25T10:00:00Z",
+    "end_time": "2026-04-25T10:30:00Z",
+    "meeting_url": "",
+    "created_at": "2026-04-23T22:27:28.790509"
+  },
+  "updated_at": "2026-04-23T22:27:48.595913"
+}

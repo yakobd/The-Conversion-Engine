@@ -1,0 +1,16 @@
+{
+  "source": "resend",
+  "event_type": "email.bounced",
+  "email_id": "test-123",
+  "data": {
+    "email_id": "test-123",
+    "to": [
+      "bad@invalid.com"
+    ],
+    "bounce": {
+      "type": "hard",
+      "message": "User does not exist"
+    }
+  },
+  "received_at": "2026-04-23T22:27:15.103432"
+}
