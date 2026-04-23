@@ -8,3 +8,5 @@ tau2-bench/data/simulations/
 Crunchbase-dataset-samples/
 calcom/
 *.log
+**/.env
+.env.*
