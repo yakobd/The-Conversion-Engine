@@ -1,0 +1,16 @@
+{
+  "trace_id": "email_20260423_173519_174223",
+  "prospect": "Snap21",
+  "to_email": "test@example.com",
+  "subject": "Context: Snap21 and engineering capacity",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T17:35:19.174277",
+  "status": "dry_run_success",
+  "latency_ms": 102.18,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": false,
+  "message_id": "dry_run_email_20260423_173519_174223",
+  "routed_to": "staff_sink"
+}

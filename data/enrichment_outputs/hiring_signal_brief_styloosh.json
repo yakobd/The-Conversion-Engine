@@ -1,7 +1,7 @@
 {
   "prospect": "Styloosh",
-  "enriched_at": "2026-04-23T12:31:31.803257",
-  "pipeline_duration_seconds": 0.08,
+  "enriched_at": "2026-04-23T17:35:17.454954",
+  "pipeline_duration_seconds": 0.07,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "98147bcf-8505-634e-0a24-4ad5d8c82f0e",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T12:31:31.728215",
+    "last_enriched_at": "2026-04-23T17:35:17.391608",
     "name": "Styloosh",
     "website": "nan",
     "description": "Styloosh is a leading personalized jewelry provider.",
@@ -83,7 +83,7 @@
     ],
     "claim_language": "active hiring signals detected",
     "assert_aggressive_hiring": true,
-    "scraped_at": "2026-04-23T12:31:31.788095",
+    "scraped_at": "2026-04-23T17:35:17.446690",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

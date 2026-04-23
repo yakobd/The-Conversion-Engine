@@ -1,7 +1,7 @@
 {
   "prospect": "Western Borders",
-  "enriched_at": "2026-04-23T12:31:32.461647",
-  "pipeline_duration_seconds": 0.07,
+  "enriched_at": "2026-04-23T17:35:18.076519",
+  "pipeline_duration_seconds": 0.04,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "67fef08e-978a-45c1-87c4-9391c8960f98",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T12:31:32.395072",
+    "last_enriched_at": "2026-04-23T17:35:18.037651",
     "name": "Western Borders",
     "website": "http://www.westernborders.com/",
     "description": "Western Borders provides online campaigns and analytics strategies to enhance business growth for organizations and manufacturers.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T12:31:32.439431",
+    "scraped_at": "2026-04-23T17:35:18.064126",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

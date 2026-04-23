@@ -1,0 +1,16 @@
+{
+  "trace_id": "email_20260423_173519_484136",
+  "prospect": "Sycamore Dental and Associates",
+  "to_email": "test@example.com",
+  "subject": "Context: Sycamore Dental and Associates and engineering c...",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T17:35:19.484186",
+  "status": "dry_run_success",
+  "latency_ms": 100.38,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": false,
+  "message_id": "dry_run_email_20260423_173519_484136",
+  "routed_to": "staff_sink"
+}

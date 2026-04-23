@@ -1,0 +1,16 @@
+{
+  "trace_id": "email_20260423_173519_797912",
+  "prospect": "Webcloud IT",
+  "to_email": "test@example.com",
+  "subject": "Context: Webcloud IT and engineering capacity",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T17:35:19.797965",
+  "status": "dry_run_success",
+  "latency_ms": 100.24,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": false,
+  "message_id": "dry_run_email_20260423_173519_797912",
+  "routed_to": "staff_sink"
+}

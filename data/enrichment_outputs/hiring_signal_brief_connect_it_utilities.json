@@ -1,7 +1,7 @@
 {
   "prospect": "Connect It Utilities",
-  "enriched_at": "2026-04-23T12:31:33.066675",
-  "pipeline_duration_seconds": 0.08,
+  "enriched_at": "2026-04-23T17:35:18.549225",
+  "pipeline_duration_seconds": 0.07,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "0438675a-e238-4fbf-ba71-fa85115791f5",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T12:31:32.994023",
+    "last_enriched_at": "2026-04-23T17:35:18.489371",
     "name": "Connect It Utilities",
     "website": "https://www.cius.co.uk",
     "description": "Connect It Utilities provides street lighting and electro-mechanical installations, gas, water, and smart metering connections.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T12:31:33.054079",
+    "scraped_at": "2026-04-23T17:35:18.538392",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

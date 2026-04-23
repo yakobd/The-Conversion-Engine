@@ -1,7 +1,7 @@
 {
   "prospect": "Synergy",
-  "enriched_at": "2026-04-23T12:31:33.843460",
-  "pipeline_duration_seconds": 0.06,
+  "enriched_at": "2026-04-23T17:35:19.320479",
+  "pipeline_duration_seconds": 0.04,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "83abdec7-8a85-4395-90a0-bc83824844aa",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T12:31:33.788744",
+    "last_enriched_at": "2026-04-23T17:35:19.281281",
     "name": "Synergy",
     "website": "https://www.synergypetroleum.com",
     "description": "Synergy offers engineering and contracting services for civil, mechanical, instrumentation, electrical, and procurement industries.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T12:31:33.832292",
+    "scraped_at": "2026-04-23T17:35:19.314113",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

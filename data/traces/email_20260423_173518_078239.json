@@ -1,0 +1,16 @@
+{
+  "trace_id": "email_20260423_173518_078239",
+  "prospect": "Western Borders",
+  "to_email": "test@example.com",
+  "subject": "Context: Western Borders and engineering capacity",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T17:35:18.078282",
+  "status": "dry_run_success",
+  "latency_ms": 101.09,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": false,
+  "message_id": "dry_run_email_20260423_173518_078239",
+  "routed_to": "staff_sink"
+}

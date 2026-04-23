@@ -1,0 +1,16 @@
+{
+  "trace_id": "email_20260423_173518_230250",
+  "prospect": "winVS software AG",
+  "to_email": "test@example.com",
+  "subject": "Context: winVS software AG and engineering capacity",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T17:35:18.230304",
+  "status": "dry_run_success",
+  "latency_ms": 101.2,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": false,
+  "message_id": "dry_run_email_20260423_173518_230250",
+  "routed_to": "staff_sink"
+}

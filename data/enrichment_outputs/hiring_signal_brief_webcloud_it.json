@@ -1,7 +1,7 @@
 {
   "prospect": "Webcloud IT",
-  "enriched_at": "2026-04-23T12:31:34.298375",
-  "pipeline_duration_seconds": 0.05,
+  "enriched_at": "2026-04-23T17:35:19.796989",
+  "pipeline_duration_seconds": 0.07,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "9a438942-2a65-412d-9067-0f72805b499d",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T12:31:34.255648",
+    "last_enriched_at": "2026-04-23T17:35:19.731929",
     "name": "Webcloud IT",
     "website": "https://webcloudit.com/",
     "description": "We provides a full set of strategic digital marketing services.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T12:31:34.280749",
+    "scraped_at": "2026-04-23T17:35:19.785451",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

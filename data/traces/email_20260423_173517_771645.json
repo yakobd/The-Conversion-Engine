@@ -1,0 +1,16 @@
+{
+  "trace_id": "email_20260423_173517_771645",
+  "prospect": "World of Wanderlust",
+  "to_email": "test@example.com",
+  "subject": "Context: World of Wanderlust and engineering capacity",
+  "segment": 1,
+  "dry_run": true,
+  "sent_at": "2026-04-23T17:35:17.771691",
+  "status": "dry_run_success",
+  "latency_ms": 100.78,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": false,
+  "message_id": "dry_run_email_20260423_173517_771645",
+  "routed_to": "staff_sink"
+}

@@ -1,7 +1,7 @@
 {
   "prospect": "Wiring Technologies",
-  "enriched_at": "2026-04-23T12:31:31.402196",
-  "pipeline_duration_seconds": 0.06,
+  "enriched_at": "2026-04-23T17:35:17.138804",
+  "pipeline_duration_seconds": 0.03,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "4924df90-2974-4302-9841-755053210c12",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T12:31:31.353474",
+    "last_enriched_at": "2026-04-23T17:35:17.108465",
     "name": "Wiring Technologies",
     "website": "https://wiringtech.com/",
     "description": "Wiring Technologies committed to providing Total Connectivity Solutions through a complete line of Fiber, Data, Voice and Video cabling.",
@@ -78,7 +78,7 @@
     ],
     "claim_language": "limited public hiring signal",
     "assert_aggressive_hiring": false,
-    "scraped_at": "2026-04-23T12:31:31.384294",
+    "scraped_at": "2026-04-23T17:35:17.129761",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {

@@ -1,7 +1,7 @@
 {
   "prospect": "SnapTrade",
-  "enriched_at": "2026-04-23T12:31:33.527304",
-  "pipeline_duration_seconds": 0.04,
+  "enriched_at": "2026-04-23T17:35:19.002854",
+  "pipeline_duration_seconds": 0.03,
   "icp_classification": {
     "segment": 1,
     "segment_name": "Recently-funded startup",
@@ -21,7 +21,7 @@
     "crunchbase_id": "24c29bd4-ca95-4628-b793-c2832142be4e",
     "found": true,
     "confidence": 1.0,
-    "last_enriched_at": "2026-04-23T12:31:33.487562",
+    "last_enriched_at": "2026-04-23T17:35:18.977829",
     "name": "SnapTrade",
     "website": "https://snaptrade.com",
     "description": "SnapTrade is an API that connects retail brokerage accounts to a fintech app.",
@@ -83,7 +83,7 @@
     ],
     "claim_language": "active hiring signals detected",
     "assert_aggressive_hiring": true,
-    "scraped_at": "2026-04-23T12:31:33.512815",
+    "scraped_at": "2026-04-23T17:35:18.996287",
     "note": "Signal derived from Crunchbase ODM \u2014 Playwright scraping available for live data"
   },
   "outreach_guidance": {
