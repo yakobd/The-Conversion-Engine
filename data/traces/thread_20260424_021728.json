@@ -1,0 +1,83 @@
+{
+  "thread_id": "thread_20260424_021728",
+  "company": "Yellow.ai",
+  "started_at": "2026-04-24T02:17:28.351005",
+  "steps": [
+    {
+      "step": 1,
+      "name": "enrichment",
+      "status": "complete",
+      "icp_segment": 2,
+      "ai_maturity": 2,
+      "completed_at": "2026-04-24T02:17:28.531202"
+    },
+    {
+      "step": 2,
+      "name": "competitor_gap_brief",
+      "status": "complete",
+      "sector_rank": 1,
+      "completed_at": "2026-04-24T02:17:28.692815"
+    },
+    {
+      "step": 3,
+      "name": "hubspot_write",
+      "status": "error",
+      "contact_id": null,
+      "enrichment_timestamp": null,
+      "completed_at": "2026-04-24T02:17:31.142316"
+    },
+    {
+      "step": 4,
+      "name": "email_send",
+      "status": "dry_run_success",
+      "subject": "Note on Yellow.ai restructuring",
+      "latency_ms": 111.32,
+      "completed_at": "2026-04-24T02:17:31.255462"
+    },
+    {
+      "step": 5,
+      "name": "prospect_reply",
+      "status": "simulated",
+      "reply_text": "Your recent restructuring context resonates. We are indeed looking at cost optimization. Tell me more.",
+      "reply_class": "curious",
+      "completed_at": "2026-04-24T02:17:32.256743"
+    },
+    {
+      "step": 6,
+      "name": "hubspot_reply_update",
+      "status": "skipped",
+      "reply_class": "curious",
+      "enrichment_timestamp": null,
+      "completed_at": "2026-04-24T02:17:32.257201"
+    },
+    {
+      "step": 7,
+      "name": "calcom_booking_link",
+      "status": "generated",
+      "booking_link": "http://localhost:3000/yakob/30min?utm_source=email_reply",
+      "completed_at": "2026-04-24T02:17:32.257662"
+    },
+    {
+      "step": 8,
+      "name": "hubspot_booking_update",
+      "status": "skipped",
+      "booking_link": "http://localhost:3000/yakob/30min?utm_source=email_reply",
+      "enrichment_timestamp": null,
+      "completed_at": "2026-04-24T02:17:32.258129"
+    },
+    {
+      "step": 9,
+      "name": "sms_scheduling",
+      "status": "generated",
+      "message": "Hi Yellow.ai \u2014 Tenacious here. Re our email thread: http://localhost:3000/yakob/30min?utm_source=email_reply \u2014 reply N if slot no longer works.",
+      "chars": 143,
+      "warm_lead_gate": "enforced",
+      "completed_at": "2026-04-24T02:17:32.258674"
+    }
+  ],
+  "draft": true,
+  "outbound_enabled": false,
+  "completed_at": "2026-04-24T02:17:32.258718",
+  "total_steps": 9,
+  "all_steps_complete": false
+}

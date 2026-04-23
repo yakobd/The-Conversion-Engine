@@ -1,0 +1,16 @@
+{
+  "trace_id": "email_20260424_022348_176855",
+  "prospect": "Yellow.ai",
+  "to_email": "yakobdereje.yd@gmail.com",
+  "subject": "Note on Yellow.ai restructuring",
+  "segment": 2,
+  "dry_run": true,
+  "sent_at": "2026-04-24T02:23:48.177434",
+  "status": "dry_run_success",
+  "latency_ms": 100.98,
+  "error": null,
+  "draft": true,
+  "outbound_enabled": false,
+  "message_id": "dry_run_email_20260424_022348_176855",
+  "routed_to": "staff_sink"
+}
