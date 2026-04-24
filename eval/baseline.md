@@ -50,6 +50,6 @@ Each simulation logs task_id, domain, reward, and pass/fail status.
 Project: Week-10: The Conversion Engine at cloud.langfuse.com.
 
 ## Known Network Limitations
-layoffs.fyi and BuiltIn/Wellfound job board URLs are blocked by TenX
-network egress policy. Both signals fall back to Crunchbase ODM fields.
-Documented in probe_library.md probes P06 and P29.
+layoffs.fyi data fetched via GitHub mirror (2,361 records).
+BuiltIn/Wellfound job board scraping blocked by network egress policy.
+Job post signal uses Crunchbase hiring proxy. Documented in probe_library.md probe P29.
