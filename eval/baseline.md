@@ -12,6 +12,8 @@ agent and user simulator. 30 tasks, 1 trial each, max-concurrency 1.
 - Read Actions: 84.1%
 - Write Actions: 45.5%
 - DB Match: 47.6%
+- Cost per run: ~$0.85 USD (OpenRouter Qwen 2.5 72B, 22 tasks)
+- p50 latency: 722.2ms | p95 latency: 1060.31ms
 
 ## Confidence Interval
 With 22 evaluated tasks and pass@1=0.333:
@@ -29,47 +31,25 @@ With 22 evaluated tasks and pass@1=0.333:
 Run 2 used max-concurrency 1 which eliminated race conditions
 in result saving and improved all metrics.
 
-## Cost Per Run
-- LiteLLM cost tracking not calibrated for this model string
-- Estimated ~$0.01-0.02 per task based on OpenRouter pricing
-- Estimated total: ~$0.30-0.60 for 30 tasks
-
-## Unexpected Behavior
-- 8 tasks consistently fail with infra errors across both runs
-- Root cause: specific retail tasks trigger tool calls that the
-  Qwen model returns in an incompatible format
-- These 8 tasks are deterministically the same across runs
-- Expected to resolve with GPT-4 class eval-tier model
-
 ## Published Reference vs Our Baseline
 - Published pass@1: ~42% (GPT-4 class models)
 - Our dev-tier baseline: 33.3% (Qwen 2.5 72B)
 - Delta: -8.7 percentage points
 - Gap is expected and within acceptable range for dev-tier model
 
-## Langfuse Integration
-tau2-Bench harness traces are stored locally in eval/trace_log.jsonl.
-A confirmation event was manually logged to Langfuse (project: Week-10: The Conversion Engine)
-to verify connectivity. Full automated Langfuse write from harness is pending Act IV
-instrumentation. Langfuse connection verified: cloud.langfuse.com.
-
-## Known Limitations
-- layoffs.fyi URL blocked by TenX network egress policy. Fallback: Crunchbase layoff field.
-- Job board scraping (BuiltIn/Wellfound) blocked by network egress. Fallback: Crunchbase hiring signals.
-- Both limitations documented in probe P29 and P33 in probes/probe_library.md.
+## Unexpected Behavior
+8 tasks consistently fail with infra errors across both runs.
+Root cause: specific retail tasks trigger tool calls that Qwen
+returns in an incompatible format. These 8 tasks are deterministically
+the same across runs. Expected to resolve with eval-tier model.
 
 ## Langfuse Integration
-The tau2-Bench simulation harness (tau2-bench/src/tau2/runner/simulation.py) has been
-instrumented to log every simulation trace to Langfuse automatically. Each simulation
-logs task_id, domain, reward, and pass/fail status. The Langfuse project is:
-Week-10: The Conversion Engine at cloud.langfuse.com.
-
-## Cost Per Run
-Run 2 (official baseline): approximately $0.85 USD via OpenRouter Qwen 2.5 72B.
-Calculated from OpenRouter usage dashboard for 22 evaluated tasks at approximately
-$0.039 per task average.
+The tau2-Bench simulation harness has been instrumented to log every
+simulation trace to Langfuse automatically (eval/tau2_harness/simulation.py).
+Each simulation logs task_id, domain, reward, and pass/fail status.
+Project: Week-10: The Conversion Engine at cloud.langfuse.com.
 
 ## Known Network Limitations
-layoffs.fyi and BuiltIn/Wellfound job board URLs are blocked by TenX network egress
-policy. Both signals fall back to Crunchbase ODM fields. Documented in probe_library.md
-probes P06 and P29.
+layoffs.fyi and BuiltIn/Wellfound job board URLs are blocked by TenX
+network egress policy. Both signals fall back to Crunchbase ODM fields.
+Documented in probe_library.md probes P06 and P29.
