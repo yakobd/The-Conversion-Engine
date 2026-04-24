@@ -50,6 +50,7 @@ Each simulation logs task_id, domain, reward, and pass/fail status.
 Project: Week-10: The Conversion Engine at cloud.langfuse.com.
 
 ## Known Network Limitations
-layoffs.fyi data fetched via GitHub mirror (2,361 records).
-BuiltIn/Wellfound job board scraping blocked by network egress policy.
-Job post signal uses Crunchbase hiring proxy. Documented in probe_library.md probe P29.
+layoffs.fyi data fetched via GitHub mirror (2,361 records, source:
+github.com/SaiPrabandh/eda-on-layoffs.csv). BuiltIn/Wellfound job
+board scraping blocked by network egress. Job post signal uses
+Crunchbase hiring proxy. Documented in probe_library.md probe P29.
