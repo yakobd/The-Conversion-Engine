@@ -57,3 +57,19 @@ instrumentation. Langfuse connection verified: cloud.langfuse.com.
 - layoffs.fyi URL blocked by TenX network egress policy. Fallback: Crunchbase layoff field.
 - Job board scraping (BuiltIn/Wellfound) blocked by network egress. Fallback: Crunchbase hiring signals.
 - Both limitations documented in probe P29 and P33 in probes/probe_library.md.
+
+## Langfuse Integration
+The tau2-Bench simulation harness (tau2-bench/src/tau2/runner/simulation.py) has been
+instrumented to log every simulation trace to Langfuse automatically. Each simulation
+logs task_id, domain, reward, and pass/fail status. The Langfuse project is:
+Week-10: The Conversion Engine at cloud.langfuse.com.
+
+## Cost Per Run
+Run 2 (official baseline): approximately $0.85 USD via OpenRouter Qwen 2.5 72B.
+Calculated from OpenRouter usage dashboard for 22 evaluated tasks at approximately
+$0.039 per task average.
+
+## Known Network Limitations
+layoffs.fyi and BuiltIn/Wellfound job board URLs are blocked by TenX network egress
+policy. Both signals fall back to Crunchbase ODM fields. Documented in probe_library.md
+probes P06 and P29.
