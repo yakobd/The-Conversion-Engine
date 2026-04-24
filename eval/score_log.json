@@ -10,13 +10,13 @@
       "num_trials": 1,
       "evaluated": 22,
       "infra_errors": 8,
-      "pass_at_1": 0.300,
+      "pass_at_1": 0.3,
       "ci_95_lower": 0.11,
       "ci_95_upper": 0.49,
       "ci_95_margin": 0.19,
       "average_reward": 0.4091,
       "read_actions_pct": 0.733,
-      "write_actions_pct": 0.400,
+      "write_actions_pct": 0.4,
       "db_match_pct": 0.409,
       "concurrency": 3,
       "notes": "First run. 8 infra errors due to model tool-call format incompatibility. Concurrency 3. Race condition in result saving."
@@ -34,13 +34,16 @@
       "pass_at_1": 0.333,
       "ci_95_lower": 0.13,
       "ci_95_upper": 0.53,
-      "ci_95_margin": 0.20,
+      "ci_95_margin": 0.2,
       "average_reward": 0.4545,
       "read_actions_pct": 0.841,
       "write_actions_pct": 0.455,
       "db_match_pct": 0.476,
       "concurrency": 1,
-      "notes": "Clean run with max-concurrency 1. All metrics improved. This is the official baseline."
+      "notes": "Clean run with max-concurrency 1. All metrics improved. This is the official baseline.",
+      "cost_per_run_usd": 0.85,
+      "p50_latency_ms": 722.2,
+      "p95_latency_ms": 1060.31
     }
   ],
   "official_baseline": {
@@ -48,11 +51,14 @@
     "pass_at_1": 0.333,
     "ci_95_lower": 0.13,
     "ci_95_upper": 0.53,
-    "ci_95_margin": 0.20,
+    "ci_95_margin": 0.2,
     "average_reward": 0.4545,
     "published_reference": 0.42,
     "delta_from_reference": -0.087,
     "model": "openrouter/qwen/qwen-2.5-72b-instruct",
-    "notes": "Dev-tier model. Expected gap from published reference which uses GPT-4 class models."
+    "notes": "Dev-tier model. Expected gap from published reference which uses GPT-4 class models.",
+    "cost_per_run_usd": 0.85,
+    "p50_latency_ms": 722.2,
+    "p95_latency_ms": 1060.31
   }
 }

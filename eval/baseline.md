@@ -46,3 +46,14 @@ in result saving and improved all metrics.
 - Our dev-tier baseline: 33.3% (Qwen 2.5 72B)
 - Delta: -8.7 percentage points
 - Gap is expected and within acceptable range for dev-tier model
+
+## Langfuse Integration
+tau2-Bench harness traces are stored locally in eval/trace_log.jsonl.
+A confirmation event was manually logged to Langfuse (project: Week-10: The Conversion Engine)
+to verify connectivity. Full automated Langfuse write from harness is pending Act IV
+instrumentation. Langfuse connection verified: cloud.langfuse.com.
+
+## Known Limitations
+- layoffs.fyi URL blocked by TenX network egress policy. Fallback: Crunchbase layoff field.
+- Job board scraping (BuiltIn/Wellfound) blocked by network egress. Fallback: Crunchbase hiring signals.
+- Both limitations documented in probe P29 and P33 in probes/probe_library.md.
