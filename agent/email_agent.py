@@ -10,6 +10,8 @@ from dotenv import load_dotenv
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from agent.enrichment.pipeline import run_enrichment_pipeline
 
+from agent.tone_check import check_and_maybe_regenerate
+
 load_dotenv(Path(__file__).parent.parent / "tau2-bench" / ".env")
 
 resend.api_key = os.getenv("RESEND_API_KEY")
@@ -202,6 +204,24 @@ def send_outreach_email(
         "outbound_enabled": OUTBOUND_ENABLED,
     }
 
+    # Tone preservation check — before sending
+    # Tone preservation check — before sending
+    from agent.tone_check import check_and_maybe_regenerate
+    tone_result = check_and_maybe_regenerate(
+        subject=email_content.get("subject", ""),
+        body=email_content.get("body", ""),
+        brief={}
+    )
+    result["tone_score"] = tone_result["tone_score"]["total_score"]
+    result["tone_pass"] = tone_result["tone_score"]["pass"]
+    result["tone_violations"] = tone_result["tone_score"]["violations"]
+
+    # Block send if tone fails badly (score < 3)
+    if tone_result["tone_score"]["total_score"] < 3:
+        result["status"] = "blocked_tone_failure"
+        result["latency_ms"] = 0
+        return result
+
     try:
         if dry_run or not OUTBOUND_ENABLED:
             time.sleep(0.1)
@@ -302,7 +322,7 @@ if __name__ == "__main__":
     summary = run_outreach_sequence(
         companies=companies,
         test_email="yakobdereje.yd@gmail.com",
-        dry_run=False
+        dry_run=True
     )
 
     print(f"\n✅ Outreach sequence complete!")
