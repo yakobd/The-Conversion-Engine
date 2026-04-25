@@ -115,32 +115,7 @@ typically require significant additional compute.
 | num_trials | 1 | Per program announcement: 1 trial sufficient |
 | confidence_threshold | 0.5 | Below this reward threshold task considered failed |
 
-## Three Ablation Variants Tested
 
-### Variant 1 — No Mechanism (Day 1 Baseline)
-Model: openrouter/qwen/qwen2.5-72b-instruct
-Mechanism: none
-pass@1: 0.333, avg_reward: 0.4545
-Infra errors: 8/30 (tool-call format incompatibility)
-Cost: ~$0.85
-
-### Variant 2 — Confidence-Aware Abstention (Our Method)
-Model: openrouter/qwen/qwen3-next-80b-a3b-thinking
-Mechanism: confidence_aware_abstention_v1
-Five behavioral rules injected into SYSTEM_PROMPT
-pass@1: 0.500, avg_reward: 0.750
-Delta A: +0.167, p=0.0005
-Cost: ~$2.98
-
-### Variant 3 — Automated Optimization Baseline (Program Reference)
-Model: openrouter/qwen/qwen3-next-80b-a3b-thinking
-Mechanism: none (vanilla model, no prompt injection)
-pass@1: 0.7267, avg_reward: N/A
-Trials: 5 (program-provided baseline)
-Source: eval/program_baseline/score_log.json
-Note: Delta B not measured directly — program baseline
-serves as reference. Our mechanism on same model
-architecture shows the prompt injection contribution.
 
 ## Three Ablation Variants — Explicit Contrasts
 

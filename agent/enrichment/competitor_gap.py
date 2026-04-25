@@ -122,7 +122,12 @@ def generate_competitor_gap_brief(company_name: str) -> dict:
                     "practice": sig_name,
                     "detail": signal.get("detail", ""),
                     "example_company": tq_company["company"],
-                    "weight": signal.get("weight", "medium")
+                    "weight": signal.get("weight", "medium"),
+                    "evidence": signal.get("evidence", signal.get("detail", "")),
+                    "evidence_source": signal.get("source", "crunchbase_odm"),
+                    "named_signal": signal.get("evidence", "")[:100],
+                    "prospect_has_it": sig_name in prospect_signals,
+                    "gap_severity": "high" if signal.get("tier") == "high" else "medium"
                 })
 
     # Deduplicate gaps

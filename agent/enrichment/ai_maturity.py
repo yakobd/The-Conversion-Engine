@@ -401,3 +401,31 @@ if __name__ == "__main__":
     silent = compute_ai_maturity_score({}, {}, {})
     print(f"Score: {silent['ai_maturity_score']}/3")
     print(f"Silence note: {silent['silence_note']}")
+
+
+# Compatibility alias — competitor_gap.py and pipeline.py call score_ai_maturity
+def score_ai_maturity(company_name: str) -> dict:
+    """
+    Compatibility wrapper around compute_ai_maturity_score.
+    Accepts company name, fetches signals from Crunchbase,
+    then calls the full 6-signal scorer.
+    """
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+    from agent.enrichment.crunchbase import enrich_company
+    from agent.enrichment.job_posts import get_job_post_signal
+    from agent.enrichment.leadership import detect_leadership_changes
+
+    firmographics = enrich_company(company_name)
+    job_posts = get_job_post_signal(company_name)
+    leadership = detect_leadership_changes(company_name)
+
+    result = compute_ai_maturity_score(firmographics, job_posts, leadership)
+
+    # Add legacy fields for backward compatibility
+    result["company"] = company_name
+    result["signals"] = result.get("signal_breakdown", [])
+    result["confidence"] = result.get("confidence", "low")
+
+    return result
