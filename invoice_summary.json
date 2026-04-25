@@ -1,0 +1,60 @@
+{
+  "generated_at": "2026-04-25T12:43:12.358376",
+  "description": "Rig usage and LLM spend summary for The Conversion Engine challenge week",
+  "llm_spend": {
+    "provider": "OpenRouter",
+    "total_used_usd": 6.17,
+    "credit_limit_usd": 11.74,
+    "remaining_usd": 5.57,
+    "breakdown": {
+      "act1_baseline_run1": {
+        "model": "qwen2.5-72b-instruct",
+        "tasks": 30,
+        "cost_usd": 0.42
+      },
+      "act1_baseline_run2": {
+        "model": "qwen2.5-72b-instruct",
+        "tasks": 30,
+        "cost_usd": 0.85
+      },
+      "act4_mechanism_run": {
+        "model": "qwen3-next-80b-a3b-thinking",
+        "tasks": 30,
+        "cost_usd": 2.98
+      },
+      "test_runs": {
+        "cost_usd": 1.92
+      }
+    }
+  },
+  "resend_usage": {
+    "emails_sent": 23,
+    "cost_usd": 0.023,
+    "free_tier_limit": 3000
+  },
+  "operational_cost_per_email": {
+    "enrichment": 0.0,
+    "composition": 0.0,
+    "tone_check": 0.0,
+    "delivery": 0.001,
+    "crm_logging": 0.0,
+    "total": 0.001
+  },
+  "cost_per_qualified_lead": {
+    "at_7pct_reply_rate": 0.014,
+    "at_9pct_reply_rate": 0.011,
+    "at_12pct_reply_rate": 0.008
+  },
+  "trace_count": {
+    "email_traces": 23,
+    "sms_traces": 3,
+    "enrichment_traces": 40,
+    "webhook_events": 12,
+    "total": 78
+  },
+  "source_files": [
+    "eval/track_costs.py",
+    "eval/trace_log.jsonl",
+    "data/traces/"
+  ]
+}
