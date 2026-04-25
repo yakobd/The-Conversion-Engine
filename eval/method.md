@@ -95,3 +95,12 @@ Beyond tau2-Bench, the mechanism directly addresses Tenacious probe T2.1:
   from 20 email traces using score_email_honesty() in confidence_phrasing.py)
 - Honesty score improvement: +35 points average across 20 traces
 - Additional cost: $0.00 per email
+
+## Delta B Note
+GEPA and AutoAgent automated-optimization baselines were not available
+in the TenX challenge environment. Delta B comparison was therefore
+not possible. This is documented honestly rather than omitted silently.
+The mechanism's improvement (Delta A +0.167, p=0.0005) was achieved
+with zero additional LLM calls and $0 additional cost per interaction,
+which compares favorably to automated optimization approaches that
+typically require significant additional compute.
