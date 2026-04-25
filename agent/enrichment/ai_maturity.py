@@ -415,7 +415,7 @@ def score_ai_maturity(company_name: str) -> dict:
     sys.path.insert(0, str(Path(__file__).parent.parent.parent))
     from agent.enrichment.crunchbase import enrich_company
     from agent.enrichment.job_posts import get_job_post_signal
-    from agent.enrichment.leadership import detect_leadership_changes
+    from agent.enrichment.leadership import check_leadership_change as detect_leadership_changes
 
     firmographics = enrich_company(company_name)
     job_posts = get_job_post_signal(company_name)
