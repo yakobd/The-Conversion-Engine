@@ -44,8 +44,12 @@ def generate_outreach_email(brief: dict) -> dict:
     funding_rounds = firmographics.get("funding_rounds_list", "[]")
 
     # Honesty check — confidence-aware language
-    if confidence in ["very_low", "low"] or not assert_aggressive:
-        hiring_claim = "has open engineering roles"
+    if confidence == "very_low":
+        hiring_claim = "may have engineering capacity needs based on public profile"
+    elif confidence == "low" or not assert_aggressive:
+        hiring_claim = "appears to have open engineering roles based on public signals"
+    elif hiring_velocity == "high":
+        hiring_claim = "has been growing its engineering team aggressively"
     else:
         hiring_claim = "has been growing its engineering team"
 
