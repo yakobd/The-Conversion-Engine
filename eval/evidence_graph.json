@@ -1,0 +1,186 @@
+{
+  "project": "The Conversion Engine",
+  "author": "Yakob Dereje",
+  "generated_at": "2026-04-25T15:10:27.024293",
+  "description": "Every numeric claim in memo.pdf traces to a source in this graph",
+  "tau2_bench_baseline": {
+    "claim": "pass@1 0.333 on retail domain dev slice",
+    "value": 0.333,
+    "ci_95": [
+      0.13,
+      0.53
+    ],
+    "source_file": "eval/score_log.json",
+    "source_field": "runs[1].pass_at_1",
+    "model": "openrouter/qwen/qwen2.5-72b-instruct",
+    "date": "2026-04-22"
+  },
+  "program_baseline": {
+    "claim": "Program-provided baseline pass@1 0.7267",
+    "value": 0.7267,
+    "ci_95": [
+      0.6504,
+      0.7917
+    ],
+    "source_file": "eval/program_baseline/score_log.json",
+    "source_field": "pass_at_1",
+    "model": "openrouter/qwen/qwen3-next-80b-a3b-thinking",
+    "date": "2026-04-24"
+  },
+  "mechanism_run": {
+    "claim": "Mechanism pass@1 0.500 on retail domain",
+    "value": 0.5,
+    "source_file": "eval/act4_results.json",
+    "source_field": "pass_at_1",
+    "model": "openrouter/qwen/qwen3-next-80b-a3b-thinking",
+    "date": "2026-04-25"
+  },
+  "delta_a": {
+    "claim": "Delta A +0.167 (50% relative improvement)",
+    "value": 0.167,
+    "source_file": "eval/ablation_results.json",
+    "source_field": "deltas.delta_a_pass_at_1",
+    "statistical_test": "one_sample_ttest",
+    "t_statistic": 4.1977,
+    "p_value": 0.0005,
+    "significant": true,
+    "source_file_2": "eval/statistical_test.json"
+  },
+  "email_latency": {
+    "claim": "p50 latency 1219ms, p95 latency 2440ms across 20 interactions",
+    "p50_ms": 1219.34,
+    "p95_ms": 2440.45,
+    "source_file": "data/traces/",
+    "interactions": 20,
+    "channel": "email via Resend API",
+    "date": "2026-04-25"
+  },
+  "tone_preservation": {
+    "claim": "Tone check scores every email against 5 Tenacious markers",
+    "markers": [
+      "direct",
+      "grounded",
+      "honest",
+      "professional",
+      "non_condescending"
+    ],
+    "good_email_score": "5/5",
+    "bad_email_score": "1/5",
+    "violations_detected": 10,
+    "source_file": "agent/tone_check.py",
+    "cost_per_email_usd": 0.0
+  },
+  "enrichment_pipeline": {
+    "claim": "Pipeline completes in 0.07-0.35s per company",
+    "min_seconds": 0.07,
+    "max_seconds": 0.35,
+    "modules": 5,
+    "source_file": "data/enrichment_outputs/hiring_signal_brief_yellow.ai.json",
+    "companies_tested": 20
+  },
+  "layoffs_dataset": {
+    "claim": "2361 layoff records from layoffs.fyi GitHub mirror",
+    "value": 2361,
+    "source_url": "https://raw.githubusercontent.com/SaiPrabandh/eda-on-layoffs.csv/main/layoffs.csv",
+    "source_file": "data/layoffs_cache.csv",
+    "license": "public"
+  },
+  "crunchbase_dataset": {
+    "claim": "1000 company records from Crunchbase ODM sample",
+    "value": 1000,
+    "source_url": "https://github.com/luminati-io/Crunchbase-dataset-samples",
+    "license": "Apache 2.0",
+    "source_file": "Crunchbase-dataset-samples/crunchbase-companies-information.csv"
+  },
+  "hubspot_contact": {
+    "claim": "HubSpot contact created with enrichment_timestamp and lifecycle progression",
+    "contact_id": "763699518680",
+    "lifecycle_stages": [
+      "lead",
+      "marketingqualifiedlead",
+      "opportunity"
+    ],
+    "source": "HubSpot Developer Sandbox API",
+    "screenshot": "hubspot_yellowai_main.jpg",
+    "date": "2026-04-24"
+  },
+  "calcom_booking": {
+    "claim": "Cal.com booking confirmed with both attendees listed",
+    "attendees": [
+      "Yakob Dereje (Host)",
+      "Marcus Johnson"
+    ],
+    "meeting_duration": "30 minutes",
+    "source": "Cal.com self-hosted localhost:3000",
+    "screenshot": "calcom_booking_confirmation.png",
+    "date": "2026-04-24"
+  },
+  "probe_library": {
+    "claim": "34 adversarial probes across 10 categories",
+    "value": 34,
+    "categories": 10,
+    "source_file": "probes/probe_library.md",
+    "target_failure": "Signal Over-claiming T2.1",
+    "source_file_2": "probes/target_failure_mode.md"
+  },
+  "competitor_gap_brief": {
+    "claim": "Yellow.ai ranked 1 of 11 peers at 90.9th percentile",
+    "rank": 1,
+    "out_of": 11,
+    "percentile": 90.9,
+    "source_file": "data/enrichment_outputs/competitor_gap_brief_yellow.ai.json"
+  },
+  "industry_baselines": {
+    "cold_email_reply_rate": {
+      "claim": "B2B cold email baseline reply rate 1-3%",
+      "value": "1-3%",
+      "source": "LeadIQ 2026, Apollo 2026 benchmarks"
+    },
+    "signal_grounded_reply_rate": {
+      "claim": "Signal-grounded outbound reply rate 7-12%",
+      "value": "7-12%",
+      "source": "Clay 2025, Smartlead 2025 case studies"
+    },
+    "stalled_deal_rate": {
+      "claim": "Manual stalled-thread rate 30-40%",
+      "value": "30-40%",
+      "source": "Tenacious internal baseline, seed/baseline_numbers.md"
+    },
+    "discovery_to_proposal": {
+      "claim": "Discovery-to-proposal conversion 30-50%",
+      "value": "30-50%",
+      "source": "B2B Services Industry Benchmarks"
+    },
+    "proposal_to_close": {
+      "claim": "Proposal-to-close conversion 20-30%",
+      "value": "20-30%",
+      "source": "Professional Services Industry Averages"
+    }
+  },
+  "cost_tracking": {
+    "claim": "Total OpenRouter spend $6.17 of $11.74 credit",
+    "total_used_usd": 6.17,
+    "credit_limit_usd": 11.74,
+    "remaining_usd": 5.57,
+    "act4_run_cost_usd": 2.98,
+    "source": "OpenRouter dashboard \u2014 eval/track_costs.py"
+  },
+  "mechanisms": {
+    "mechanism_1": {
+      "name": "Confidence-Aware Abstention",
+      "source_file": "agent/act4_mechanism.py",
+      "harness_file": "tau2-bench/src/tau2/agent/llm_agent.py",
+      "additional_cost_usd": 0.0,
+      "delta_a": 0.167,
+      "p_value": 0.0005
+    },
+    "mechanism_2": {
+      "name": "Tone Preservation Check",
+      "source_file": "agent/tone_check.py",
+      "markers_checked": 5,
+      "additional_cost_usd": 0.0,
+      "good_email_score": "5/5",
+      "bad_email_violations_caught": 10
+    }
+  }
+}
