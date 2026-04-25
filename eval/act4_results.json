@@ -1,0 +1,23 @@
+{
+  "run_id": "act4_mechanism_run",
+  "date": "2026-04-25",
+  "mechanism": "confidence_aware_abstention_v1",
+  "model_agent": "openrouter/qwen/qwen3-next-80b-a3b-thinking",
+  "model_user": "openrouter/qwen/qwen3-next-80b-a3b-thinking",
+  "domain": "retail",
+  "num_tasks": 30,
+  "num_trials": 1,
+  "max_steps": 80,
+  "evaluated": 20,
+  "infra_errors": 10,
+  "pass_at_1": 0.5,
+  "average_reward": 0.75,
+  "read_actions_pct": 0.873,
+  "write_actions_pct": 0.696,
+  "db_match_pct": 0.75,
+  "cost_usd": 2.98,
+  "baseline_pass_at_1": 0.333,
+  "delta_a": 0.167,
+  "delta_a_pct": 50.0,
+  "completed_at": "2026-04-25T13:24:48.424385"
+}

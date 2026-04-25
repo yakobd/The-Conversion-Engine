@@ -1,0 +1,10 @@
+{
+  "baseline_pass_at_1": 0.333,
+  "mechanism_pass_at_1": 0.5,
+  "delta_a": 0.167,
+  "t_statistic": 4.1977,
+  "p_value": 0.0005,
+  "significant": true,
+  "baseline_n": 22,
+  "mechanism_n": 20
+}
