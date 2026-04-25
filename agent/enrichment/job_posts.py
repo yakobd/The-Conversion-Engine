@@ -90,6 +90,7 @@ async def scrape_job_posts_playwright(
     target_urls.extend([
         f"https://www.builtinnyc.com/company/{company_slug}/jobs",
         f"https://wellfound.com/company/{company_slug}/jobs",
+        f"https://www.linkedin.com/company/{company_slug}/jobs/",
     ])
 
     jobs_found = []
