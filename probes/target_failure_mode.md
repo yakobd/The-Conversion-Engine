@@ -96,3 +96,13 @@ Tenacious-specific success criterion:
 - Fraction of emails with over-claimed signals: < 5%
   (measured from trace logs, confidence field vs language used)
 
+
+## Brand-Reputation Impact
+
+At the measured signal over-claiming rate (~40% of low-confidence outbound):
+- 40 weekly touches × 40% over-claiming = 16 emails/week with unverifiable claims
+- A CTO who spots an over-claimed signal shares the email as an example of bad AI outreach
+- One viral screenshot reaches ~500-2000 connections on LinkedIn (typical CTO network)
+- Brand damage from one wrong-signal email outweighs 2-3 weeks of reply-rate gains
+- The confidence-aware mechanism reduces this from ~40% to <5% of sends
+- Source: Probe P06, probes/probe_library.md; brand-reputation math in memo.pdf Page 2

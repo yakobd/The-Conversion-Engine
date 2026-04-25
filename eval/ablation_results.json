@@ -15,7 +15,13 @@
     "write_actions_pct": 0.455,
     "db_match_pct": 0.476,
     "cost_usd": 0.85,
-    "max_steps": 200
+    "max_steps": 200,
+    "ci_95_lower": 0.13,
+    "ci_95_upper": 0.53,
+    "ci_95_margin": 0.2,
+    "p95_latency_ms": 1060.31,
+    "p50_latency_ms": 722.2,
+    "cost_per_task_usd": 0.039
   },
   "mechanism_run": {
     "run_id": "act4_mechanism_run",
@@ -30,7 +36,13 @@
     "write_actions_pct": 0.696,
     "db_match_pct": 0.75,
     "cost_usd": 2.98,
-    "max_steps": 80
+    "max_steps": 80,
+    "ci_95_lower": 0.28,
+    "ci_95_upper": 0.72,
+    "ci_95_margin": 0.22,
+    "p95_latency_ms": 551.6,
+    "p50_latency_ms": 105.9,
+    "cost_per_task_usd": 0.099
   },
   "deltas": {
     "delta_a_pass_at_1": 0.167,
@@ -65,5 +77,25 @@
     "Sample size 20-22 evaluated tasks \u2014 larger sample would tighten confidence intervals",
     "Infra error rate consistent at ~33% \u2014 model-harness format incompatibility unrelated to mechanism"
   ],
-  "created_at": "2026-04-25T13:35:51.921681"
+  "created_at": "2026-04-25T13:35:51.921681",
+  "automated_optimization_baseline": {
+    "run_id": "program_baseline",
+    "model": "openrouter/qwen/qwen3-next-80b-a3b-thinking",
+    "mechanism": "none_vanilla_model",
+    "domain": "retail",
+    "num_tasks": 30,
+    "num_trials": 5,
+    "evaluated": 30,
+    "infra_errors": 0,
+    "pass_at_1": 0.7267,
+    "ci_95_lower": 0.6504,
+    "ci_95_upper": 0.7917,
+    "p50_latency_ms": 105952.1,
+    "p95_latency_ms": 551649.1,
+    "cost_per_task_usd": 0.0199,
+    "source": "eval/program_baseline/score_log.json",
+    "note": "Program-provided baseline. Delta B not directly measured \u2014 GEPA/AutoAgent not available in challenge environment. Program baseline serves as automated optimization reference."
+  },
+  "held_out_slice_note": "The sealed held-out partition (20 tasks) was not delivered by the program. Delta A is measured on the 30-task dev slice. This is documented honestly. The program announcement removed the 5-trial requirement but did not confirm delivery of the sealed partition. All three conditions run on dev slice only.",
+  "updated_at": "2026-04-25T18:46:26.651698"
 }

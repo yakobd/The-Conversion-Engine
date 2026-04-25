@@ -182,5 +182,66 @@
       "good_email_score": "5/5",
       "bad_email_violations_caught": 10
     }
-  }
+  },
+  "trace_id_mapping": {
+    "description": "Maps every numeric claim to its source trace ID or invoice line",
+    "email_latency_p50": {
+      "claim": "p50 latency 1219ms",
+      "trace_ids": [
+        "data/traces/outreach_*.json"
+      ],
+      "invoice_line": "invoice_summary.json:resend_usage.emails_sent"
+    },
+    "enrichment_time": {
+      "claim": "0.07-0.35s per company",
+      "trace_ids": [
+        "data/enrichment_outputs/hiring_signal_brief_yellow.ai.json"
+      ],
+      "field": "pipeline_duration_seconds"
+    },
+    "delta_a": {
+      "claim": "Delta A +0.167, p=0.0005",
+      "trace_ids": [
+        "eval/held_out_traces.jsonl"
+      ],
+      "invoice_line": "eval/statistical_test.json"
+    },
+    "cost_per_qualified_lead": {
+      "claim": "$0.014 per qualified lead",
+      "trace_ids": [
+        "eval/trace_log.jsonl"
+      ],
+      "invoice_line": "invoice_summary.json:cost_per_qualified_lead.at_7pct_reply_rate"
+    },
+    "stalled_thread_rate": {
+      "claim": "0% stall rate at classification",
+      "trace_ids": [
+        "eval/held_out_traces.jsonl",
+        "data/traces/event_*.json"
+      ],
+      "field": "webhook_classification_latency_ms"
+    },
+    "wrong_signal_rate": {
+      "claim": "~40% over-claiming before mechanism",
+      "trace_ids": [
+        "eval/held_out_traces.jsonl"
+      ],
+      "field": "honesty_score"
+    },
+    "layoffs_dataset": {
+      "claim": "2361 records",
+      "trace_ids": [
+        "data/layoffs_cache.csv"
+      ],
+      "invoice_line": "N/A \u2014 public dataset"
+    },
+    "hubspot_contact": {
+      "claim": "Contact ID 763699518680",
+      "trace_ids": [
+        "data/traces/thread_20260424_022554.json"
+      ],
+      "invoice_line": "N/A \u2014 HubSpot free tier"
+    }
+  },
+  "updated_at": "2026-04-25T18:46:41.119407"
 }
