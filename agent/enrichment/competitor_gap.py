@@ -217,3 +217,56 @@ if __name__ == "__main__":
         print(f"  - {gap['practice']}: {gap['detail'][:60]}")
     print(f"\nOutreach Finding:")
     print(f"  {brief['outreach_finding']}")
+
+# Competitor Gap Brief Schema
+# Every competitor_gap_brief.json must conform to this schema
+COMPETITOR_GAP_BRIEF_SCHEMA = {
+    "prospect": "string — company name",
+    "generated_at": "ISO timestamp",
+    "sector": "string — sector classification",
+    "peers_analyzed": "integer — number of peers scored (5-10)",
+    "prospect_position": {
+        "rank": "integer — 1 = top of sector",
+        "out_of": "integer — total companies including prospect",
+        "percentile": "float — 0-100",
+        "ai_maturity_score": "integer 0-3"
+    },
+    "top_quartile_practices": [
+        {
+            "practice": "string — specific practice name",
+            "evidence": "string — named role, tool, or public statement",
+            "source": "string — Crunchbase / press release / job posting",
+            "prospect_has_it": "boolean",
+            "gap_severity": "string — high/medium/low"
+        }
+    ],
+    "outreach_finding": "string — the research finding for the email hook",
+    "sparse_sector_flag": "boolean — true if fewer than 5 peers found",
+    "sparse_sector_note": "string — fallback explanation if sparse",
+    "confidence": "string — high/medium/low/very_low"
+}
+
+
+def handle_sparse_sector(company_name: str, available_peers: list) -> dict:
+    """
+    Explicit sparse sector handling.
+    Called when fewer than 5 viable competitors are found.
+    Returns a flagged brief with honest acknowledgment.
+    """
+    return {
+        "prospect": company_name,
+        "generated_at": __import__('datetime').datetime.now().isoformat(),
+        "sparse_sector_flag": True,
+        "sparse_sector_note": (
+            f"Only {len(available_peers)} sector peers found in Crunchbase ODM sample. "
+            "Competitor gap analysis requires minimum 5 peers for valid distribution. "
+            "Outreach hook defaults to general sector positioning rather than "
+            "specific gap finding. Human review recommended before sending."
+        ),
+        "peers_analyzed": len(available_peers),
+        "confidence": "very_low",
+        "outreach_finding": (
+            "Based on public signals in your sector, there is growing adoption of "
+            "dedicated engineering capacity for AI and data initiatives."
+        )
+    }
