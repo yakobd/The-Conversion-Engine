@@ -66,10 +66,21 @@ def get_mechanism_metadata() -> dict:
         "mechanism_type": "prompt_injection",
         "additional_llm_calls": 0,
         "additional_cost_usd": 0.0,
+        "reasoning_token_note": (
+            "additional_cost_usd measures extra LLM calls only — correctly zero. "
+            "When run on a thinking model (qwen3-next-80b-a3b-thinking), this "
+            "mechanism's deliberative prompt causes reasoning tokens to constitute "
+            "~97% of output tokens (32:1 reasoning:answer ratio measured across "
+            "30 held-out simulations). Reasoning tokens are billed at output token "
+            "rates. Total mechanism cost = base model cost x ~32x output multiplier. "
+            "Use usage.completion_tokens_details.reasoning_tokens to audit."
+        ),
         "description": (
             "Injects confidence-aware behavioral rules into agent system prompt. "
             "Forces evidence check before claims, abstention on low confidence, "
-            "and grounded language. Zero additional LLM calls."
+            "and grounded language. Zero additional LLM calls. Note: deliberative "
+            "prompts in thinking models generate significant reasoning token volume "
+            "— see reasoning_token_note for cost implications."
         )
     }
 
