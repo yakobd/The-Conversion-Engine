@@ -42,7 +42,7 @@ research per touch with a sub-second automated pipeline.
 │  Tenacious style guide (max 120 words, 5 tone markers)         │
 │  Confidence-aware phrasing (high/medium/low/very_low)          │
 │  Tone preservation check  (blocks score < 3/5)                 │
-│  Backbone LLM: OpenRouter (qwen3-next-80b-a3b-thinking)        │
+│  Deterministic template composer (no LLM call) - see note      │
 └───────────────────────────┬─────────────────────────────────────┘
                             │
               ┌─────────────┴──────────────┐
@@ -160,7 +160,7 @@ agent/
   hubspot_integration.py  HubSpot CRM write, enrichment_timestamp
   calcom_booking.py       Cal.com booking flow and discovery brief
   act4_mechanism.py       Confidence-aware abstention mechanism
-  confidence_phrasing.py  Confidence-aware phrasing module
+  signal_recency.py       Signal recency windows (funding 180d, layoff 120d, leader 90d)
   e2e_thread.py           9-step end-to-end synthetic prospect thread
   enrichment/
     pipeline.py           Master 5-module enrichment pipeline
@@ -209,6 +209,32 @@ invoice_summary.json      LLM spend and operational cost breakdown
 - Delta A: +0.167 (+50% relative) | t=4.1977 | p=0.0005
 
 ---
+
+## Correction and update (post-Week 11 audit)
+
+**The composer is a deterministic template, not an LLM.** `agent/email_agent.py` fills
+segment-specific sentences; the original README box said it ran on an OpenRouter model.
+The Act IV mechanism was a prompt applied to the τ²-Bench retail agent, not to this composer.
+
+**Honest composer (v2, branch `fix/honest-composer`).** Tenacious-Bench v0.2 measured that
+the original composer passed 10/204 real-company briefs: of the signals it pitched as
+"recent", almost none were inside the challenge's buying windows relative to the
+July 2024 Crunchbase snapshot (e.g. a 2014 round described as "post-funding", a 2020
+layoff as a "recent restructuring"). v2:
+- `agent/signal_recency.py` - a signal counts only inside its window (funding 180 days,
+  layoff 120, leadership change 90), measured from the data's snapshot date
+- `classify_icp_segment` uses only in-window signals and abstains (segment `None`,
+  confidence `very_low`) when there are none; stale signals are listed in `reasons`
+- `generate_outreach_email` pitches a segment only on a valid signal; otherwise it sends
+  a short exploratory note that asks rather than asserts (probe P05); region-aware
+  time-zone wording (P28); never says "bench" (P16)
+- the originals are kept as `generate_outreach_email_v1` / `classify_icp_segment_v1`
+  so the Tenacious-Bench "week10" baseline remains reproducible
+- tests: `venv/Scripts/python -m pytest tests/` (12 tests)
+
+Same evaluator, same 204 briefs: v1 10/204 -> v2 204/204. Caveat: almost none of
+these briefs has an in-window signal, so v2 mostly abstains, which is correct but means
+this slice measures safety more than persuasiveness.
 
 ## Known Limitations and Next Steps
 Concrete issues a successor engineer will encounter:
