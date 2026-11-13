@@ -13,13 +13,56 @@ from agent.enrichment.job_posts import get_job_post_signal
 
 OUTPUT_DIR = Path(__file__).parent.parent.parent / "data" / "enrichment_outputs"
 
-def classify_icp_segment(
+def classify_icp_segment(crunchbase: dict, layoffs: dict, leadership: dict, ai_maturity: dict) -> dict:
+    """
+    Classify into an ICP segment using only VALID (in-window) signals:
+    layoff <= 120 days -> Segment 2, technical leadership change <= 90 days ->
+    Segment 3, funding <= 180 days -> Segment 1, AI maturity >= 2 -> Segment 4.
+    Stale signals are reported in the reasons but never drive the segment.
+    No valid signal -> abstain (segment None, confidence 'very_low').
+    """
+    from agent.signal_recency import valid_signals, WINDOWS
+    valid = valid_signals({"firmographics": crunchbase, "layoff_signal": layoffs, "leadership_signal": leadership})
+    scores, reasons = {1: 0, 2: 0, 3: 0, 4: 0}, []
+    if layoffs.get("layoff_detected"):
+        if valid["layoff"]:
+            scores[2] += 3; reasons.append("Layoff in the last 120 days - cost restructuring likely")
+        else:
+            reasons.append(f"Layoff on record but older than {WINDOWS['layoff']} days - not used")
+    if leadership.get("technical_leadership_change"):
+        if valid["leadership"]:
+            scores[3] += 3; reasons.append("New technical leader in the last 90 days - vendor reassessment window")
+        else:
+            reasons.append(f"Leadership change on record but older than {WINDOWS['leadership']} days - not used")
+    ai_score = ai_maturity.get("ai_maturity_score", 0) or 0
+    if ai_score >= 2:
+        scores[4] += 2; reasons.append(f"AI maturity {ai_score}/3 - eligible for Segment 4 pitch")
+    if valid["funding"]:
+        scores[1] += 2; reasons.append("Funding round in the last 180 days - fresh budget")
+    elif crunchbase.get("funding_rounds_list") not in (None, "", "[]", "nan"):
+        reasons.append(f"Funding on record but older than {WINDOWS['funding']} days - not used")
+    best = max(scores, key=lambda k: scores[k])
+    if scores[best] == 0:
+        return {"segment": None, "segment_name": "Abstain - no valid signal", "confidence": "very_low",
+                "scores": scores, "reasons": reasons + ["No in-window signal - send an exploratory note, not a segment pitch"],
+                "signal_recency": valid}
+    names = {1: "Recently-funded startup", 2: "Mid-market restructuring",
+             3: "Engineering leadership transition", 4: "Specialized capability gap"}
+    return {"segment": best, "segment_name": names[best],
+            "confidence": "high" if scores[best] >= 3 else "medium",
+            "scores": scores, "reasons": reasons, "signal_recency": valid}
+
+
+def classify_icp_segment_v1(
     crunchbase: dict,
     layoffs: dict,
     leadership: dict,
     ai_maturity: dict
 ) -> dict:
     """
+    ORIGINAL Week 10 classifier (ignores signal dates), kept unchanged so the
+    Tenacious-Bench exports stay reproducible. Use classify_icp_segment.
+
     Classify prospect into one of four ICP segments.
 
     Segment 1: Recently funded startups
@@ -159,7 +202,10 @@ def generate_outreach_guidance(icp: dict, ai_maturity: dict, crunchbase: dict) -
         "tone": "professional and research-grounded"
     }
 
-    if segment == 1:
+    if segment is None:  # no in-window signal: abstain from a segment pitch (probe P05)
+        guidance["hook"] = "No current public signal - ask about their roadmap rather than assert a need"
+        guidance["pitch_angle"] = "Exploratory note: managed engineering teams or fixed-scope projects, if relevant"
+    elif segment == 1:
         guidance["hook"] = "You recently raised funding — most teams at this stage hit a hiring bottleneck before a delivery bottleneck"
         guidance["pitch_angle"] = "Scale engineering output faster than in-house hiring can support"
         if ai_score >= 2:

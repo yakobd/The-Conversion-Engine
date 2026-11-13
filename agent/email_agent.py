@@ -21,10 +21,12 @@ STAFF_SINK_EMAIL = os.getenv("STAFF_SINK_EMAIL", "sink@tenacious-program.dev")
 TRACE_DIR = Path(__file__).parent.parent / "data" / "traces"
 TRACE_DIR.mkdir(parents=True, exist_ok=True)
 
-def generate_outreach_email(brief: dict) -> dict:
+def generate_outreach_email_v1(brief: dict) -> dict:
     """
-    Generate a personalized outreach email following Tenacious style guide.
-    Max 120 words, signal-grounded, segment-specific subject line.
+    ORIGINAL Week 10 composer, kept unchanged so the Tenacious-Bench "week10"
+    baseline stays reproducible. Known issues (fixed in generate_outreach_email):
+    ignores signal dates, says "post-funding" without funding, says "bench" to
+    prospects, US-centric time-zone wording. Use generate_outreach_email instead.
     """
     prospect = brief.get("prospect", "")
     icp = brief.get("icp_classification", {})
@@ -179,6 +181,119 @@ def generate_outreach_email(brief: dict) -> dict:
         "confidence": confidence,
         "generated_at": datetime.now().isoformat()
     }
+
+
+EUROPE = {"AT", "BE", "CH", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "UK", "GR", "HU", "IE", "IT", "LT",
+          "LU", "LV", "NL", "NO", "PL", "PT", "RO", "SE", "SI", "SK", "UA"}
+NORTH_AMERICA = {"US", "USA", "CA", "MX"}
+
+
+def _overlap_phrase(country_code: str) -> str:
+    cc = (country_code or "").upper()
+    if cc in NORTH_AMERICA:
+        return "with 3-5 hours of daily overlap with US time zones"
+    if cc in EUROPE:
+        return "working within European (CET) business hours"
+    return "with working-hour overlap agreed around your team's day"
+
+
+def _cta(prospect: str) -> str:
+    link = (f"{os.getenv('CALCOM_BASE_URL', 'http://localhost:3000')}/"
+            f"{os.getenv('CALCOM_USERNAME', 'yakob')}/{os.getenv('CALCOM_EVENT_TYPE', '30min')}")
+    return f"Worth 15 minutes to see whether this is relevant for {prospect}? {link}"
+
+
+SIGNATURE = "\nResearch Partner\nTenacious Intelligence Corporation\ngettenacious.com"
+
+
+def generate_outreach_email(brief: dict, as_of: datetime | None = None) -> dict:
+    """
+    Honest composer (v2). Pitches a segment only on a VALID signal: one that
+    exists and is inside its buying window (funding 180d, layoff 120d,
+    leadership 90d - agent/signal_recency.py). With no valid signal, or with
+    very_low confidence, it abstains from a segment pitch and sends a short
+    exploratory note that asks rather than asserts (probe P05). Region-aware
+    overlap wording (P28); never says "bench" to a prospect (P16); Segment 4
+    only at AI maturity >= 2 (P03).
+    """
+    from agent.signal_recency import valid_signals
+
+    prospect = brief.get("prospect", "")
+    icp = brief.get("icp_classification", {}) or {}
+    firmo = brief.get("firmographics", {}) or {}
+    ai = brief.get("ai_maturity", {}) or {}
+    jobs = brief.get("job_post_signal", {}) or {}
+    ai_score = int(ai.get("ai_maturity_score") or 0)
+    confidence = icp.get("confidence") or ai.get("confidence") or "low"
+    valid = valid_signals(brief, as_of)
+    overlap = _overlap_phrase(firmo.get("country_code", ""))
+
+    # choose the segment from VALID signals only (challenge priority: layoff > leadership > funding)
+    if confidence == "very_low":
+        segment = None
+    elif valid["layoff"]:
+        segment = 2
+    elif valid["leadership"]:
+        segment = 3
+    elif valid["funding"]:
+        segment = 1
+    elif ai_score >= 2:
+        segment = 4
+    else:
+        segment = None
+
+    if segment is None:  # abstain: exploratory, no claims beyond the brief
+        industry = firmo.get("industries")
+        industry = ", ".join(industry[:2]) if isinstance(industry, list) else (str(industry).split(",")[0] if industry else "")
+        context = f" in {industry.lower()}" if industry and industry.lower() not in ("nan", "technology") else ""
+        subject = f"A question about engineering at {prospect}"[:60]
+        body_parts = [
+            f"I research engineering teams{context} and could not tell from public information "
+            f"whether {prospect} is adding engineering capacity right now, so I would rather ask than guess.",
+            f"Tenacious runs managed engineering teams and fixed-scope projects {overlap}. "
+            "If capacity or a specific build is on your roadmap this year, a short call may be useful; if not, no follow-up.",
+            _cta(prospect),
+        ]
+    elif segment == 1:
+        subject = f"Context: {prospect} and engineering capacity"[:60]
+        hiring = ("your open engineering roles are growing" if jobs.get("assert_aggressive_hiring")
+                  else "you may be planning to grow the engineering team")
+        body_parts = [
+            f"{prospect} recently raised funding and {hiring}. For teams at this stage the usual bottleneck "
+            "is recruiting capacity, not budget.",
+            f"We run dedicated engineering squads that can start in 7-14 days {overlap}.",
+            _cta(prospect),
+        ]
+    elif segment == 2:
+        subject = f"Note on {prospect}'s recent restructuring"[:60]
+        body_parts = [
+            f"{prospect} went through a restructuring in the last few months. Teams in that position often need "
+            "to keep delivery steady while the cost base resets.",
+            f"Tenacious provides managed engineering teams of full-time employees {overlap}, sized to the work.",
+            _cta(prospect),
+        ]
+    elif segment == 3:
+        subject = "Congratulations on the leadership appointment"
+        body_parts = [
+            f"Congratulations on the recent engineering leadership change at {prospect}. The first 90 days are "
+            "often when the delivery and vendor mix gets a fresh look.",
+            f"If outside engineering capacity is part of that review, we run managed teams {overlap}.",
+            _cta(prospect),
+        ]
+    else:  # segment 4: AI maturity >= 2 and no time-bound signal
+        subject = f"Question on {prospect}'s AI roadmap"[:60]
+        body_parts = [
+            f"Public signals suggest {prospect} is investing in AI. Is there a specific build - an ML platform, "
+            "agentic workflow, or data contracts - where in-house capacity is the constraint?",
+            f"We deliver fixed-scope AI and data engineering projects with engineers available now, {overlap}.",
+            _cta(prospect),
+        ]
+
+    body = "\n\n".join(body_parts + [SIGNATURE])
+    return {"prospect": prospect, "segment": segment or 0, "subject": subject, "body": body,
+            "word_count": len(body.split()), "valid_signals": valid, "ai_maturity_score": ai_score,
+            "confidence": confidence, "draft": True, "composer_version": "v2-honest",
+            "generated_at": datetime.now().isoformat()}
 
 
 def send_outreach_email(

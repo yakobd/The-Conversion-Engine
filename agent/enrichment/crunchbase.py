@@ -48,6 +48,8 @@ def enrich_company(company_name: str) -> dict:
         "found": True,
         "confidence": confidence,
         "last_enriched_at": pd.Timestamp.now().isoformat(),
+        # date the Crunchbase record was scraped: signal recency is measured from here
+        "snapshot_date": str(record.get("timestamp", ""))[:10],
         "name": str(record.get("name", "")),
         "website": str(record.get("website", "")),
         "description": str(record.get("about", "")),
