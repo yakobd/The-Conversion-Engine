@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Send Desk</title>
+<style>
+:root{color-scheme:light;--bg:#f4f4f2;--card:#fcfcfb;--line:#dddcd7;--fg:#0b0b0b;--mut:#6f6e69;--sub:#52514e;--acc:#2a78d6;--acc-soft:#e6f0fc;
+--good:#0ca30c;--good-ink:#006300;--good-soft:#e5f5e5;--bad:#d03b3b;--bad-ink:#a52a2a;--bad-soft:#fbe9e9;--warn-soft:#fdf3dd;--mark:#fde68a;--code:#f0efec}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#121211;--card:#1a1a19;--line:#383835;--fg:#f0efec;--mut:#a3a29a;--sub:#c3c2b7;--acc:#3987e5;--acc-soft:#1b2b40;
+--good-ink:#6fd36f;--good-soft:#15301a;--bad-ink:#f08a8a;--bad-soft:#3a1c1c;--warn-soft:#3a2f12;--mark:#6b5310;--code:#242422}}
+[hidden]{display:none!important}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 "Segoe UI",system-ui,sans-serif}
+header{padding:16px 24px;border-bottom:1px solid var(--line);background:var(--card);display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+header h1{font-size:18px;margin:0}header .sub{color:var(--mut);font-size:13px}.spacer{flex:1}
+.badge{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;background:var(--card)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mut)}.dot.on{background:var(--good)}.dot.warn{background:#fab219}.dot.bad{background:var(--bad)}
+main{display:grid;grid-template-columns:260px minmax(0,1fr) minmax(0,1fr);gap:14px;padding:16px 24px 40px}
+@media(max-width:1100px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.card h2{font-size:14px;margin:0 0 8px}.mut{color:var(--mut)}.small{font-size:12.5px}
+input,textarea,button{font:inherit;color:inherit}
+input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:var(--card)}
+textarea{min-height:230px;resize:vertical;line-height:1.45}
+.list{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:8px;margin-top:8px}
+.item{padding:7px 10px;border-bottom:1px solid var(--line);cursor:pointer}.item:hover{background:var(--code)}.item.sel{background:var(--acc-soft)}
+.item .why{font-size:11.5px;color:var(--mut)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:6px 0 10px}
+.seg button{border:0;background:var(--card);padding:6px 12px;cursor:pointer;color:var(--sub)}.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:var(--acc-soft);color:var(--acc);font-weight:600}
+dl{display:grid;grid-template-columns:120px 1fr;gap:3px 10px;margin:0;font-size:13px}dt{color:var(--mut)}dd{margin:0;overflow-wrap:anywhere}
+.verdict{font-size:20px;font-weight:700;display:flex;align-items:center;gap:10px;margin:2px 0 10px}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:600}
+.pass{background:var(--good-soft);color:var(--good-ink)}.fail{background:var(--bad-soft);color:var(--bad-ink)}.neutral{background:var(--code);color:var(--sub)}
+.dims{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.v{border-left:3px solid var(--bad);background:var(--code);border-radius:6px;padding:6px 9px;margin-bottom:6px}
+.v .code{font-family:ui-monospace,Consolas,monospace;font-size:12px;font-weight:700;color:var(--bad-ink)}
+.preview{background:var(--code);border-radius:8px;padding:10px 12px;white-space:pre-wrap;font-size:13px;margin-top:8px}
+mark{background:var(--mark);color:inherit;border-radius:3px}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600}
+.btn.primary{background:var(--acc);border-color:var(--acc);color:#fff}.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.blocked{background:var(--bad-soft);border-color:var(--bad);color:var(--bad-ink);opacity:1}
+.note{font-size:12.5px;background:var(--code);border-radius:8px;padding:8px 10px;margin-top:8px}.note.warn{background:var(--warn-soft)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.judging{font-size:12px;color:var(--mut)}
+.hist{font-size:12.5px;border-top:1px solid var(--line);padding:6px 0}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Live send desk</h1><div class="sub">Week 10 writes the email · Week 11 judges it · only a pass is sent</div></div>
+  <span class="spacer"></span>
+  <nav><a href="/" style="margin-right:12px;font-weight:600;color:var(--acc);text-decoration:none">Single email</a><a href="/autopilot" style="margin-right:12px;font-weight:600;color:var(--sub);text-decoration:none">Autopilot</a></nav>
+  <span class="badge" id="b-eval"><span class="dot"></span>evaluator</span>
+  <span class="badge" id="b-mode"><span class="dot"></span>mode</span>
+  <span class="badge" id="b-to"><span class="dot"></span>delivery</span>
+  <span class="badge" id="b-writer"><span class="dot"></span>writer</span>
+</header>
+<main>
+  <section class="card">
+    <h2>1 · Pick a company</h2>
+    <input type="text" id="q" placeholder="Search 1,000 Crunchbase companies…">
+    <div class="small mut" style="margin-top:8px">Good demo picks:</div>
+    <div id="featured"></div>
+    <div class="list" id="results"></div>
+    <div class="small mut" style="margin-top:6px">Held-out benchmark companies are hidden (sealed test set).</div>
+  </section>
+
+  <section class="card">
+    <h2>2 · Research &amp; compose (Week 10)</h2>
+    <div id="brief" class="mut small">Pick a company: the real Week 10 enrichment pipeline runs on it.</div>
+    <div id="who" class="row" style="margin-top:10px" hidden>
+      <input type="text" id="first" placeholder="Recipient first name (optional)" style="max-width:240px">
+      <span class="small mut" id="sender"></span>
+    </div>
+    <div class="seg" id="composer" hidden>
+      <button data-v="v1">Original template (v1)</button><button data-v="v2">Honest template (v2)</button><button data-v="v3">LLM writer (v3)</button>
+    </div>
+    <div id="writerinfo" class="small mut" style="margin:-4px 0 8px"></div>
+    <div id="editor" hidden>
+      <input type="text" id="subject" placeholder="Subject">
+      <textarea id="body" style="margin-top:8px"></textarea>
+      <div class="small mut">Edit freely: the judge re-runs as you type.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>3 · Pre-send check (Week 11 evaluator)</h2>
+    <div id="judge" class="mut small">The judgment appears here before anything can be sent.</div>
+    <div id="sendbox" hidden>
+      <div id="tobox" class="row" style="margin-top:10px" hidden>
+        <input type="text" id="to" placeholder="Recipient (live mode)" style="flex:1">
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn primary" id="send">Send</button>
+        <span id="route" class="small mut"></span>
+      </div>
+      <div id="result"></div>
+    </div>
+    <h2 style="margin-top:16px">Recent sends</h2>
+    <div id="history" class="small mut">None yet.</div>
+  </section>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let CFG = null, CUR = null, COMPOSER = "v2", lastJudge = null, timer = null, seq = 0;
+
+async function api(path, body) {
+  const r = await fetch(path, body ? {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)} : {});
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) { const e = new Error(typeof data.detail === "string" ? data.detail : (data.detail && data.detail.message) || r.statusText); e.data = data; e.status = r.status; throw e; }
+  return data;
+}
+
+function badge(id, cls, text) { const b = $(id); b.innerHTML = `<span class="dot ${cls}"></span>${esc(text)}`; }
+
+async function loadConfig() {
+  CFG = await api("/api/config");
+  const o = CFG.outbound, ev = CFG.evaluator;
+  badge("#b-eval", ev.ok ? "on" : "bad", ev.ok ? `Week 11 evaluator v${ev.version}` : "evaluator missing");
+  badge("#b-mode", o.mode === "off" ? "" : o.mode === "redirect" ? "warn" : "bad", `OUTBOUND_MODE=${o.mode}`);
+  const to = o.mode === "off" ? "dry run: nothing leaves this machine" : o.mode === "redirect" ? `to demo inbox ${o.demo_inbox || "(not set)"}` : "live: to the address you type";
+  badge("#b-to", o.ready ? "on" : "bad", o.ready ? to : `not ready: ${o.problem}`);
+  const w = CFG.writer;
+  badge("#b-writer", w.available ? "on" : "", w.available ? `LLM writer: ${w.model.split("/").pop()} · $${w.spent_usd.toFixed(4)} of $${w.budget_usd.toFixed(2)}` : "LLM writer off (no OpenRouter key)");
+  $("#sender").textContent = `Signing as ${CFG.persona.name}, ${CFG.persona.title} · ${CFG.persona.booking_url}`;
+  $("#tobox").hidden = o.mode !== "live";
+}
+
+async function search(q) {
+  const r = await api(`/api/companies?q=${encodeURIComponent(q)}&limit=60`);
+  $("#results").innerHTML = r.names.map(n => `<div class="item" data-n="${esc(n)}">${esc(n)}</div>`).join("") || `<div class="item mut">No match</div>`;
+}
+
+async function loadFeatured() {
+  const r = await api("/api/featured");
+  $("#featured").innerHTML = r.featured.map(f => `<div class="item" data-n="${esc(f.name)}"><b>${esc(f.name)}</b><div class="why">${esc(f.why)}</div></div>`).join("");
+}
+
+function sig(label, s) { return s ? `<dt>${label}</dt><dd>${s}</dd>` : ""; }
+
+async function pick(name) {
+  document.querySelectorAll(".item").forEach(i => i.classList.toggle("sel", i.dataset.n === name));
+  $("#brief").innerHTML = `<span class="judging">Running the Week 10 enrichment pipeline on ${esc(name)}…</span>`;
+  $("#judge").innerHTML = ""; $("#sendbox").hidden = true; $("#result").innerHTML = "";
+  try { CUR = await api("/api/research", {name, first_name: $("#first").value || null}); } catch (e) { $("#brief").innerHTML = `<span style="color:var(--bad-ink)">${esc(e.message)}</span>`; return; }
+  const b = CUR.brief, f = b.funding, l = b.layoff_signal || {}, ld = b.leadership_signal || {}, icp = b.icp_classification || {};
+  const fresh = ok => ok ? `<span class="pill pass">in window</span>` : `<span class="pill fail">stale</span>`;
+  $("#brief").innerHTML = `<dl>
+    <dt>Prospect</dt><dd><b>${esc(b.prospect)}</b> ${b.firmographics.country_code && b.firmographics.country_code !== "nan" ? "· " + esc(b.firmographics.country_code) : ""}</dd>
+    <dt>Snapshot</dt><dd>${esc(b.snapshot_date)} <span class="mut">(recency is measured from here)</span></dd>
+    <dt>Segment (v1)</dt><dd>${esc(icp.segment)} · ${esc(icp.segment_name)} <span class="mut">(${esc(icp.confidence)})</span></dd>
+    ${f ? sig("Funding", `${esc(f.latest_round)} on ${esc(f.announced_on)}, ${esc(f.days_before_snapshot)} days before ${fresh(f.recent)}`) : sig("Funding", "none on record")}
+    ${l.layoff_detected ? sig("Layoff", `${esc(l.date)} ${fresh(l.within_window)}`) : ""}
+    ${ld.leadership_change_detected ? sig("Leadership", `${esc(ld.event || "")} ${esc(ld.date || "")} ${fresh(ld.within_window)}`) : ""}
+    <dt>AI maturity</dt><dd>${esc(b.ai_maturity.ai_maturity_score)}/3</dd>
+  </dl><div class="small mut" style="margin-top:6px">Researched in ${CUR.research_ms} ms with Week 10's pipeline</div>`;
+  $("#composer").hidden = false; $("#editor").hidden = false; $("#who").hidden = false;
+  setComposer(COMPOSER);
+}
+
+async function setComposer(v) {
+  COMPOSER = v;
+  document.querySelectorAll("#composer button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+  $("#writerinfo").textContent = "";
+  if (v === "v3" && !CUR.emails.v3) {
+    $("#writerinfo").textContent = `Writing with ${CFG.writer.model} using the Week 11 teacher prompt…`;
+    $("#judge").innerHTML = `<div class="judging">Waiting for the draft…</div>`;
+    try {
+      const w = await api("/api/write", {name: CUR.name, first_name: $("#first").value || null});
+      CUR.emails.v3 = w.email;
+      $("#writerinfo").textContent = `Drafted by ${w.model} in ${w.write_ms} ms`;
+      loadConfig();
+    } catch (e) { $("#writerinfo").textContent = e.message; return; }
+  }
+  $("#subject").value = CUR.emails[v].subject; $("#body").value = CUR.emails[v].body;
+  judgeNow();
+}
+
+async function fixWithWriter() {
+  const btn = $("#fix"); if (btn) { btn.disabled = true; btn.textContent = "Rewriting with the judge's findings…"; }
+  try {
+    const w = await api("/api/write", {name: CUR.name, first_name: $("#first").value || null,
+                                       email: {subject: $("#subject").value, body: $("#body").value}});
+    $("#subject").value = w.email.subject; $("#body").value = w.email.body;
+    $("#writerinfo").textContent = w.model ? `Rewritten by ${w.model} from the judge's violations (${w.write_ms} ms)` : w.note;
+    loadConfig(); judgeNow();
+  } catch (e) { $("#writerinfo").textContent = e.message; if (btn) btn.disabled = false; }
+}
+
+function needles(vs) {
+  const out = new Set();
+  for (const v of vs) {
+    for (const m of (v.evidence || "").matchAll(/'([^']{2,80})'/g)) out.add(m[1]);
+    const head = (v.evidence || "").split(" (")[0];
+    if (head.length >= 3 && head.length <= 60 && !/^\d+ [<>]/.test(head) && !/^(none|no )/i.test(head)) out.add(head);
+  }
+  return [...out].sort((a, b) => b.length - a.length);
+}
+function highlight(text, ns) {
+  let h = esc(text);
+  for (const n of ns) { const re = new RegExp(esc(n).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"); h = h.replace(re, m => `<mark>${m}</mark>`); }
+  return h;
+}
+
+function scheduleJudge() { clearTimeout(timer); $("#judge").querySelector(".judging") || ($("#judge").insertAdjacentHTML("afterbegin", `<div class="judging">Judging…</div>`)); timer = setTimeout(judgeNow, 300); }
+
+async function judgeNow() {
+  if (!CUR) return;
+  const mine = ++seq, email = {subject: $("#subject").value, body: $("#body").value};
+  let j; try { j = await api("/api/judge", {name: CUR.name, email}); } catch (e) { $("#judge").innerHTML = `<span style="color:var(--bad-ink)">${esc(e.message)}</span>`; return; }
+  if (mine !== seq) return;
+  lastJudge = j;
+  const dims = Object.entries(j.checks).map(([d, c]) => `<span class="pill ${c.pass ? "pass" : "fail"}">${c.pass ? "✓" : "✕"} ${esc(d.replace("_", " "))}</span>`).join("");
+  const vs = j.violations.map(v => `<div class="v"><span class="code">${esc(v.code)}</span> <span class="small mut">· ${esc(v.dimension)}</span><div class="small">${esc(v.evidence)}</div></div>`).join("");
+  $("#judge").innerHTML = `
+    <div class="verdict"><span class="pill ${j.all_pass ? "pass" : "fail"}" style="font-size:15px;padding:4px 12px">${j.all_pass ? "✓ PASS: cleared to send" : "✕ FAIL: blocked"}</span></div>
+    <div class="dims">${dims}</div>${vs || `<div class="small mut">No violations.</div>`}
+    ${!j.all_pass && CFG.writer.available ? `<button class="btn" id="fix" style="margin:4px 0 6px">Ask the LLM writer to fix it</button>` : ""}
+    <div class="preview"><b>${highlight(email.subject, needles(j.violations))}</b>\n\n${highlight(email.body, needles(j.violations))}</div>
+    <div class="small mut" style="margin-top:6px">Tenacious-Bench evaluator v${esc(j.evaluator_version)} · judged in ${j.judge_ms} ms</div>`;
+  $("#sendbox").hidden = false;
+  const o = CFG.outbound, btn = $("#send");
+  btn.disabled = !j.all_pass || !o.ready;
+  btn.className = "btn " + (j.all_pass ? "primary" : "blocked");
+  btn.textContent = !j.all_pass ? "Blocked by evaluator" : o.mode === "off" ? "Send (dry run)" : o.mode === "redirect" ? "Send to demo inbox" : "Send live";
+  $("#route").textContent = !j.all_pass ? "Fix the violations to unlock sending" : o.mode === "off" ? "OUTBOUND_MODE=off: recorded, not sent"
+    : o.mode === "redirect" ? `Goes to ${o.demo_inbox}, labelled with the intended prospect` : "Goes to the address you type";
+}
+
+async function send() {
+  const btn = $("#send"); btn.disabled = true; $("#result").innerHTML = `<div class="judging">Re-judging on the server and sending…</div>`;
+  try {
+    const r = await api("/api/send", {name: CUR.name, email: {subject: $("#subject").value, body: $("#body").value}, composer: COMPOSER, to: $("#to").value || null});
+    const d = r.delivery, ok = d.status === "sent";
+    $("#result").innerHTML = `<div class="note ${ok ? "" : "warn"}"><b>${ok ? "✓ Sent" : d.status === "dry_run" ? "Dry run" : "Not sent"}</b> · ${esc(d.why)}${d.routed_to ? ` · to ${esc(d.routed_to)}` : ""}${d.message_id ? `<br>Resend id <code>${esc(d.message_id)}</code>` : ""}${d.error ? `<br>${esc(d.error)}` : ""}</div>`;
+  } catch (e) {
+    $("#result").innerHTML = `<div class="note warn"><b>${esc(e.message)}</b>${e.status === 409 ? " (the server re-ran the judge: the gate cannot be skipped from the browser)" : ""}</div>`;
+  }
+  btn.disabled = !(lastJudge && lastJudge.all_pass);
+  loadHistory();
+}
+
+async function loadHistory() {
+  const r = await api("/api/sends");
+  $("#history").innerHTML = r.sends.length ? r.sends.map(s => `<div class="hist"><span class="pill ${s.verdict === "pass" ? "pass" : "fail"}">${esc(s.verdict)}</span>
+    <b>${esc(s.company)}</b> · ${esc(s.composer)} · <span class="mut">${esc(s.delivery.status)}${s.delivery.routed_to ? " → " + esc(s.delivery.routed_to) : ""}</span>
+    <div class="mut">${esc(s.ts)} · ${esc(s.subject)}${s.violations.length ? " · " + esc(s.violations.join(", ")) : ""}</div></div>`).join("") : "None yet.";
+}
+
+document.addEventListener("click", e => {
+  const it = e.target.closest(".item[data-n]"); if (it) pick(it.dataset.n);
+  const cb = e.target.closest("#composer button"); if (cb) setComposer(cb.dataset.v);
+  if (e.target.id === "fix") fixWithWriter();
+});
+$("#q").addEventListener("input", e => search(e.target.value));
+$("#subject").addEventListener("input", scheduleJudge);
+$("#body").addEventListener("input", scheduleJudge);
+$("#send").addEventListener("click", send);
+$("#first").addEventListener("change", () => { if (CUR) pick(CUR.name); });
+(async () => {
+  await loadConfig(); loadFeatured(); search(""); loadHistory();
+  const p = new URLSearchParams(location.search);   // e.g. ?company=Styloosh&composer=v1
+  if (["v1", "v2", "v3"].includes(p.get("composer"))) COMPOSER = p.get("composer");
+  if (p.get("first")) $("#first").value = p.get("first");
+  if (p.get("company")) pick(p.get("company"));
+})();
+</script>
+</body>
+</html>

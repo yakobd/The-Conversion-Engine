@@ -299,11 +299,13 @@ def generate_outreach_email(brief: dict, as_of: datetime | None = None) -> dict:
 def send_outreach_email(
     to_email: str,
     email_content: dict,
-    dry_run: bool = True
+    dry_run: bool = True,
+    brief: dict | None = None,
 ) -> dict:
     """
-    Send outreach email via Resend.
+    Send outreach email via Resend (agent/outbound.py).
     dry_run=True logs without sending (safe default).
+    brief: if given, the Week 11 evaluator judges the email first and a failing email is blocked.
     """
     start_time = time.time()
     trace_id = f"email_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
@@ -341,27 +343,32 @@ def send_outreach_email(
         result["latency_ms"] = 0
         return result
 
-    try:
-        if dry_run or not OUTBOUND_ENABLED:
-            time.sleep(0.1)
-            result["status"] = "dry_run_success"
-            result["message_id"] = f"dry_run_{trace_id}"
-            result["routed_to"] = "staff_sink"
-        else:
-            # Route to staff sink unless explicitly enabled
-            actual_recipient = to_email if OUTBOUND_ENABLED else STAFF_SINK_EMAIL
-            response = resend.Emails.send({
-                "from": "onboarding@resend.dev",
-                "to": actual_recipient,
-                "subject": email_content.get("subject"),
-                "text": email_content.get("body")
-            })
-            result["status"] = "sent"
-            result["message_id"] = response.get("id")
+    # Week 11 pre-send gate: when the brief is supplied, the frozen Tenacious-Bench evaluator must pass
+    # the email on all five dimensions before anything is delivered.
+    if brief is not None:
+        from agent import send_gate
+        try:
+            judgment = send_gate.judge(brief, email_content)
+        except send_gate.EvaluatorUnavailable as e:
+            result.update(status="blocked_no_evaluator", error=str(e), latency_ms=0)
+            return result
+        result["judgment"] = {"all_pass": judgment["all_pass"], "violations": [v["code"] for v in judgment["violations"]]}
+        if not send_gate.allowed(judgment):
+            result.update(status="blocked_by_evaluator", latency_ms=0)
+            return result
 
-    except Exception as e:
-        result["status"] = "error"
-        result["error"] = str(e)
+    # Delivery: agent/outbound.py (OUTBOUND_MODE off | redirect | live). dry_run=True never sends.
+    # (Replaces the old branch whose "staff sink" fallback could never run: it was only reached when
+    # OUTBOUND_ENABLED was already true, so enabled outbound went straight to the prospect.)
+    if dry_run:
+        result["status"] = "dry_run_success"
+        result["message_id"] = f"dry_run_{trace_id}"
+        result["routed_to"] = None
+    else:
+        from agent import outbound
+        d = outbound.deliver(to_email, email_content.get("subject", ""), email_content.get("body", ""))
+        result.update(status=d["status"], message_id=d["message_id"], routed_to=d["routed_to"], error=d["error"],
+                      outbound_mode=d["mode"])
 
     end_time = time.time()
     result["latency_ms"] = round((end_time - start_time) * 1000, 2)

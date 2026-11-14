@@ -236,6 +236,53 @@ Same evaluator, same 204 briefs: v1 10/204 -> v2 204/204. Caveat: almost none of
 these briefs has an in-window signal, so v2 mostly abstains, which is correct but means
 this slice measures safety more than persuasiveness.
 
+## Live send desk: Week 10 writes, Week 11 judges, only a pass is sent
+
+```bash
+cp env.example .env        # fill in RESEND_API_KEY, DEMO_INBOX, OUTBOUND_MODE (see below)
+venv/Scripts/python -m agent.live_desk.server     # http://127.0.0.1:8100
+```
+
+1. **Pick a company.** You can choose any of the 1,000 Crunchbase companies (held-out benchmark companies are hidden). The real enrichment pipeline builds its brief in the same format the benchmark used.
+2. **Compose.** Use the original composer (v1) or the honest composer (v2). The draft is editable.
+3. **Judge.** The frozen **Tenacious-Bench evaluator v0.2.1** from the sibling Week 11 repo (`TB_DIR`) scores the draft live as you type: 5 dimensions, plus every violation with the evidence that triggered it.
+4. **Send.** Only a full pass can be sent. The server re-judges, so the browser can't skip the gate. Delivery goes through **Resend** according to `OUTBOUND_MODE`:
+
+| Mode | Delivery |
+|---|---|
+| `off` (default) | Nothing leaves the machine; the send is logged as a dry run |
+| `redirect` | Everything goes to `DEMO_INBOX`, with the intended prospect named in the subject and body |
+| `live` | Goes to an address **you type**. The desk never emails company data. An optional `ALLOWED_RECIPIENTS` allowlist applies. |
+
+Resend's test sender (`onboarding@resend.dev`) only delivers to the address you signed up to Resend with. To send anywhere else, verify a domain in Resend and set `RESEND_FROM`.
+
+The gate reproduces the published benchmark exactly: v1 passes 10/204 briefs and v2 passes 204/204 (`tests/test_live_send.py`). `send_outreach_email(..., brief=...)` applies the same gate in the pipeline.
+
+**Fix included:** the old send branch's "staff sink" fallback could never run. It was only reached when `OUTBOUND_ENABLED` was already true, so enabled outbound went straight to the prospect. Delivery now goes through `agent/outbound.py` with the explicit modes above.
+
+### Autopilot (`/autopilot`): the judge is the gatekeeper, a human decides only what it still rejects
+
+**Start a run** by choosing a writer and up to 10 companies. Each company follows one of three paths:
+
+| Path | Who handles it |
+|---|---|
+| Passes the judge on the first try | **Sent automatically** |
+| Fails, then the judge's violations become **improvement instructions** for the LLM writer, and the **improved email** passes **final verification** (up to 2 rewrites) | **Sent automatically, no human needed** |
+| **Still failing** after the rewrites | Waits in **Needs your decision**. The admin can **try another fix**, **edit** it (edits are re-judged), or **reject** it. A failing email can never be sent. |
+
+**Activity log:** every company is recorded with its full timeline: first draft, verdict, instructions, each improved version and its verification, and the email that was actually sent.
+
+**Settings and safety:**
+
+| Setting or control | Effect |
+|---|---|
+| `AUTOPILOT_APPROVE_FIXED=1` | Fixed emails also wait for an admin (a stricter review mode) |
+| `AUTOPILOT_MAX_PER_RUN` (default 10) | Caps the number of companies per run |
+| `AUTOPILOT_SEND_DELAY_S` (default 2) | Spaces sends out |
+| **Stop** button | Halts the current run |
+| `OUTBOUND_MODE=off` | Nothing leaves the machine |
+| Live mode | Never sends automatically; every send needs a typed recipient |
+
 ## Known Limitations and Next Steps
 Concrete issues a successor engineer will encounter:
 

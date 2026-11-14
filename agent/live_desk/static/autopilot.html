@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autopilot</title>
+<style>
+:root{color-scheme:light;--bg:#f4f4f2;--card:#fcfcfb;--line:#dddcd7;--fg:#0b0b0b;--mut:#6f6e69;--sub:#52514e;--acc:#2a78d6;--acc-soft:#e6f0fc;
+--good:#0ca30c;--good-ink:#006300;--good-soft:#e5f5e5;--bad:#d03b3b;--bad-ink:#a52a2a;--bad-soft:#fbe9e9;--warn:#fab219;--warn-soft:#fdf3dd;--mark:#fde68a;--code:#f0efec}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#121211;--card:#1a1a19;--line:#383835;--fg:#f0efec;--mut:#a3a29a;--sub:#c3c2b7;--acc:#3987e5;--acc-soft:#1b2b40;
+--good-ink:#6fd36f;--good-soft:#15301a;--bad-ink:#f08a8a;--bad-soft:#3a1c1c;--warn-soft:#3a2f12;--mark:#6b5310;--code:#242422}}
+[hidden]{display:none!important}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 "Segoe UI",system-ui,sans-serif}
+header{padding:14px 24px;border-bottom:1px solid var(--line);background:var(--card);display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+header h1{font-size:18px;margin:0}header .sub{color:var(--mut);font-size:13px}.spacer{flex:1}
+nav a{margin-right:12px;color:var(--sub);text-decoration:none;font-weight:600}nav a.on{color:var(--acc)}
+.badge{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px}
+main{padding:16px 24px 40px;display:flex;flex-direction:column;gap:14px}
+.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:14px}@media(max-width:1100px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.card h2{font-size:14.5px;margin:0 0 4px}.mut{color:var(--mut)}.small{font-size:12.5px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+select,input,textarea,button{font:inherit;color:inherit}select,input,textarea{border:1px solid var(--line);border-radius:8px;padding:6px 9px;background:var(--card)}
+textarea{width:100%;min-height:160px}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 13px;cursor:pointer;font-weight:600}
+.btn.primary{background:var(--acc);border-color:var(--acc);color:#fff}.btn.good{background:var(--good);border-color:var(--good);color:#fff}.btn:disabled{opacity:.5;cursor:not-allowed}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:600;white-space:nowrap}
+.pass{background:var(--good-soft);color:var(--good-ink)}.fail{background:var(--bad-soft);color:var(--bad-ink)}.wait{background:var(--warn-soft);color:var(--fg)}.neutral{background:var(--code);color:var(--sub)}.info{background:var(--acc-soft);color:var(--acc)}
+.item{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px;background:var(--card)}
+.tl{border-left:2px solid var(--line);margin:10px 0 4px 6px;padding-left:14px}
+.st{position:relative;margin-bottom:12px}.st:before{content:"";position:absolute;left:-21px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--line)}
+.st.s-ok:before{background:var(--good)}.st.s-bad:before{background:var(--bad)}.st.s-wait:before{background:var(--warn)}.st.s-info:before{background:var(--acc)}
+.st h3{font-size:13px;margin:0 0 4px}
+.mail{background:var(--code);border-radius:8px;padding:9px 11px;white-space:pre-wrap;font-size:12.8px}
+.mail b{display:block;margin-bottom:6px}
+.v{font-size:12.5px;border-left:3px solid var(--bad);padding:3px 8px;margin:3px 0;background:var(--code);border-radius:4px}
+.v code{font-weight:700;color:var(--bad-ink)}
+.instr{white-space:pre-wrap;font-family:ui-monospace,Consolas,monospace;font-size:12px;background:var(--warn-soft);border-radius:8px;padding:8px 10px}
+mark{background:var(--mark);color:inherit;border-radius:3px}
+.log{width:100%;border-collapse:collapse;font-size:13px}.log td,.log th{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.log th{color:var(--sub);font-size:12px;background:var(--code)}.log tr.click{cursor:pointer}.log tr.click:hover td{background:var(--code)}
+.counts{display:flex;gap:8px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Autopilot</h1><div class="sub">The Week 11 judge is the gatekeeper · passing and fixed emails go out on their own · you only decide what it still rejects</div></div>
+  <span class="spacer"></span>
+  <nav><a href="/">Single email</a><a href="/autopilot" class="on">Autopilot</a></nav>
+  <span class="badge" id="mode">mode</span>
+</header>
+<main>
+  <section class="card">
+    <div class="row">
+      <label class="small">Writer
+        <select id="writer">
+          <option value="v1">Week 10 original template (v1): fails often, shows the fix loop</option>
+          <option value="v3" selected>LLM writer (v3)</option>
+          <option value="v2">Week 10 honest template (v2): almost always passes</option>
+        </select></label>
+      <label class="small">Companies <input id="count" type="number" min="1" max="10" value="5" style="width:70px"></label>
+      <button class="btn primary" id="start">Start run</button>
+      <button class="btn" id="stop" hidden>Stop</button>
+      <span class="spacer"></span>
+      <div class="counts" id="counts"></div>
+    </div>
+    <div class="small mut" id="status" style="margin-top:8px"></div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Needs your decision</h2>
+      <p class="small mut" style="margin:0 0 10px">Only emails the judge <b>still</b> rejects after the automatic fixes. Each shows the first draft, the judge's instructions, every improved version and its verification. Try another fix, edit it (it is judged again), or reject it. A failing email can never be sent.</p>
+      <div id="queue"></div>
+    </section>
+    <section class="card">
+      <h2>Activity log</h2>
+      <p class="small mut" style="margin:0 0 10px">Everything the autopilot did. Click a row for its full timeline, including the sent email.</p>
+      <table class="log"><thead><tr><th>Company</th><th>Status</th><th>Path</th><th>Updated</th></tr></thead><tbody id="log"></tbody></table>
+      <div id="detail" style="margin-top:10px"></div>
+    </section>
+  </div>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let STATE = null, OPEN = null, EDITING = null, timer = null;
+
+async function api(path, body) {
+  const r = await fetch(path, body ? {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)} : {});
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) { const d = data.detail; const e = new Error(typeof d === "string" ? d : (d && (d.error || d.message)) || r.statusText); e.data = d; throw e; }
+  return data;
+}
+
+const STATUS = {
+  sent: ["pass", "sent"], awaiting_approval: ["wait", "needs recipient"], blocked: ["fail", "needs decision"], rejected: ["neutral", "rejected"],
+  drafting: ["info", "drafting…"], fixing: ["info", "fixing…"], sending: ["info", "sending…"], queued: ["neutral", "queued"],
+  send_failed: ["fail", "send failed"], error: ["fail", "error"], stopped: ["neutral", "stopped"],
+};
+const pill = s => { const [c, t] = STATUS[s] || ["neutral", s]; return `<span class="pill ${c}">${esc(t)}</span>`; };
+
+function needles(vs) {
+  const out = new Set();
+  for (const v of vs || []) {
+    for (const m of (v.evidence || "").matchAll(/'([^']{2,80})'/g)) out.add(m[1]);
+    const h = (v.evidence || "").split(" (")[0];
+    if (h.length >= 3 && h.length <= 60 && !/^\d+ [<>]/.test(h) && !/^(none|no )/i.test(h)) out.add(h);
+  }
+  return [...out].sort((a, b) => b.length - a.length);
+}
+function mail(email, vs) {
+  let s = esc(email.subject), b = esc(email.body);
+  for (const n of needles(vs)) { const re = new RegExp(esc(n).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"); s = s.replace(re, m => `<mark>${m}</mark>`); b = b.replace(re, m => `<mark>${m}</mark>`); }
+  return `<div class="mail"><b>${s}</b>${b}</div>`;
+}
+const vlist = vs => (vs || []).map(v => `<div class="v"><code>${esc(v.code)}</code> · ${esc(v.dimension)}: ${esc(v.evidence)}</div>`).join("");
+const dims = c => Object.entries(c || {}).map(([d, ok]) => `<span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓" : "✕"} ${esc(d.replace("_", " "))}</span>`).join(" ");
+
+function timeline(it) {
+  const tl = it.data.timeline;
+  const nextVerdict = i => { for (let k = i + 1; k < tl.length; k++) if (tl[k].step === "judge" || tl[k].step === "verify") return tl[k]; return null; };
+  return `<div class="tl">` + tl.map((s, i) => {
+    switch (s.step) {
+      case "draft": { const j = nextVerdict(i); return `<div class="st s-info"><h3>1 · First draft <span class="mut small">by ${esc(s.by)}</span></h3>${mail(s.email, j && j.violations)}</div>`; }
+      case "judge": return `<div class="st ${s.verdict === "pass" ? "s-ok" : "s-bad"}"><h3>2 · Week 11 judge: ${s.verdict === "pass" ? "PASS" : "FAIL"}</h3><div>${dims(s.checks)}</div>${vlist(s.violations)}</div>`;
+      case "instructions": return `<div class="st s-wait"><h3>3 · Improvement instructions to the writer <span class="mut small">(attempt ${esc(s.attempt)})</span></h3><div class="instr">${esc(s.text)}</div></div>`;
+      case "rewrite": { const j = nextVerdict(i); return `<div class="st s-info"><h3>4 · Improved email <span class="mut small">by ${esc(s.by)}</span></h3>${mail(s.email, j && j.violations)}</div>`; }
+      case "admin_edit": return `<div class="st s-info"><h3>Admin edit <span class="mut small">by ${esc(s.by)}</span></h3>${mail(s.email, [])}</div>`;
+      case "verify": return `<div class="st ${s.verdict === "pass" ? "s-ok" : "s-bad"}"><h3>5 · Final verification: ${s.verdict === "pass" ? "PASS" : "FAIL"}</h3><div>${dims(s.checks)}</div>${vlist(s.violations)}</div>`;
+      case "awaiting_approval": case "needs_recipient": return `<div class="st s-wait"><h3>Waiting for an admin</h3><div class="small">${esc(s.note)}</div></div>`;
+      case "blocked": return `<div class="st s-bad"><h3>Blocked</h3><div class="small">${esc(s.note)}</div></div>`;
+      case "approved": return `<div class="st s-ok"><h3>Sent by ${esc(s.by)}</h3></div>`;
+      case "retry_requested": return `<div class="st s-info"><h3>Admin asked for another fix</h3></div>`;
+      case "rejected": return `<div class="st s-bad"><h3>Rejected by ${esc(s.by)}</h3><div class="small">${esc(s.reason)}</div></div>`;
+      case "send": { const d = s.delivery || {}; const ok = d.status === "sent";
+        return `<div class="st ${ok || d.status === "dry_run" ? "s-ok" : "s-bad"}"><h3>${ok ? "Sent" : d.status === "dry_run" ? "Dry run (OUTBOUND_MODE=off)" : "Not sent"} ${s.approved_by ? `<span class="mut small">by ${esc(s.approved_by)} after review</span>` : tl.some(x => x.step === "rewrite") ? `<span class="mut small">automatically, after the fix passed final verification</span>` : `<span class="mut small">automatically: passed on the first try</span>`}</h3>
+          <div class="small">${esc(d.why || "")}${d.routed_to ? ` · to ${esc(d.routed_to)}` : ""}${d.message_id ? ` · Resend id <code>${esc(d.message_id)}</code>` : ""}${d.error ? ` · ${esc(d.error)}` : ""}</div>${mail(s.email, [])}</div>`; }
+      case "error": return `<div class="st s-bad"><h3>Error</h3><div class="small">${esc(s.error)}</div></div>`;
+      case "stopped": return `<div class="st"><h3>Stopped</h3><div class="small">${esc(s.note)}</div></div>`;
+      default: return "";
+    }
+  }).join("") + `</div>`;
+}
+
+function finalEmail(it) { const tl = it.data.timeline; for (let i = tl.length - 1; i >= 0; i--) if (tl[i].email) return tl[i].email; return {subject: "", body: ""}; }
+
+function queueCard(it) {
+  const editing = EDITING === it.id, e = finalEmail(it), live = STATE.mode === "live";
+  return `<div class="item" id="q-${it.id}">
+    <div class="row"><b>${esc(it.company)}</b>${pill(it.status)}<span class="mut small">${esc(it.writer)} · ${esc(it.id)}</span></div>
+    ${timeline(it)}
+    ${editing ? `<div style="margin:6px 0"><input id="es-${it.id}" value="${esc(e.subject)}" style="width:100%;margin-bottom:6px"><textarea id="eb-${it.id}">${esc(e.body)}</textarea>
+       <div class="small mut">Your edit is judged again before anything is sent.</div></div>` : ""}
+    ${live ? `<input id="to-${it.id}" placeholder="Recipient (live mode)" style="width:100%;margin:6px 0">` : ""}
+    <div class="row">
+      ${it.status === "awaiting_approval" && !editing ? `<button class="btn good" data-a="approve" data-id="${it.id}">Approve &amp; send</button>` : ""}
+      ${it.status === "blocked" && !editing && STATE.fixer ? `<button class="btn primary" data-a="retry" data-id="${it.id}">Try another fix</button>` : ""}
+      ${editing ? `<button class="btn good" data-a="approve-edit" data-id="${it.id}">Re-judge &amp; send</button><button class="btn" data-a="cancel" data-id="${it.id}">Cancel</button>`
+                : `<button class="btn" data-a="edit" data-id="${it.id}">Edit</button>`}
+      <button class="btn" data-a="reject" data-id="${it.id}">Reject</button>
+      <span class="small" id="msg-${it.id}"></span>
+    </div></div>`;
+}
+
+function pathLabel(it) {
+  const st = it.data.timeline.map(s => s.step);
+  if (st.includes("send") && st.includes("approved")) return st.includes("admin_edit") ? "failed → edited by admin → sent" : "failed → reviewed → sent";
+  if (st.includes("send")) return st.includes("rewrite") ? "failed → fixed → sent automatically" : "passed first try → sent automatically";
+  if (st.includes("rejected")) return "failed → rejected by admin";
+  if (st.includes("rewrite")) return "failed → fixed";
+  if (st.includes("judge")) return st.includes("blocked") ? "failed → blocked" : "judged";
+  return "";
+}
+
+function render() {
+  const s = STATE;
+  $("#mode").textContent = `OUTBOUND_MODE=${s.mode}${s.fixer ? " · fixer: " + s.fixer : " · no fixer (set OPENROUTER_API_KEY)"}`;
+  $("#start").disabled = s.running; $("#stop").hidden = !s.running;
+  const order = ["sent", "awaiting_approval", "blocked", "rejected", "drafting", "fixing", "sending", "queued", "error"];
+  $("#counts").innerHTML = order.filter(k => s.counts[k]).map(k => `${pill(k)} <b>${s.counts[k]}</b>`).join(" ");
+  $("#status").textContent = s.running ? `Run ${s.run_id} in progress… (max ${s.max_per_run} per run, paced sends)` : (s.run_id ? `Run ${s.run_id} finished.` : "Start a run to let the autopilot work through companies.");
+  if (!EDITING) {
+    const q = s.items.filter(i => i.status === "awaiting_approval" || i.status === "blocked");
+    $("#queue").innerHTML = q.length ? q.map(queueCard).join("") : `<div class="small mut">Nothing needs you right now.</div>`;
+  }
+  $("#log").innerHTML = s.items.map(it => `<tr class="click" data-open="${it.id}"><td><b>${esc(it.company)}</b><div class="small mut">${esc(it.writer)}</div></td>
+    <td>${pill(it.status)}</td><td class="small">${esc(pathLabel(it))}</td><td class="small mut">${esc(it.updated.slice(11, 19))}</td></tr>`).join("")
+    || `<tr><td colspan="4" class="mut small">No activity yet.</td></tr>`;
+  const o = OPEN && s.items.find(i => i.id === OPEN);
+  $("#detail").innerHTML = o ? `<div class="item"><div class="row"><b>${esc(o.company)}</b>${pill(o.status)}<span class="spacer"></span><button class="btn" data-a="close">Close</button></div>${timeline(o)}</div>` : "";
+}
+
+async function refresh() {
+  try { STATE = await api("/api/autopilot"); render(); } catch (e) { $("#status").textContent = e.message; }
+  clearTimeout(timer); timer = setTimeout(refresh, STATE && STATE.running ? 1500 : 5000);
+}
+
+document.addEventListener("click", async e => {
+  const row = e.target.closest("[data-open]"); if (row) { OPEN = row.dataset.open; render(); return; }
+  const b = e.target.closest("[data-a]"); if (!b) return;
+  const id = b.dataset.id, a = b.dataset.a, msg = id && $(`#msg-${id}`);
+  const to = id && $(`#to-${id}`) ? $(`#to-${id}`).value : null;
+  if (a === "close") { OPEN = null; render(); return; }
+  if (a === "edit") { EDITING = id; render(); EDITING = id; return; }
+  if (a === "cancel") { EDITING = null; render(); return; }
+  try {
+    b.disabled = true;
+    if (a === "approve") { await api(`/api/autopilot/${id}/approve`, {by: "admin", to}); }
+    if (a === "retry") { b.textContent = "Fixing…"; await api(`/api/autopilot/${id}/retry`, {}); }
+    if (a === "approve-edit") { await api(`/api/autopilot/${id}/approve`, {by: "admin", to, email: {subject: $(`#es-${id}`).value, body: $(`#eb-${id}`).value}}); EDITING = null; }
+    if (a === "reject") { await api(`/api/autopilot/${id}/reject`, {by: "admin", reason: "rejected in review"}); }
+  } catch (err) {
+    if (msg) msg.innerHTML = `<span class="pill fail">${esc(err.message)}</span>` + (err.data && err.data.violations ? " " + err.data.violations.map(v => esc(v.code)).join(", ") : "");
+    b.disabled = false; if (a === "approve-edit") { EDITING = null; } refresh(); return;
+  }
+  refresh();
+});
+$("#start").addEventListener("click", async () => {
+  try { await api("/api/autopilot/start", {writer: $("#writer").value, count: Number($("#count").value)}); refresh(); }
+  catch (e) { $("#status").textContent = e.message; }
+});
+$("#stop").addEventListener("click", async () => { await api("/api/autopilot/stop", {}); refresh(); });
+refresh();
+</script>
+</body>
+</html>
