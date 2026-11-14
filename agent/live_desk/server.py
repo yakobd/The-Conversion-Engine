@@ -373,6 +373,14 @@ def autopilot_approve(item_id: str, body: ApproveIn):
     return r
 
 
+@app.post("/api/autopilot/{item_id}/retry")
+def autopilot_retry(item_id: str):
+    r = autopilot().retry(item_id, "admin")
+    if not r["ok"]:
+        raise HTTPException(409, detail=r)
+    return r
+
+
 class RejectIn(BaseModel):
     by: str = Field("admin", max_length=60)
     reason: str = Field("", max_length=300)

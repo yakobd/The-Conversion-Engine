@@ -260,21 +260,23 @@ The gate reproduces the published benchmark exactly: v1 passes 10/204 briefs and
 
 **Fix included:** the old send branch's "staff sink" fallback could never run. It was only reached when `OUTBOUND_ENABLED` was already true, so enabled outbound went straight to the prospect. Delivery now goes through `agent/outbound.py` with the explicit modes above.
 
-### Autopilot (`/autopilot`): the judge is the gatekeeper, a human handles only what it rejected
+### Autopilot (`/autopilot`): the judge is the gatekeeper, a human decides only what it still rejects
 
-**Start a run** by choosing a writer and up to 10 companies. For each company:
-1. **The draft is judged first.** A draft that passes on the first try is **sent automatically**.
-2. **A failing draft gets fixed.** The judge's violations become **improvement instructions** for the LLM writer. It produces an **improved email**, which goes through **final verification**; there are up to 2 rewrites.
-3. **A fixed email still needs a person.** It waits in **Needs your approval**, where the admin sees the whole story (first draft → instructions → improved email → verification) and chooses **Approve & send**, **Edit**, or **Reject**.
-4. **Edits are judged again** before anything is sent.
-5. **Emails that still fail are blocked** and cannot be approved.
+**Start a run** by choosing a writer and up to 10 companies. Each company follows one of three paths:
 
-**Activity log:** every run is recorded, with the path each email took and the email that was sent.
-
-**Safety controls:**
-
-| Control | What it does |
+| Path | Who handles it |
 |---|---|
+| Passes the judge on the first try | **Sent automatically** |
+| Fails, then the judge's violations become **improvement instructions** for the LLM writer, and the **improved email** passes **final verification** (up to 2 rewrites) | **Sent automatically, no human needed** |
+| **Still failing** after the rewrites | Waits in **Needs your decision**. The admin can **try another fix**, **edit** it (edits are re-judged), or **reject** it. A failing email can never be sent. |
+
+**Activity log:** every company is recorded with its full timeline: first draft, verdict, instructions, each improved version and its verification, and the email that was actually sent.
+
+**Settings and safety:**
+
+| Setting or control | Effect |
+|---|---|
+| `AUTOPILOT_APPROVE_FIXED=1` | Fixed emails also wait for an admin (a stricter review mode) |
 | `AUTOPILOT_MAX_PER_RUN` (default 10) | Caps the number of companies per run |
 | `AUTOPILOT_SEND_DELAY_S` (default 2) | Spaces sends out |
 | **Stop** button | Halts the current run |

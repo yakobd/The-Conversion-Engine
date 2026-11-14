@@ -46,18 +46,37 @@ def test_perfect_email_is_sent_automatically_without_admin(tmp_path):
     assert it["status"] == "sent" and steps(ap, it["id"]) == ["draft", "judge", "send"] and sent[0][0] == "A"
 
 
-def test_failed_email_is_fixed_then_waits_for_admin_and_is_sent_after_approval(tmp_path):
+def test_failed_email_that_gets_fixed_is_sent_automatically_with_full_log(tmp_path):
     ap, sent = make(tmp_path, {"B": BAD}, fixes=[FIXED])
     ap.start(["B"], "v1", background=False)
     it = ap.store.items()[0]
-    assert it["status"] == "awaiting_approval" and sent == []
-    assert steps(ap, it["id"]) == ["draft", "judge", "instructions", "rewrite", "verify", "awaiting_approval"]
+    assert it["status"] == "sent" and sent[0][1] == FIXED  # no human needed: the fix passed final verification
+    assert steps(ap, it["id"]) == ["draft", "judge", "instructions", "rewrite", "verify", "send"]
     tl = it["data"]["timeline"]
     assert tl[1]["verdict"] == "fail" and "FUNDING_NOT_RECENT" in tl[2]["text"] and tl[4]["verdict"] == "pass"
-    r = ap.approve(it["id"], "admin")
-    assert r["ok"] and sent[0][1] == FIXED and ap.store.get(it["id"])["status"] == "sent"
-    assert steps(ap, it["id"])[-2:] == ["approved", "send"]
+    assert tl[5]["approved_by"] is None and tl[5]["email"] == FIXED  # the log records exactly what was sent
     assert ap.approve(it["id"], "admin")["ok"] is False  # cannot be sent twice
+
+
+def test_review_mode_keeps_fixed_emails_for_an_admin(tmp_path, monkeypatch):
+    monkeypatch.setenv("AUTOPILOT_APPROVE_FIXED", "1")
+    ap, sent = make(tmp_path, {"B": BAD}, fixes=[FIXED])
+    ap.start(["B"], "v1", background=False)
+    iid = ap.store.items()[0]["id"]
+    assert ap.store.get(iid)["status"] == "awaiting_approval" and sent == []
+    assert ap.approve(iid, "admin")["ok"] and sent[0][1] == FIXED and steps(ap, iid)[-2:] == ["approved", "send"]
+
+
+def test_admin_can_ask_for_another_fix_on_a_blocked_email(tmp_path):
+    ap, sent = make(tmp_path, {"C": BAD}, fixes=[BAD, BAD, FIXED])
+    ap.start(["C"], "v1", background=False)
+    iid = ap.store.items()[0]["id"]
+    assert ap.store.get(iid)["status"] == "blocked"
+    r = ap.retry(iid, "admin")
+    assert r["ok"] and r["status"] == "sent" and sent[0][1] == FIXED
+    st = steps(ap, iid)
+    assert "retry_requested" in st and st.count("rewrite") == 3 and st[-1] == "send"
+    assert ap.retry(iid, "admin")["ok"] is False  # only blocked emails can be retried
 
 
 def test_still_failing_after_fixes_is_blocked_and_cannot_be_approved(tmp_path):
@@ -96,7 +115,7 @@ def test_live_mode_never_auto_sends(tmp_path):
 
 def test_reject_and_run_cap(tmp_path, monkeypatch):
     monkeypatch.setenv("AUTOPILOT_MAX_PER_RUN", "2")
-    ap, sent = make(tmp_path, {"A": GOOD, "B": BAD, "C": GOOD}, fixes=[FIXED])
+    ap, sent = make(tmp_path, {"A": GOOD, "B": BAD, "C": GOOD}, fixes=[BAD, BAD])  # B stays blocked
     ap.start(["A", "B", "C"], "v3", background=False)
     items = {i["company"]: i for i in ap.store.items()}
     assert set(items) == {"A", "B"}  # capped at 2

@@ -7,9 +7,11 @@ For each company in a run:
     PASS             -> sent automatically (status: sent)
     FAIL             -> the violations become improvement instructions for the LLM writer
                         -> improved email -> final verification by the judge (up to MAX_FIXES rewrites)
-                        -> verified : waits for an admin (status: awaiting_approval)
-                        -> still failing: blocked (status: blocked); the admin may edit it, it is re-judged
-    admin approves   -> re-judged on the server, then sent (status: sent, approved_by recorded)
+                        -> verified : sent automatically, no human needed (status: sent)
+                        -> still failing: blocked (status: blocked) -> the admin decides:
+                           another fix (retry), an edit (re-judged), or reject
+    admin sends      -> re-judged on the server, then sent (status: sent, approved_by recorded)
+AUTOPILOT_APPROVE_FIXED=1 restores human review for fixed emails too.
 
 Every step is appended to the item's timeline, so the admin sees the first draft, the judge's
 instructions, the improved email, the final verification and the sent email.
@@ -99,6 +101,8 @@ class Autopilot:
         self.store, self.research, self.compose, self.judge = store, research, compose, judge
         self.rewrite, self.instructions, self.deliver, self.outbound_mode = rewrite, instructions, deliver, outbound_mode
         self.send_delay_s = float(os.getenv("AUTOPILOT_SEND_DELAY_S", "2")) if send_delay_s is None else send_delay_s
+        # default: a fix that passes final verification is sent without a human; set 1 to review fixed emails too
+        self.approve_fixed = os.getenv("AUTOPILOT_APPROVE_FIXED", "0") == "1"
         self.stop_flag = threading.Event()
         self.thread: threading.Thread | None = None
         self.run_id: str | None = None
@@ -153,8 +157,13 @@ class Autopilot:
             self._send(iid, name, email, j, approved_by=None)
             return
         # failed: the judge's findings become instructions for the writer, then a final verification
-        attempt, current = 0, email
-        while not j["all_pass"] and attempt < MAX_FIXES and self.rewrite is not None:
+        current, j, attempt = self._fix(iid, name, brief, email, j, start=0, tries=MAX_FIXES)
+        self._after_fix(iid, name, current, j, attempt)
+
+    def _fix(self, iid: str, name: str, brief: dict, current: dict, j: dict, start: int, tries: int):
+        """Up to `tries` rewrites, each driven by the judge's violations and re-verified by the judge."""
+        attempt = start
+        while not j["all_pass"] and attempt < start + tries and self.rewrite is not None:
             attempt += 1
             self.store.set_status(iid, "fixing")
             self.store.step(iid, "instructions", text=self.instructions(j["violations"]), attempt=attempt)
@@ -163,12 +172,37 @@ class Autopilot:
             j = self.judge(brief, current)
             self.store.step(iid, "verify", verdict="pass" if j["all_pass"] else "fail", violations=j["violations"],
                             checks={d: c["pass"] for d, c in j["checks"].items()}, attempt=attempt)
+        return current, j, attempt
+
+    def _after_fix(self, iid: str, name: str, current: dict, j: dict, attempt: int) -> None:
+        """Verified fix -> sent automatically (no human). Still failing -> the admin decides."""
         if j["all_pass"]:
-            self.store.step(iid, "awaiting_approval", "awaiting_approval",
-                            note="the first draft failed; the improved email passed final verification and needs an admin")
+            if self.outbound_mode() == "live":
+                self.store.step(iid, "needs_recipient", "awaiting_approval",
+                                note="fixed and verified; live mode has no recipient on file, an admin must type the address")
+            elif self.approve_fixed:
+                self.store.step(iid, "awaiting_approval", "awaiting_approval",
+                                note="fixed and verified; AUTOPILOT_APPROVE_FIXED=1 asks an admin to confirm fixed emails")
+            else:
+                self._send(iid, name, current, j, approved_by=None)
         else:
             why = "no LLM writer configured" if self.rewrite is None else f"still failing after {attempt} rewrite(s)"
-            self.store.step(iid, "blocked", "blocked", note=f"{why}: cannot be sent until it passes")
+            self.store.step(iid, "blocked", "blocked", note=f"{why}: an admin decides (another fix, an edit, or reject)")
+
+    def retry(self, iid: str, by: str) -> dict:
+        """Admin asks the writer for one more fix on a blocked email. A verified fix is then sent automatically."""
+        it = self.store.get(iid)
+        if not it or it["status"] != "blocked":
+            return {"ok": False, "error": "only blocked emails can be retried"}
+        if self.rewrite is None:
+            return {"ok": False, "error": "no LLM writer configured"}
+        done = sum(1 for s in it["data"]["timeline"] if s["step"] == "rewrite")
+        self.store.step(iid, "retry_requested", by=by)
+        brief = self.research(it["company"])
+        current = self.final_email(it)
+        current, j, attempt = self._fix(iid, it["company"], brief, current, self.judge(brief, current), start=done, tries=1)
+        self._after_fix(iid, it["company"], current, j, attempt)
+        return {"ok": True, "status": self.store.get(iid)["status"]}
 
     def _send(self, iid: str, name: str, email: dict, j: dict, approved_by: str | None, to: str | None = None) -> dict:
         if self.send_delay_s:
@@ -180,7 +214,8 @@ class Autopilot:
 
     # ── admin actions ───────────────────────────────────────────────────
     def approve(self, iid: str, by: str, email: dict | None = None, to: str | None = None) -> dict:
-        """Approve an item the judge rejected at first. The email (optionally edited) is re-judged here."""
+        """Admin sends an item that needs a human (blocked, or awaiting in live mode / review mode).
+        The email (optionally edited) is re-judged here: a failing email can never be sent."""
         it = self.store.get(iid)
         if not it or it["status"] not in ("awaiting_approval", "blocked"):
             return {"ok": False, "error": f"item is {it['status'] if it else 'missing'}, not awaiting approval"}

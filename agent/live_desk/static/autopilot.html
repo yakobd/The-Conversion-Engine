@@ -43,7 +43,7 @@ mark{background:var(--mark);color:inherit;border-radius:3px}
 </head>
 <body>
 <header>
-  <div><h1>Autopilot</h1><div class="sub">The Week 11 judge is the gatekeeper · perfect emails go out on their own · you only handle what it rejected</div></div>
+  <div><h1>Autopilot</h1><div class="sub">The Week 11 judge is the gatekeeper · passing and fixed emails go out on their own · you only decide what it still rejects</div></div>
   <span class="spacer"></span>
   <nav><a href="/">Single email</a><a href="/autopilot" class="on">Autopilot</a></nav>
   <span class="badge" id="mode">mode</span>
@@ -68,8 +68,8 @@ mark{background:var(--mark);color:inherit;border-radius:3px}
 
   <div class="grid">
     <section class="card">
-      <h2>Needs your approval</h2>
-      <p class="small mut" style="margin:0 0 10px">These failed the judge at first. Each one shows the first draft, the judge's instructions, the improved email and the final verification. Nothing here is sent until you approve, and the server re-judges before sending.</p>
+      <h2>Needs your decision</h2>
+      <p class="small mut" style="margin:0 0 10px">Only emails the judge <b>still</b> rejects after the automatic fixes. Each shows the first draft, the judge's instructions, every improved version and its verification. Try another fix, edit it (it is judged again), or reject it. A failing email can never be sent.</p>
       <div id="queue"></div>
     </section>
     <section class="card">
@@ -93,7 +93,7 @@ async function api(path, body) {
 }
 
 const STATUS = {
-  sent: ["pass", "sent"], awaiting_approval: ["wait", "needs approval"], blocked: ["fail", "blocked"], rejected: ["neutral", "rejected"],
+  sent: ["pass", "sent"], awaiting_approval: ["wait", "needs recipient"], blocked: ["fail", "needs decision"], rejected: ["neutral", "rejected"],
   drafting: ["info", "drafting…"], fixing: ["info", "fixing…"], sending: ["info", "sending…"], queued: ["neutral", "queued"],
   send_failed: ["fail", "send failed"], error: ["fail", "error"], stopped: ["neutral", "stopped"],
 };
@@ -129,10 +129,11 @@ function timeline(it) {
       case "verify": return `<div class="st ${s.verdict === "pass" ? "s-ok" : "s-bad"}"><h3>5 · Final verification: ${s.verdict === "pass" ? "PASS" : "FAIL"}</h3><div>${dims(s.checks)}</div>${vlist(s.violations)}</div>`;
       case "awaiting_approval": case "needs_recipient": return `<div class="st s-wait"><h3>Waiting for an admin</h3><div class="small">${esc(s.note)}</div></div>`;
       case "blocked": return `<div class="st s-bad"><h3>Blocked</h3><div class="small">${esc(s.note)}</div></div>`;
-      case "approved": return `<div class="st s-ok"><h3>Approved by ${esc(s.by)}</h3></div>`;
+      case "approved": return `<div class="st s-ok"><h3>Sent by ${esc(s.by)}</h3></div>`;
+      case "retry_requested": return `<div class="st s-info"><h3>Admin asked for another fix</h3></div>`;
       case "rejected": return `<div class="st s-bad"><h3>Rejected by ${esc(s.by)}</h3><div class="small">${esc(s.reason)}</div></div>`;
       case "send": { const d = s.delivery || {}; const ok = d.status === "sent";
-        return `<div class="st ${ok || d.status === "dry_run" ? "s-ok" : "s-bad"}"><h3>${ok ? "Sent" : d.status === "dry_run" ? "Dry run (OUTBOUND_MODE=off)" : "Not sent"} ${s.approved_by ? `<span class="mut small">after approval by ${esc(s.approved_by)}</span>` : `<span class="mut small">automatically: passed on the first try</span>`}</h3>
+        return `<div class="st ${ok || d.status === "dry_run" ? "s-ok" : "s-bad"}"><h3>${ok ? "Sent" : d.status === "dry_run" ? "Dry run (OUTBOUND_MODE=off)" : "Not sent"} ${s.approved_by ? `<span class="mut small">by ${esc(s.approved_by)} after review</span>` : tl.some(x => x.step === "rewrite") ? `<span class="mut small">automatically, after the fix passed final verification</span>` : `<span class="mut small">automatically: passed on the first try</span>`}</h3>
           <div class="small">${esc(d.why || "")}${d.routed_to ? ` · to ${esc(d.routed_to)}` : ""}${d.message_id ? ` · Resend id <code>${esc(d.message_id)}</code>` : ""}${d.error ? ` · ${esc(d.error)}` : ""}</div>${mail(s.email, [])}</div>`; }
       case "error": return `<div class="st s-bad"><h3>Error</h3><div class="small">${esc(s.error)}</div></div>`;
       case "stopped": return `<div class="st"><h3>Stopped</h3><div class="small">${esc(s.note)}</div></div>`;
@@ -153,6 +154,7 @@ function queueCard(it) {
     ${live ? `<input id="to-${it.id}" placeholder="Recipient (live mode)" style="width:100%;margin:6px 0">` : ""}
     <div class="row">
       ${it.status === "awaiting_approval" && !editing ? `<button class="btn good" data-a="approve" data-id="${it.id}">Approve &amp; send</button>` : ""}
+      ${it.status === "blocked" && !editing && STATE.fixer ? `<button class="btn primary" data-a="retry" data-id="${it.id}">Try another fix</button>` : ""}
       ${editing ? `<button class="btn good" data-a="approve-edit" data-id="${it.id}">Re-judge &amp; send</button><button class="btn" data-a="cancel" data-id="${it.id}">Cancel</button>`
                 : `<button class="btn" data-a="edit" data-id="${it.id}">Edit</button>`}
       <button class="btn" data-a="reject" data-id="${it.id}">Reject</button>
@@ -162,8 +164,9 @@ function queueCard(it) {
 
 function pathLabel(it) {
   const st = it.data.timeline.map(s => s.step);
-  if (st.includes("send") && !st.includes("approved")) return "passed first try → sent automatically";
-  if (st.includes("approved")) return "failed → fixed → approved → sent";
+  if (st.includes("send") && st.includes("approved")) return st.includes("admin_edit") ? "failed → edited by admin → sent" : "failed → reviewed → sent";
+  if (st.includes("send")) return st.includes("rewrite") ? "failed → fixed → sent automatically" : "passed first try → sent automatically";
+  if (st.includes("rejected")) return "failed → rejected by admin";
   if (st.includes("rewrite")) return "failed → fixed";
   if (st.includes("judge")) return st.includes("blocked") ? "failed → blocked" : "judged";
   return "";
@@ -203,6 +206,7 @@ document.addEventListener("click", async e => {
   try {
     b.disabled = true;
     if (a === "approve") { await api(`/api/autopilot/${id}/approve`, {by: "admin", to}); }
+    if (a === "retry") { b.textContent = "Fixing…"; await api(`/api/autopilot/${id}/retry`, {}); }
     if (a === "approve-edit") { await api(`/api/autopilot/${id}/approve`, {by: "admin", to, email: {subject: $(`#es-${id}`).value, body: $(`#eb-${id}`).value}}); EDITING = null; }
     if (a === "reject") { await api(`/api/autopilot/${id}/reject`, {by: "admin", reason: "rejected in review"}); }
   } catch (err) {
