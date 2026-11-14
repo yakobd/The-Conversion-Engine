@@ -51,6 +51,7 @@ mark{background:var(--mark);color:inherit;border-radius:3px}
   <span class="badge" id="b-eval"><span class="dot"></span>evaluator</span>
   <span class="badge" id="b-mode"><span class="dot"></span>mode</span>
   <span class="badge" id="b-to"><span class="dot"></span>delivery</span>
+  <span class="badge" id="b-writer"><span class="dot"></span>writer</span>
 </header>
 <main>
   <section class="card">
@@ -65,9 +66,14 @@ mark{background:var(--mark);color:inherit;border-radius:3px}
   <section class="card">
     <h2>2 · Research &amp; compose (Week 10)</h2>
     <div id="brief" class="mut small">Pick a company: the real Week 10 enrichment pipeline runs on it.</div>
-    <div class="seg" id="composer" hidden>
-      <button data-v="v1">Original composer (v1)</button><button data-v="v2">Honest composer (v2)</button>
+    <div id="who" class="row" style="margin-top:10px" hidden>
+      <input type="text" id="first" placeholder="Recipient first name (optional)" style="max-width:240px">
+      <span class="small mut" id="sender"></span>
     </div>
+    <div class="seg" id="composer" hidden>
+      <button data-v="v1">Original template (v1)</button><button data-v="v2">Honest template (v2)</button><button data-v="v3">LLM writer (v3)</button>
+    </div>
+    <div id="writerinfo" class="small mut" style="margin:-4px 0 8px"></div>
     <div id="editor" hidden>
       <input type="text" id="subject" placeholder="Subject">
       <textarea id="body" style="margin-top:8px"></textarea>
@@ -113,6 +119,9 @@ async function loadConfig() {
   badge("#b-mode", o.mode === "off" ? "" : o.mode === "redirect" ? "warn" : "bad", `OUTBOUND_MODE=${o.mode}`);
   const to = o.mode === "off" ? "dry run: nothing leaves this machine" : o.mode === "redirect" ? `to demo inbox ${o.demo_inbox || "(not set)"}` : "live: to the address you type";
   badge("#b-to", o.ready ? "on" : "bad", o.ready ? to : `not ready: ${o.problem}`);
+  const w = CFG.writer;
+  badge("#b-writer", w.available ? "on" : "", w.available ? `LLM writer: ${w.model.split("/").pop()} · $${w.spent_usd.toFixed(4)} of $${w.budget_usd.toFixed(2)}` : "LLM writer off (no OpenRouter key)");
+  $("#sender").textContent = `Signing as ${CFG.persona.name}, ${CFG.persona.title} · ${CFG.persona.booking_url}`;
   $("#tobox").hidden = o.mode !== "live";
 }
 
@@ -132,7 +141,7 @@ async function pick(name) {
   document.querySelectorAll(".item").forEach(i => i.classList.toggle("sel", i.dataset.n === name));
   $("#brief").innerHTML = `<span class="judging">Running the Week 10 enrichment pipeline on ${esc(name)}…</span>`;
   $("#judge").innerHTML = ""; $("#sendbox").hidden = true; $("#result").innerHTML = "";
-  try { CUR = await api("/api/research", {name}); } catch (e) { $("#brief").innerHTML = `<span style="color:var(--bad-ink)">${esc(e.message)}</span>`; return; }
+  try { CUR = await api("/api/research", {name, first_name: $("#first").value || null}); } catch (e) { $("#brief").innerHTML = `<span style="color:var(--bad-ink)">${esc(e.message)}</span>`; return; }
   const b = CUR.brief, f = b.funding, l = b.layoff_signal || {}, ld = b.leadership_signal || {}, icp = b.icp_classification || {};
   const fresh = ok => ok ? `<span class="pill pass">in window</span>` : `<span class="pill fail">stale</span>`;
   $("#brief").innerHTML = `<dl>
@@ -144,15 +153,37 @@ async function pick(name) {
     ${ld.leadership_change_detected ? sig("Leadership", `${esc(ld.event || "")} ${esc(ld.date || "")} ${fresh(ld.within_window)}`) : ""}
     <dt>AI maturity</dt><dd>${esc(b.ai_maturity.ai_maturity_score)}/3</dd>
   </dl><div class="small mut" style="margin-top:6px">Researched in ${CUR.research_ms} ms with Week 10's pipeline</div>`;
-  $("#composer").hidden = false; $("#editor").hidden = false;
+  $("#composer").hidden = false; $("#editor").hidden = false; $("#who").hidden = false;
   setComposer(COMPOSER);
 }
 
-function setComposer(v) {
+async function setComposer(v) {
   COMPOSER = v;
   document.querySelectorAll("#composer button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+  $("#writerinfo").textContent = "";
+  if (v === "v3" && !CUR.emails.v3) {
+    $("#writerinfo").textContent = `Writing with ${CFG.writer.model} using the Week 11 teacher prompt…`;
+    $("#judge").innerHTML = `<div class="judging">Waiting for the draft…</div>`;
+    try {
+      const w = await api("/api/write", {name: CUR.name, first_name: $("#first").value || null});
+      CUR.emails.v3 = w.email;
+      $("#writerinfo").textContent = `Drafted by ${w.model} in ${w.write_ms} ms`;
+      loadConfig();
+    } catch (e) { $("#writerinfo").textContent = e.message; return; }
+  }
   $("#subject").value = CUR.emails[v].subject; $("#body").value = CUR.emails[v].body;
   judgeNow();
+}
+
+async function fixWithWriter() {
+  const btn = $("#fix"); if (btn) { btn.disabled = true; btn.textContent = "Rewriting with the judge's findings…"; }
+  try {
+    const w = await api("/api/write", {name: CUR.name, first_name: $("#first").value || null,
+                                       email: {subject: $("#subject").value, body: $("#body").value}});
+    $("#subject").value = w.email.subject; $("#body").value = w.email.body;
+    $("#writerinfo").textContent = w.model ? `Rewritten by ${w.model} from the judge's violations (${w.write_ms} ms)` : w.note;
+    loadConfig(); judgeNow();
+  } catch (e) { $("#writerinfo").textContent = e.message; if (btn) btn.disabled = false; }
 }
 
 function needles(vs) {
@@ -183,6 +214,7 @@ async function judgeNow() {
   $("#judge").innerHTML = `
     <div class="verdict"><span class="pill ${j.all_pass ? "pass" : "fail"}" style="font-size:15px;padding:4px 12px">${j.all_pass ? "✓ PASS: cleared to send" : "✕ FAIL: blocked"}</span></div>
     <div class="dims">${dims}</div>${vs || `<div class="small mut">No violations.</div>`}
+    ${!j.all_pass && CFG.writer.available ? `<button class="btn" id="fix" style="margin:4px 0 6px">Ask the LLM writer to fix it</button>` : ""}
     <div class="preview"><b>${highlight(email.subject, needles(j.violations))}</b>\n\n${highlight(email.body, needles(j.violations))}</div>
     <div class="small mut" style="margin-top:6px">Tenacious-Bench evaluator v${esc(j.evaluator_version)} · judged in ${j.judge_ms} ms</div>`;
   $("#sendbox").hidden = false;
@@ -217,15 +249,18 @@ async function loadHistory() {
 document.addEventListener("click", e => {
   const it = e.target.closest(".item[data-n]"); if (it) pick(it.dataset.n);
   const cb = e.target.closest("#composer button"); if (cb) setComposer(cb.dataset.v);
+  if (e.target.id === "fix") fixWithWriter();
 });
 $("#q").addEventListener("input", e => search(e.target.value));
 $("#subject").addEventListener("input", scheduleJudge);
 $("#body").addEventListener("input", scheduleJudge);
 $("#send").addEventListener("click", send);
+$("#first").addEventListener("change", () => { if (CUR) pick(CUR.name); });
 (async () => {
   await loadConfig(); loadFeatured(); search(""); loadHistory();
   const p = new URLSearchParams(location.search);   // e.g. ?company=Styloosh&composer=v1
-  if (p.get("composer") === "v1" || p.get("composer") === "v2") COMPOSER = p.get("composer");
+  if (["v1", "v2", "v3"].includes(p.get("composer"))) COMPOSER = p.get("composer");
+  if (p.get("first")) $("#first").value = p.get("first");
   if (p.get("company")) pick(p.get("company"));
 })();
 </script>

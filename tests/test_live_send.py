@@ -62,8 +62,8 @@ def test_redirect_goes_to_demo_inbox_and_names_intended_recipient():
     d = outbound.deliver("Styloosh (prospect contact)", "Hello", "Body", note="PASS", cfg=cfg(), client=fake)
     assert d["status"] == "sent" and d["message_id"] == "re_1"
     sent = fake.sent[0]
-    assert sent["to"] == ["me@gmail.com"] and sent["subject"].startswith("[DEMO -> Styloosh")
-    assert "Intended recipient: Styloosh" in sent["text"] and "PASS" in sent["text"] and sent["text"].endswith("Body")
+    assert sent["to"] == ["me@gmail.com"] and sent["subject"] == "Hello"  # the real subject, untouched
+    assert sent["text"].startswith("Body") and "originally addressed to Styloosh" in sent["text"] and "PASS" in sent["text"]
 
 
 def test_live_mode_uses_typed_address_and_blocks_reserved_domains_and_allowlist():
@@ -137,3 +137,43 @@ def test_send_outreach_email_blocks_on_evaluator_failure():
     r = next(r for r in rows() if r["brief"]["prospect"] == "Styloosh")
     res = send_outreach_email("x@y.com", {**r["week10_email"], "prospect": "Styloosh"}, dry_run=True, brief=r["brief"])
     assert res["status"] == "blocked_by_evaluator" and "FUNDING_NOT_RECENT" in res["judgment"]["violations"]
+
+
+# ── persona polish + LLM writer (stubbed: no network, no spend) ─────────
+
+def persona():
+    from agent.live_desk.persona import Persona
+    return Persona(name="Yakob Dereje", title="Research Partner", booking_url="https://cal.com/tenacious/15min",
+                   website="gettenacious.com")
+
+
+def test_polish_reads_like_a_person_and_never_changes_verdicts():
+    from agent.live_desk.persona import polish
+    from agent.email_agent import generate_outreach_email
+    data = rows()
+    for r in data:
+        before = {v["code"] for v in send_gate.judge(r["brief"], r["week10_email"])["violations"]}
+        after = {v["code"] for v in send_gate.judge(r["brief"], polish(r["week10_email"], persona()))["violations"]}
+        assert before == after, r["brief"]["prospect"]
+    r = next(r for r in data if r["brief"]["prospect"] == "Styloosh")
+    with contextlib.redirect_stdout(io.StringIO()):
+        e = polish(generate_outreach_email(r["brief"]), persona(), "Ana")
+    assert e["body"].startswith("Hi Ana,") and "localhost" not in e["body"] and "Yakob Dereje" in e["body"]
+    assert "e-commerce and jewelry companies" in e["body"] and send_gate.judge(r["brief"], e)["all_pass"]
+
+
+def test_writer_rewrite_uses_the_judges_violations(desk, monkeypatch):
+    client, _ = desk
+    from agent import llm_writer
+    seen = {}
+
+    def fake_write(brief, persona, first_name=None, previous=None, violations=None):
+        seen["violations"] = [v["code"] for v in (violations or [])]
+        return {"email": {"subject": "A question about Styloosh",
+                          "body": "Is engineering capacity on your roadmap? Here's my calendar: https://cal.com/tenacious/15min"},
+                "model": "stub", "rewrite": bool(previous)}
+    monkeypatch.setattr(llm_writer, "write", fake_write)
+    r = client.post("/api/research", json={"name": "Styloosh"}).json()
+    w = client.post("/api/write", json={"name": "Styloosh", "email": r["emails"]["v1"]}).json()
+    assert seen["violations"] == ["FUNDING_NOT_RECENT"] and w["rewrite"] is True
+    assert client.post("/api/judge", json={"name": "Styloosh", "email": w["email"]}).json()["all_pass"]

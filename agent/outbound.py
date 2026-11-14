@@ -104,9 +104,9 @@ def plan(intended_to: str, cfg: OutboundConfig, override_to: str | None = None) 
 
 
 def _redirect_wrap(subject: str, body: str, intended_to: str, note: str) -> tuple[str, str]:
-    banner = (f"[DEMO SEND] Intended recipient: {intended_to}\n{note}\n"
-              + "-" * 60 + "\n\n")
-    return f"[DEMO -> {intended_to}] {subject}", banner + body
+    """Keep the email as the prospect would see it; a small footer records that it was redirected."""
+    footer = f"\n\n--\nDemo copy: originally addressed to {intended_to}." + (f" {note}" if note else "")
+    return subject, body.rstrip() + footer
 
 
 def deliver(intended_to: str, subject: str, body: str, *, override_to: str | None = None,

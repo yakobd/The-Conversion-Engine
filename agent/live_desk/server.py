@@ -33,7 +33,8 @@ from pydantic import BaseModel, Field
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from agent import outbound, send_gate  # noqa: E402
+from agent import llm_writer, outbound, send_gate  # noqa: E402
+from agent.live_desk.persona import Persona, polish  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 STATE = ROOT / ".state"
@@ -115,7 +116,9 @@ def config():
         ev = {"ok": True, "version": send_gate.evaluator().VERSION, "path": str(send_gate.TB_DIR)}
     except send_gate.EvaluatorUnavailable as e:
         ev = {"ok": False, "error": str(e)}
-    return {"outbound": cfg.public(), "evaluator": ev}
+    writer = {"available": llm_writer.available(), "model": __import__("os").getenv("LIVE_DESK_MODEL") or llm_writer.DEFAULT_MODEL,
+              "spent_usd": llm_writer.spent_usd(), "budget_usd": llm_writer.budget_usd()}
+    return {"outbound": cfg.public(), "evaluator": ev, "persona": Persona.from_env().public(), "writer": writer}
 
 
 @app.get("/api/companies")
@@ -147,18 +150,50 @@ def featured():
     return {"featured": picks}
 
 
+class EmailIn(BaseModel):
+    subject: str = Field("", max_length=300)
+    body: str = Field("", max_length=8000)
+
+
 class ResearchIn(BaseModel):
     name: str = Field(..., min_length=1, max_length=200)
+    first_name: str | None = Field(None, max_length=40)
 
 
 @app.post("/api/research")
 def api_research(body: ResearchIn):
-    return research(body.name)
+    """Brief + both template drafts, polished with the sender persona (what the judge and the reader see)."""
+    r = research(body.name)
+    p = Persona.from_env()
+    return r | {"emails": {k: polish(e, p, body.first_name) for k, e in r["emails"].items()}}
 
 
-class EmailIn(BaseModel):
-    subject: str = Field("", max_length=300)
-    body: str = Field("", max_length=8000)
+class WriteIn(BaseModel):
+    name: str
+    first_name: str | None = Field(None, max_length=40)
+    email: EmailIn | None = None   # set to ask the writer to fix this draft using the judge's findings
+
+
+@app.post("/api/write")
+def api_write(body: WriteIn):
+    """LLM writer (v3). With `email`, it rewrites that draft once using the Week 11 violations as feedback."""
+    brief = research(body.name)["brief"]
+    p = Persona.from_env()
+    prev, viol = None, None
+    if body.email is not None:
+        prev = body.email.model_dump()
+        viol = send_gate.judge(brief, prev)["violations"]
+        if not viol:
+            return {"email": prev, "model": None, "rewrite": False, "note": "already passes: nothing to fix"}
+    t0 = time.time()
+    try:
+        out = llm_writer.write(brief, p, body.first_name, prev, viol)
+    except llm_writer.WriterError as e:
+        raise HTTPException(503, str(e))
+    out["email"] = polish(out["email"], p, body.first_name)
+    out["write_ms"] = round((time.time() - t0) * 1000)
+    out["spent_usd"] = llm_writer.spent_usd()
+    return out
 
 
 class JudgeIn(BaseModel):
@@ -202,8 +237,8 @@ def api_send(body: SendIn):
         raise HTTPException(409, detail={"message": "Blocked by the Week 11 evaluator", "judgment": j})
     if cfg.mode == "live" and not (body.to or "").strip():
         raise HTTPException(422, "live mode: type the recipient address (the desk never emails company data)")
-    note = f"Judged by Tenacious-Bench evaluator v{j['evaluator_version']}: PASS (all 5 dimensions). Company: {body.name}."
-    d = outbound.deliver(f"{body.name} (prospect contact)", body.email.subject, body.email.body,
+    note = f"Passed the Week 11 pre-send check (Tenacious-Bench evaluator v{j['evaluator_version']})."
+    d = outbound.deliver(f"a contact at {body.name}", body.email.subject, body.email.body,
                          override_to=(body.to or None), note=note, cfg=cfg)
     rec["delivery"] = {k: d[k] for k in ("mode", "status", "message_id", "error", "why")} | {"routed_to": outbound.mask(d["routed_to"])}
     _log(rec)
