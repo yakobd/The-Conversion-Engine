@@ -20,6 +20,7 @@ import argparse
 import contextlib
 import io
 import json
+import os
 import sys
 import threading
 import time
@@ -258,6 +259,136 @@ def _log(rec: dict) -> None:
         STATE.mkdir(exist_ok=True)
         with SEND_LOG.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+
+# ── Autopilot: the judge is the gatekeeper; a human only handles what it rejected ──
+from agent.live_desk.autopilot import Autopilot, Store as AutopilotStore  # noqa: E402
+
+AUTOPILOT_DB = STATE / "autopilot.db"
+
+
+def _ap_compose(name: str, brief: dict, writer: str):
+    p = Persona.from_env()
+    if writer == "v3":
+        out = llm_writer.write(brief, p)
+        return polish(out["email"], p), f"LLM writer ({out['model']})"
+    raw = research(name)["emails"][writer]
+    label = {"v1": "Week 10 original template (v1)", "v2": "Week 10 honest template (v2)"}[writer]
+    return polish(raw, p), label
+
+
+def _ap_rewrite(name: str, brief: dict, current: dict, violations: list):
+    p = Persona.from_env()
+    out = llm_writer.write(brief, p, None, current, violations)
+    return polish(out["email"], p), out["model"]
+
+
+def _ap_deliver(name: str, email: dict, judgment: dict, to: str | None):
+    cfg = outbound.OutboundConfig.from_env()
+    note = f"Passed the Week 11 pre-send check (Tenacious-Bench evaluator v{judgment['evaluator_version']})."
+    d = outbound.deliver(f"a contact at {name}", email["subject"], email["body"], override_to=to, note=note, cfg=cfg)
+    _log({"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"), "company": name, "composer": "autopilot",
+          "subject": email["subject"], "verdict": "pass", "violations": [],
+          "delivery": {k: d[k] for k in ("mode", "status", "message_id", "error", "why")} | {"routed_to": outbound.mask(d["routed_to"])}})
+    return {k: d[k] for k in ("mode", "status", "message_id", "error", "why")} | {"routed_to": outbound.mask(d["routed_to"])}
+
+
+def _ap_instructions(violations: list) -> str:
+    return llm_writer._prompting().revision_message(violations)
+
+
+_autopilot: Autopilot | None = None
+
+
+def autopilot() -> Autopilot:
+    global _autopilot
+    if _autopilot is None:
+        _autopilot = Autopilot(
+            AutopilotStore(AUTOPILOT_DB),
+            research=lambda name: research(name)["brief"], compose=_ap_compose, judge=send_gate.judge,
+            rewrite=(_ap_rewrite if llm_writer.available() else None), instructions=_ap_instructions,
+            deliver=_ap_deliver, outbound_mode=lambda: outbound.OutboundConfig.from_env().mode)
+    return _autopilot
+
+
+def _candidate_companies() -> list[str]:
+    """Companies with real signals first (the benchmark's train briefs), then the rest of the sample."""
+    held, done = _held_out_names(), autopilot().store.done_companies()
+    names = []
+    f = send_gate.TB_DIR / "training_data" / "week10_train_briefs.jsonl"
+    if f.exists():
+        names = [json.loads(l)["brief"]["prospect"] for l in f.read_text(encoding="utf-8").splitlines() if l.strip()]
+    names += [str(n).strip() for n in _crunchbase()["name"]]
+    return [n for n in dict.fromkeys(names) if n and n.lower() != "nan" and n.lower() not in held and n.lower() not in done]
+
+
+class StartIn(BaseModel):
+    writer: str = Field("v3", pattern="^v[123]$")
+    count: int = Field(5, ge=1, le=50)
+    companies: list[str] | None = None
+
+
+@app.post("/api/autopilot/start")
+def autopilot_start(body: StartIn):
+    ap = autopilot()
+    if body.writer == "v3" and not llm_writer.available():
+        raise HTTPException(503, "LLM writer needs OPENROUTER_API_KEY")
+    names = body.companies or _candidate_companies()[: body.count]
+    try:
+        run_id = ap.start(names[: body.count], body.writer)
+    except (RuntimeError, ValueError) as e:
+        raise HTTPException(409, str(e))
+    return {"run_id": run_id, "companies": names[: body.count]}
+
+
+@app.post("/api/autopilot/stop")
+def autopilot_stop():
+    autopilot().stop()
+    return {"ok": True}
+
+
+@app.get("/api/autopilot")
+def autopilot_state():
+    ap = autopilot()
+    items = ap.store.items()
+    counts: dict = {}
+    for it in items:
+        counts[it["status"]] = counts.get(it["status"], 0) + 1
+    return {"running": ap.running(), "run_id": ap.run_id, "counts": counts, "items": items,
+            "max_per_run": int(os.getenv("AUTOPILOT_MAX_PER_RUN", "10")), "mode": outbound.OutboundConfig.from_env().mode,
+            "fixer": "LLM writer" if llm_writer.available() else None}
+
+
+class ApproveIn(BaseModel):
+    by: str = Field("admin", max_length=60)
+    email: EmailIn | None = None      # optional admin edit; re-judged before sending
+    to: str | None = Field(None, max_length=254)
+
+
+@app.post("/api/autopilot/{item_id}/approve")
+def autopilot_approve(item_id: str, body: ApproveIn):
+    r = autopilot().approve(item_id, body.by, body.email.model_dump() if body.email else None, body.to)
+    if not r["ok"]:
+        raise HTTPException(409, detail=r)
+    return r
+
+
+class RejectIn(BaseModel):
+    by: str = Field("admin", max_length=60)
+    reason: str = Field("", max_length=300)
+
+
+@app.post("/api/autopilot/{item_id}/reject")
+def autopilot_reject(item_id: str, body: RejectIn):
+    r = autopilot().reject(item_id, body.by, body.reason)
+    if not r["ok"]:
+        raise HTTPException(409, detail=r)
+    return r
+
+
+@app.get("/autopilot", include_in_schema=False)
+def autopilot_page():
+    return FileResponse(HERE / "static" / "autopilot.html")
 
 
 app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")

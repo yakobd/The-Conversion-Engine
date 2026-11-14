@@ -260,6 +260,27 @@ The gate reproduces the published benchmark exactly: v1 passes 10/204 briefs and
 
 **Fix included:** the old send branch's "staff sink" fallback could never run. It was only reached when `OUTBOUND_ENABLED` was already true, so enabled outbound went straight to the prospect. Delivery now goes through `agent/outbound.py` with the explicit modes above.
 
+### Autopilot (`/autopilot`): the judge is the gatekeeper, a human handles only what it rejected
+
+**Start a run** by choosing a writer and up to 10 companies. For each company:
+1. **The draft is judged first.** A draft that passes on the first try is **sent automatically**.
+2. **A failing draft gets fixed.** The judge's violations become **improvement instructions** for the LLM writer. It produces an **improved email**, which goes through **final verification**; there are up to 2 rewrites.
+3. **A fixed email still needs a person.** It waits in **Needs your approval**, where the admin sees the whole story (first draft → instructions → improved email → verification) and chooses **Approve & send**, **Edit**, or **Reject**.
+4. **Edits are judged again** before anything is sent.
+5. **Emails that still fail are blocked** and cannot be approved.
+
+**Activity log:** every run is recorded, with the path each email took and the email that was sent.
+
+**Safety controls:**
+
+| Control | What it does |
+|---|---|
+| `AUTOPILOT_MAX_PER_RUN` (default 10) | Caps the number of companies per run |
+| `AUTOPILOT_SEND_DELAY_S` (default 2) | Spaces sends out |
+| **Stop** button | Halts the current run |
+| `OUTBOUND_MODE=off` | Nothing leaves the machine |
+| Live mode | Never sends automatically; every send needs a typed recipient |
+
 ## Known Limitations and Next Steps
 Concrete issues a successor engineer will encounter:
 
