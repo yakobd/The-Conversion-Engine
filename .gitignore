@@ -13,3 +13,4 @@ calcom/
 tenacious-seed/
 *.zip
 seed-materials/
+.state/
