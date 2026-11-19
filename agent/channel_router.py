@@ -9,7 +9,11 @@ State transitions:
   NEW          → EMAIL_SENT       (after first outreach email)
   EMAIL_SENT   → EMAIL_REPLIED    (after prospect replies)
   EMAIL_REPLIED → SMS_ELIGIBLE    (warm lead gate cleared)
+  EMAIL_REPLIED → CALL_BOOKED     (booked from the link sent after the reply)
   SMS_ELIGIBLE → CALL_BOOKED     (after Cal.com booking)
+
+The booking link itself is only sent after a reply (agent/booking_policy.py), so there is
+deliberately no EMAIL_SENT → CALL_BOOKED transition.
   CALL_BOOKED  → VOICE_HANDOFF   (human delivery lead takes over)
   ANY          → OPTED_OUT        (hard_no reply class)
 """
@@ -46,6 +50,7 @@ class ChannelRouter:
                                       ProspectState.OPTED_OUT,
                                       ProspectState.STALLED],
         ProspectState.EMAIL_REPLIED: [ProspectState.SMS_ELIGIBLE,
+                                      ProspectState.CALL_BOOKED,
                                       ProspectState.OPTED_OUT],
         ProspectState.SMS_ELIGIBLE:  [ProspectState.CALL_BOOKED,
                                       ProspectState.OPTED_OUT],

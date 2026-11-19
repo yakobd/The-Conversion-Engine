@@ -37,15 +37,16 @@ class Persona:
         return {"name": self.name, "title": self.title, "booking_url": self.booking_url, "website": self.website}
 
 
+from agent.booking_policy import ask_for_reply  # noqa: E402
+
 OLD_SIGNATURE = re.compile(r"\n*\s*Research Partner\s*\n\s*Tenacious Intelligence Corporation\s*(\n\s*gettenacious\.com)?\s*$", re.I)
-LOCAL_LINK = re.compile(r"\s*(?:→|->)?\s*https?://localhost:\d+/\S+")
 INDUSTRY_LIST = re.compile(r"engineering teams in ([^,.\n]+), ([^,.\n]+?) and could not tell")
 
 
 def polish(email: dict, persona: Persona, first_name: str | None = None) -> dict:
     subject, body = email.get("subject", "").strip(), email.get("body", "").strip()
     body = INDUSTRY_LIST.sub(lambda m: f"engineering teams at {m.group(1)} and {m.group(2)} companies, and I couldn't tell", body)
-    body = LOCAL_LINK.sub(f" Here's my calendar: {persona.booking_url}", body)
+    body = ask_for_reply(body, persona.booking_url)  # first email: no calendar link; it is sent after a reply
     body = OLD_SIGNATURE.sub("", body).rstrip()
     if not body.endswith(persona.signature()):
         body = f"{body}\n\n{persona.signature()}"

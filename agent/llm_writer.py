@@ -60,7 +60,9 @@ def _prompting():
 def persona_note(persona, first_name: str | None) -> str:
     who = f"Greet the reader as 'Hi {first_name},'." if first_name else "Greet the reader with 'Hi there,'."
     return (f"\n\nSender details (override the sign-off rule above): {who} Sign off exactly as:\n{persona.signature()}\n"
-            f"Use this booking link for the call to action: {persona.booking_url}\n"
+            "This is a first email: do NOT include any link or calendar URL (this overrides the format rule above). "
+            "End with one soft ask that invites a reply, e.g. 'Worth 15 minutes? Just reply and I'll send over a few "
+            "times.' The booking link is sent only after they reply.\n"
             "Write the way a thoughtful person writes to a stranger: plain words, no internal data-field names, "
             "labels or scores (never 'hiring velocity', 'AI maturity', 'segment', 'confidence' or 'signal').")
 

@@ -213,11 +213,29 @@ async def email_reply_webhook(request: Request, background_tasks: BackgroundTask
     logger.info(f"Email reply from {from_email}: classified as {reply_class}")
     background_tasks.add_task(emit, "email.reply", event_payload)
 
+    # Booking policy: the calendar link goes out only now, after a positive reply (agent/booking_policy.py).
+    from agent.booking_policy import next_step
+    step = next_step(reply_class)
+    background_tasks.add_task(_handle_reply_safely, from_email, reply_class,
+                              payload.get("from_name") or None, payload.get("subject", ""))
+
     return JSONResponse({
         "status": "received",
         "from": from_email,
-        "reply_class": reply_class
+        "reply_class": reply_class,
+        "next_step": step
     })
+
+
+def _handle_reply_safely(from_email: str, reply_class: str, from_name: Optional[str], subject: str) -> None:
+    from agent.booking_policy import handle_reply
+    try:
+        first = from_name.split()[0] if from_name and from_name.strip() else None
+        result = handle_reply(from_email, reply_class, first_name=first, subject=subject)
+        logger.info(f"Reply step for {from_email}: {result['next_step']} "
+                    f"({(result.get('delivery') or {}).get('status', 'nothing sent')})")
+    except Exception as e:  # a failed follow-up must never fail the webhook
+        logger.error(f"Reply step failed for {from_email}: {e}")
 
 
 def classify_reply(text: str) -> str:
@@ -424,6 +442,9 @@ async def calcom_webhook(request: Request, background_tasks: BackgroundTasks):
             "created_at": datetime.now().isoformat()
         }
         background_tasks.add_task(emit, "booking.created", event_payload)
+        if prospect_email:
+            from agent.channel_router import route_event
+            background_tasks.add_task(route_event, prospect_email, "call_booked")
         background_tasks.add_task(
             update_hubspot_on_booking,
             prospect_email,

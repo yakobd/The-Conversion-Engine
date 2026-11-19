@@ -310,6 +310,10 @@ def send_outreach_email(
     start_time = time.time()
     trace_id = f"email_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
 
+    # Booking policy: a first email asks for a reply; the calendar link is sent only after one.
+    from agent.booking_policy import ask_for_reply
+    email_content = {**email_content, "body": ask_for_reply(email_content.get("body", ""), os.getenv("BOOKING_URL"))}
+
     result = {
         "trace_id": trace_id,
         "prospect": email_content.get("prospect"),

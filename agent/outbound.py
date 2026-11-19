@@ -11,6 +11,8 @@ Settings are read from the repo-root .env (and the legacy tau2-bench/.env), see 
                      only delivers to the Resend account owner's address. To send to anyone else, verify
                      a domain in Resend and set RESEND_FROM to an address on it.
     DEMO_INBOX       where redirect mode delivers
+    REPLY_TO         optional Reply-To on every email (e.g. you+replies@gmail.com) so replies come back to
+                     an inbox agent/reply_inbox.py watches; the test sender itself cannot receive mail
     ALLOWED_RECIPIENTS  optional comma-separated allowlist for live mode (addresses or @domains)
 
 Back-compat: if OUTBOUND_MODE is unset, OUTBOUND_ENABLED=true means live, anything else means off.
@@ -44,6 +46,7 @@ class OutboundConfig:
     sender: str
     demo_inbox: str | None
     allowlist: tuple[str, ...]
+    reply_to: str | None = None
 
     @classmethod
     def from_env(cls) -> "OutboundConfig":
@@ -55,12 +58,13 @@ class OutboundConfig:
         allow = tuple(a.strip().lower() for a in (os.getenv("ALLOWED_RECIPIENTS") or "").split(",") if a.strip())
         return cls(mode=mode, api_key=os.getenv("RESEND_API_KEY") or None,
                    sender=os.getenv("RESEND_FROM") or DEFAULT_FROM,
-                   demo_inbox=(os.getenv("DEMO_INBOX") or "").strip() or None, allowlist=allow)
+                   demo_inbox=(os.getenv("DEMO_INBOX") or "").strip() or None, allowlist=allow,
+                   reply_to=(os.getenv("REPLY_TO") or "").strip() or None)
 
     def public(self) -> dict:
         """Safe to show in a UI: never the key, and the inbox is masked."""
         return {"mode": self.mode, "sender": self.sender, "api_key_set": bool(self.api_key),
-                "demo_inbox": mask(self.demo_inbox), "allowlist": list(self.allowlist),
+                "demo_inbox": mask(self.demo_inbox), "reply_to": mask(self.reply_to), "allowlist": list(self.allowlist),
                 "ready": self.problem() is None, "problem": self.problem()}
 
     def problem(self) -> str | None:
@@ -127,7 +131,10 @@ def deliver(intended_to: str, subject: str, body: str, *, override_to: str | Non
         client = resend.Emails
     t0 = time.time()
     try:
-        resp = client.send({"from": cfg.sender, "to": [p["to"]], "subject": subject, "text": body})
+        msg = {"from": cfg.sender, "to": [p["to"]], "subject": subject, "text": body}
+        if cfg.reply_to:
+            msg["reply_to"] = [cfg.reply_to]
+        resp = client.send(msg)
         result["status"] = "sent"
         result["message_id"] = (resp or {}).get("id") if isinstance(resp, dict) else getattr(resp, "id", None)
     except Exception as e:  # surface provider errors (bad key, unverified recipient, rate limit) to the caller
