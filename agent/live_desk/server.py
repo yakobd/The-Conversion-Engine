@@ -36,6 +36,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from agent import llm_writer, outbound, send_gate  # noqa: E402
 from agent.live_desk.persona import Persona, polish  # noqa: E402
+from agent.booking_policy import ask_for_reply  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 STATE = ROOT / ".state"
@@ -307,7 +308,8 @@ def autopilot() -> Autopilot:
             AutopilotStore(AUTOPILOT_DB),
             research=lambda name: research(name)["brief"], compose=_ap_compose, judge=send_gate.judge,
             rewrite=(_ap_rewrite if llm_writer.available() else None), instructions=_ap_instructions,
-            deliver=_ap_deliver, outbound_mode=lambda: outbound.OutboundConfig.from_env().mode)
+            deliver=_ap_deliver, outbound_mode=lambda: outbound.OutboundConfig.from_env().mode,
+            prepare=lambda e: {**e, "body": ask_for_reply(e.get("body", ""), Persona.from_env().booking_url)})
     return _autopilot
 
 

@@ -97,8 +97,9 @@ class Autopilot:
 
     def __init__(self, store: Store, *, research: Callable, compose: Callable, judge: Callable, rewrite: Callable | None,
                  instructions: Callable, deliver: Callable, outbound_mode: Callable[[], str],
-                 send_delay_s: float | None = None):
+                 send_delay_s: float | None = None, prepare: Callable[[dict], dict] | None = None):
         self.store, self.research, self.compose, self.judge = store, research, compose, judge
+        self.prepare = prepare or (lambda email: email)  # applied to an admin-approved email before it is re-judged
         self.rewrite, self.instructions, self.deliver, self.outbound_mode = rewrite, instructions, deliver, outbound_mode
         self.send_delay_s = float(os.getenv("AUTOPILOT_SEND_DELAY_S", "2")) if send_delay_s is None else send_delay_s
         # default: a fix that passes final verification is sent without a human; set 1 to review fixed emails too
@@ -220,6 +221,7 @@ class Autopilot:
         if not it or it["status"] not in ("awaiting_approval", "blocked"):
             return {"ok": False, "error": f"item is {it['status'] if it else 'missing'}, not awaiting approval"}
         final = email or self.final_email(it)
+        final = self.prepare(final)  # e.g. the booking policy: an admin edit or an old stored draft loses its calendar link
         brief = self.research(it["company"])
         j = self.judge(brief, final)
         if email is not None:

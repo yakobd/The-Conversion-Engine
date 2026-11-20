@@ -172,6 +172,11 @@ function pathLabel(it) {
   return "";
 }
 
+function renderQueue() {
+  const q = STATE.items.filter(i => i.status === "awaiting_approval" || i.status === "blocked");
+  $("#queue").innerHTML = q.length ? q.map(queueCard).join("") : `<div class="small mut">Nothing needs you right now.</div>`;
+}
+
 function render() {
   const s = STATE;
   $("#mode").textContent = `OUTBOUND_MODE=${s.mode}${s.fixer ? " · fixer: " + s.fixer : " · no fixer (set OPENROUTER_API_KEY)"}`;
@@ -179,10 +184,7 @@ function render() {
   const order = ["sent", "awaiting_approval", "blocked", "rejected", "drafting", "fixing", "sending", "queued", "error"];
   $("#counts").innerHTML = order.filter(k => s.counts[k]).map(k => `${pill(k)} <b>${s.counts[k]}</b>`).join(" ");
   $("#status").textContent = s.running ? `Run ${s.run_id} in progress… (max ${s.max_per_run} per run, paced sends)` : (s.run_id ? `Run ${s.run_id} finished.` : "Start a run to let the autopilot work through companies.");
-  if (!EDITING) {
-    const q = s.items.filter(i => i.status === "awaiting_approval" || i.status === "blocked");
-    $("#queue").innerHTML = q.length ? q.map(queueCard).join("") : `<div class="small mut">Nothing needs you right now.</div>`;
-  }
+  if (!EDITING) renderQueue();  // while editing, the periodic refresh must not wipe what you are typing
   $("#log").innerHTML = s.items.map(it => `<tr class="click" data-open="${it.id}"><td><b>${esc(it.company)}</b><div class="small mut">${esc(it.writer)}</div></td>
     <td>${pill(it.status)}</td><td class="small">${esc(pathLabel(it))}</td><td class="small mut">${esc(it.updated.slice(11, 19))}</td></tr>`).join("")
     || `<tr><td colspan="4" class="mut small">No activity yet.</td></tr>`;
@@ -201,7 +203,12 @@ document.addEventListener("click", async e => {
   const id = b.dataset.id, a = b.dataset.a, msg = id && $(`#msg-${id}`);
   const to = id && $(`#to-${id}`) ? $(`#to-${id}`).value : null;
   if (a === "close") { OPEN = null; render(); return; }
-  if (a === "edit") { EDITING = id; render(); EDITING = id; return; }
+  if (a === "edit") {
+    EDITING = id; renderQueue();
+    const box = $(`#eb-${id}`);
+    if (box) { box.scrollIntoView({block: "center"}); box.focus(); }
+    return;
+  }
   if (a === "cancel") { EDITING = null; render(); return; }
   try {
     b.disabled = true;

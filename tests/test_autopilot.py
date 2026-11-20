@@ -127,3 +127,14 @@ def test_bad_writer_value_rejected(tmp_path):
     ap, _ = make(tmp_path, {})
     with pytest.raises(ValueError):
         ap.start(["A"], "v9", background=False)
+
+
+def test_prepare_runs_on_admin_approved_emails(tmp_path):
+    """An old stored draft or an admin edit goes through `prepare` (the booking policy) before re-judging and sending."""
+    from agent.booking_policy import ask_for_reply
+    ap, sent = make(tmp_path, {"Acme": BAD}, fixer=False)
+    ap.prepare = lambda e: {**e, "body": ask_for_reply(e["body"], "https://cal.com/x")}
+    ap.start(["Acme"], "v1", background=False)
+    iid = ap.store.items()[0]["id"]
+    r = ap.approve(iid, "admin", {"subject": "S", "body": "Edited ok. Worth 15 minutes? Here's my calendar: https://cal.com/x"})
+    assert r["ok"] and "cal.com" not in sent[0][1]["body"] and sent[0][1]["body"].endswith("Just reply and I'll send over a few times.")
